@@ -1,0 +1,44 @@
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h2 class="text-primary fw-bold mb-4" i18n="@@title.createGenre">
+            Crear género
+        </h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <form [formGroup]="genreForm" (ngSubmit)="onSubmit()">
+                <app-input-field
+                    label="Nombre"
+                    type="text"
+                    formControlName="type"
+                    [error]="getError('type')"
+                />
+
+                <div class="d-flex justify-content-center gap-3 mt-4">
+                    <button
+                        type="button"
+                        class="btn btn-lg px-5"
+                        style="background-color: #ffcccb; color: #000"
+                        (click)="onCancel()"
+                        [disabled]="isSubmitting()"
+                    >
+                        <span i18n="@@action.cancel">Cancelar</span>
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-lg px-5"
+                        style="background-color: #90ee90; color: #000"
+                        [disabled]="isSubmitting()"
+                    >
+                        @if (isSubmitting()) {
+                            <span i18n="@@action.creating">Creando...</span>
+                        } @else {
+                            <span i18n="@@action.create">Crear</span>
+                        }
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

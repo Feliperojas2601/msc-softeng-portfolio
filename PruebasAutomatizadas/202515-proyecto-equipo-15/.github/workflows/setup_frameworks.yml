@@ -1,0 +1,27 @@
+name: Setup Frameworks Automatización
+run-name: Setup ${{ github.event.inputs.framework }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      framework:
+        type: choice
+        description: Framework de automatización
+        options:
+          - kraken
+          - puppeteer
+          - playwright
+          - cypress
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - uses: Uniandes-MISW4103/proyecto-base-actions/.github/actions/setup-framework@main
+        with:
+          framework: ${{ github.event.inputs.framework }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}

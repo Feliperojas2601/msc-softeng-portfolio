@@ -1,0 +1,64 @@
+<div class="container-fluid py-4">
+    <div class="text-center mb-5">
+        <h2 class="page-title" i18n="@@title.explorePopularMovies">
+            Explora las películas más populares
+        </h2>
+    </div>
+    @if (isLoading()) {
+        <app-loader item="películas populares" />
+    } @else {
+        <div class="carousel-container">
+            <button
+                class="carousel-button carousel-button-prev"
+                (click)="previousSlide()"
+                [disabled]="currentIndex() === 0"
+                aria-label="Película anterior"
+                i18n-aria-label="@@action.previousMovie"
+            >
+                <svg width="40" height="40" viewBox="0 0 40 40">
+                    <path
+                        d="M25 10 L15 20 L25 30"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                    />
+                </svg>
+            </button>
+            <div class="carousel-track-container">
+                <div
+                    class="carousel-track"
+                    [style.transform]="
+                        'translateX(-' + currentIndex() * slideWidth + '%)'
+                    "
+                >
+                    @for (movie of popularMovies(); track movie.id) {
+                        <div class="carousel-slide">
+                            <app-movie-card
+                                [movie]="movie"
+                                [showDetails]="true"
+                                [smallSize]="false"
+                                (showDetailEvent)="showDetailMovie(movie)"
+                            />
+                        </div>
+                    }
+                </div>
+            </div>
+            <button
+                class="carousel-button carousel-button-next"
+                (click)="nextSlide()"
+                [disabled]="currentIndex() >= maxIndex()"
+                aria-label="Película siguiente"
+                i18n-aria-label="@@action.nextMovie"
+            >
+                <svg width="40" height="40" viewBox="0 0 40 40">
+                    <path
+                        d="M15 10 L25 20 L15 30"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                    />
+                </svg>
+            </button>
+        </div>
+    }
+</div>

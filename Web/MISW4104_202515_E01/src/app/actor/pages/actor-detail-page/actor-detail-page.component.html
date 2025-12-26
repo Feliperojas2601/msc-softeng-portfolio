@@ -1,0 +1,61 @@
+@if (actorDetails()) {
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4 text-center align-self-center">
+                <div class="actor-image-wrapper">
+                    <img
+                        [src]="actorDetails()!.photo"
+                        [alt]="actorDetails()!.name"
+                        class="rounded-circle img-fluid actor-photo"
+                    />
+                </div>
+                <h2 class="actor-name mt-3">{{ actorDetails()!.name }}</h2>
+            </div>
+            <div class="col-md-8">
+                <div class="actor-info">
+                    <h3 class="mb-3">{{ actorDetails()!.nationality }}</h3>
+                    <p class="biography">{{ actorDetails()!.biography }}</p>
+                    <p class="birth-date">
+                        <strong i18n="@@form.birthDate"
+                            >Fecha de nacimiento:</strong
+                        >
+                        {{ actorDetails()!.birthDate | date }}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+                        <h4 class="movies-title mb-0" i18n="@@movie.allMovies">
+                            Todas sus películas
+                        </h4>
+                        <button
+                            class="btn btn-primary btn-rounded"
+                            (click)="openAddMovieModal()"
+                        >
+                            +
+                        </button>
+                    </div>
+                    <div class="row g-4">
+                        @for (movie of actorDetails()!.movies; track movie.id) {
+                            <div class="col-12 col-sm-6 col-lg-4">
+                                <app-movie-card
+                                    [movie]="movie"
+                                    [smallSize]="true"
+                                    (click)="goToMovie(movie.id)"
+                                    (onKeyPress.enter)="goToMovie(movie.id)"
+                                />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-association-modal
+        [title]="'Agregar película - ' + actorDetails()!.name"
+        [items]="availableMovies()"
+        [isVisible]="showMovieModal()"
+        [successMessage]="'Película agregada exitosamente'"
+        [errorMessage]="'Error al agregar la película'"
+        (onClose)="closeMovieModal()"
+        (onSelect)="onMovieSelected($event)"
+    />
+}

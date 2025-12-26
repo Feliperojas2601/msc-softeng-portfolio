@@ -1,0 +1,24 @@
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.btn-tertiary {
+    background-color: var(--tertiary-color) !important;
+    border-color: var(--tertiary-color) !important;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 10rem;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}

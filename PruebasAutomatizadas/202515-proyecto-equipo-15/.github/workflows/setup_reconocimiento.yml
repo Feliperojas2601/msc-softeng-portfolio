@@ -1,0 +1,26 @@
+name: Setup Herramientas Reconocimiento
+run-name: Setup ${{ github.event.inputs.tool }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      tool:
+        type: choice
+        description: 'Recognition tool to setup'
+        options:
+          - monkey
+          - ripper
+        required: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - uses: Uniandes-MISW4103/proyecto-base-actions/.github/actions/setup-reconocimiento@main
+        with:
+          tool: ${{ github.event.inputs.tool }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}

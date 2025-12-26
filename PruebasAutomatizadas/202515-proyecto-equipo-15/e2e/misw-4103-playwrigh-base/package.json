@@ -1,0 +1,33 @@
+{
+  "name": "misw-4103-playwright-base",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "author": "",
+  "description": "Repositorio base para el uso Pruebas Automatizadas utilizando Playwright",
+  "keywords": [
+    "playwright",
+    "misw"
+  ],
+  "main": "playwright.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "prepare": "npx playwright install",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.13.14",
+    "faker": "^5.5.3"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "dotenv": "^17.2.3"
+  }
+}

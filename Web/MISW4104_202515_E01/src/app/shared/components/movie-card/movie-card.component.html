@@ -1,0 +1,99 @@
+<div
+    class="card h-100 movie-card"
+    [class.small-card]="smallSize()"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+    (click)="showMovieDetail()"
+    (keydown.enter)="showMovieDetail()"
+>
+    <div class="movie-poster">
+        <img
+            [src]="movie().poster"
+            [alt]="movie().title"
+            class="card-img-top"
+        />
+    </div>
+    @if (isHovered() && showDetails() && fullMovie && !smallSize()) {
+        <div class="card-body p-3 details-body">
+            <h6 class="card-title fw-bold mb-2">{{ movie().title }}</h6>
+            <p class="small mb-1">
+                <strong i18n="@@label.genre">Género:</strong>
+                {{ fullMovie.genre.type }}
+            </p>
+            <p class="small mb-1">
+                <strong i18n="@@label.duration">Duración:</strong>
+                {{ fullMovie.duration }} hr
+            </p>
+            <p class="small mb-1">
+                <strong i18n="@@label.director">Director:</strong>
+                {{ fullMovie.director.name }}
+            </p>
+            <p class="small mb-1">
+                <strong i18n="@@label.country">País:</strong>
+                {{ fullMovie.country }}
+            </p>
+            <p class="small mb-1">
+                <strong i18n="@@label.protagonists">Protagonistas:</strong>
+                {{ fullMovie.sampleActors }}
+            </p>
+            <p class="small mb-1">
+                <strong i18n="@@label.releaseDate">Estreno:</strong>
+                {{ fullMovie.releaseDate | date }}
+            </p>
+            @if (fullMovie.platforms && fullMovie.platforms.length > 0) {
+                <div class="platforms mt-2">
+                    @for (platform of fullMovie.platforms; track platform.id) {
+                        <span class="badge bg-tertiary me-1">{{
+                            platform.name
+                        }}</span>
+                    }
+                </div>
+            }
+            <div class="text-center mt-2">
+                @for (star of stars; track star) {
+                    <span
+                        class="star"
+                        [class.filled]="isStarFilled(star)"
+                        [class.half]="isStarHalf(star)"
+                    >
+                        @if (isStarFilled(star)) {
+                            ★
+                        } @else if (isStarHalf(star)) {
+                            ★
+                        } @else {
+                            ☆
+                        }
+                    </span>
+                }
+            </div>
+        </div>
+    } @else {
+        <div class="card-body p-2" [class.p-1]="smallSize()">
+            <h6
+                class="card-title mb-1 text-center"
+                [class.small]="!smallSize()"
+                [class.extra-small]="smallSize()"
+            >
+                {{ movie().title }}
+            </h6>
+            <div class="text-center">
+                @for (star of stars; track star) {
+                    <span
+                        class="star"
+                        [class.filled]="isStarFilled(star)"
+                        [class.half]="isStarHalf(star)"
+                        [class.small-star]="smallSize()"
+                    >
+                        @if (isStarFilled(star)) {
+                            ★
+                        } @else if (isStarHalf(star)) {
+                            ★
+                        } @else {
+                            ☆
+                        }
+                    </span>
+                }
+            </div>
+        </div>
+    }
+</div>

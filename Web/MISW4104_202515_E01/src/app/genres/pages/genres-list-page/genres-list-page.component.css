@@ -1,0 +1,32 @@
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.genre-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.genre-row:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-right: 8px;
+    font-size: 0.8em;
+}
+
+.arrow.expanded {
+    transform: rotate(90deg);
+}
+
+.custom-thead th {
+    background-color: var(--tertiary-color) !important;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}

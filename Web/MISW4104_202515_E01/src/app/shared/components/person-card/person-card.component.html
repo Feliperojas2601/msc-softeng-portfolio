@@ -1,0 +1,56 @@
+<div class="card h-100 shadow-sm">
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-auto">
+                <div class="person-photo">
+                    <img
+                        [src]="person().photo"
+                        [alt]="person().name"
+                        class="img-fluid rounded"
+                        (click)="showPersonDetail()"
+                        (keydown.enter)="showPersonDetail()"
+                    />
+                </div>
+            </div>
+            <div class="col">
+                <h5
+                    class="card-title fw-bold mb-2 card-title-hover"
+                    (click)="showPersonDetail()"
+                    (keydown.enter)="showPersonDetail()"
+                >
+                    {{ person().name }}
+                </h5>
+                <p class="card-text text-muted mb-3">
+                    {{ person().nationality }}
+                </p>
+                <button
+                    class="btn btn-link text-dark text-decoration-none p-0 d-flex align-items-center gap-2"
+                    (click)="toggleMovies()"
+                    type="button"
+                >
+                    <span class="arrow" [class.rotated]="showMovies()">▶</span>
+                    <span class="fw-semibold" i18n="@@title.popularMovies"
+                        >Películas populares</span
+                    >
+                </button>
+            </div>
+        </div>
+
+        @if (showMovies() && person().movies.length > 0) {
+            <div class="movies-section mt-4 pt-3 border-top">
+                <div class="row row-cols-2 row-cols-md-3 g-3">
+                    @for (movie of person().movies; track movie.id) {
+                        <div class="col">
+                            <app-movie-card
+                                [movie]="movie"
+                                [smallSize]="true"
+                                (click)="goToMovie(movie.id)"
+                                (onKeyPress.enter)="goToMovie(movie.id)"
+                            />
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

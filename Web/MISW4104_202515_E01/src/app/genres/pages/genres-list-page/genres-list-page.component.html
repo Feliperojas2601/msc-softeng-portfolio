@@ -1,0 +1,73 @@
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h2 class="text-primary fw-bold mb-4" i18n="@@title.genresList">
+            Listado de géneros
+        </h2>
+    </div>
+    <div class="mx-auto" style="max-width: 960px">
+        <table class="table align-middle mb-0">
+            <thead class="custom-thead">
+                <tr>
+                    <th style="width: 30%" i18n="@@movie.genre">Género</th>
+                    <th i18n="@@genre.description">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (isLoading()) {
+                    <tr>
+                        <td colspan="2">
+                            <app-loader item="géneros" />
+                        </td>
+                    </tr>
+                } @else {
+                    @for (genre of genres(); track genre.id) {
+                        <tr
+                            class="genre-row"
+                            (click)="toggleGenre(genre.id)"
+                            (keydown.enter)="toggleGenre(genre.id)"
+                            (keydown.space)="toggleGenre(genre.id)"
+                            tabindex="0"
+                        >
+                            <td>
+                                <span
+                                    class="arrow"
+                                    [class.expanded]="isGenreExpanded(genre.id)"
+                                    >▶</span
+                                >
+                                {{ genre.type }}
+                            </td>
+                            <td>{{ getGenreDescription(genre.type) }}</td>
+                        </tr>
+                        @if (isGenreExpanded(genre.id)) {
+                            <tr class="movies-row">
+                                <td colspan="2">
+                                    <div class="movies-container p-3">
+                                        <div class="row g-3">
+                                            @for (
+                                                movie of genre.movies;
+                                                track movie.id
+                                            ) {
+                                                <div class="col-12 col-md-4">
+                                                    <app-movie-card
+                                                        [movie]="movie"
+                                                        [smallSize]="true"
+                                                        (click)="
+                                                            goToMovie(movie.id)
+                                                        "
+                                                        (onKeyPress.enter)="
+                                                            goToMovie(movie.id)
+                                                        "
+                                                    />
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

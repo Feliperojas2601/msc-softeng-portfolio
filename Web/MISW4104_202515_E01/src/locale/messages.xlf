@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es" target-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <!-- Navigation -->
+      <trans-unit id="nav.home" datatype="html">
+        <source>Inicio</source>
+        <target>Home</target>
+      </trans-unit>
+      <trans-unit id="nav.movies" datatype="html">
+        <source>Películas</source>
+        <target>Movies</target>
+      </trans-unit>
+      <trans-unit id="nav.actors" datatype="html">
+        <source>Actores</source>
+        <target>Actors</target>
+      </trans-unit>
+      <trans-unit id="nav.directors" datatype="html">
+        <source>Directores</source>
+        <target>Directors</target>
+      </trans-unit>
+      <trans-unit id="nav.genres" datatype="html">
+        <source>Géneros</source>
+        <target>Genres</target>
+      </trans-unit>
+      <trans-unit id="nav.platforms" datatype="html">
+        <source>Plataformas</source>
+        <target>Platforms</target>
+      </trans-unit>
+      <trans-unit id="nav.list" datatype="html">
+        <source>Listar</source>
+        <target>List</target>
+      </trans-unit>
+      <trans-unit id="nav.create" datatype="html">
+        <source>Crear</source>
+        <target>Create</target>
+      </trans-unit>
+
+      <!-- Common Actions -->
+      <trans-unit id="action.cancel" datatype="html">
+        <source>Cancelar</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="action.search" datatype="html">
+        <source>Búsqueda</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="action.creating" datatype="html">
+        <source>Creando...</source>
+        <target>Creating...</target>
+      </trans-unit>
+      <trans-unit id="action.create" datatype="html">
+        <source>Crear</source>
+        <target>Create</target>
+      </trans-unit>
+      <trans-unit id="action.publishing" datatype="html">
+        <source>Publicando...</source>
+        <target>Publishing...</target>
+      </trans-unit>
+      <trans-unit id="action.publishReview" datatype="html">
+        <source>Publicar reseña</source>
+        <target>Publish Review</target>
+      </trans-unit>
+      <trans-unit id="action.submit" datatype="html">
+        <source>Enviar</source>
+        <target>Submit</target>
+      </trans-unit>
+      <trans-unit id="action.addReview" datatype="html">
+        <source>Agregar reseña</source>
+        <target>Add Review</target>
+      </trans-unit>
+      <trans-unit id="action.cancel.review" datatype="html">
+        <source>Cancelar reseña</source>
+        <target>Cancel Review</target>
+      </trans-unit>
+
+      <!-- Page Titles -->
+      <trans-unit id="title.featuredActors" datatype="html">
+        <source>Actores destacados</source>
+        <target>Featured Actors</target>
+      </trans-unit>
+      <trans-unit id="title.createActor" datatype="html">
+        <source>Crear actor</source>
+        <target>Create Actor</target>
+      </trans-unit>
+      <trans-unit id="title.featuredDirectors" datatype="html">
+        <source>Directores destacados</source>
+        <target>Featured Directors</target>
+      </trans-unit>
+      <trans-unit id="title.createDirector" datatype="html">
+        <source>Crear director</source>
+        <target>Create Director</target>
+      </trans-unit>
+      <trans-unit id="title.genresList" datatype="html">
+        <source>Listado de géneros</source>
+        <target>Genres List</target>
+      </trans-unit>
+      <trans-unit id="title.createGenre" datatype="html">
+        <source>Crear género</source>
+        <target>Create Genre</target>
+      </trans-unit>
+      <trans-unit id="title.amazingMovies" datatype="html">
+        <source>Películas increíbles</source>
+        <target>Amazing Movies</target>
+      </trans-unit>
+      <trans-unit id="title.explorePopularMovies" datatype="html">
+        <source>Explora las películas más populares</source>
+        <target>Explore the Most Popular Movies</target>
+      </trans-unit>
+
+      <!-- Form Labels -->
+      <trans-unit id="form.name" datatype="html">
+        <source>Nombre</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="form.birthDate" datatype="html">
+        <source>Fecha de nacimiento</source>
+        <target>Birth Date</target>
+      </trans-unit>
+      <trans-unit id="form.nationality" datatype="html">
+        <source>Nacionalidad</source>
+        <target>Nationality</target>
+      </trans-unit>
+      <trans-unit id="form.photo" datatype="html">
+        <source>Foto</source>
+        <target>Photo</target>
+      </trans-unit>
+      <trans-unit id="form.biography" datatype="html">
+        <source>Biografía</source>
+        <target>Biography</target>
+      </trans-unit>
+      <trans-unit id="form.type" datatype="html">
+        <source>Tipo</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="form.review" datatype="html">
+        <source>Reseña</source>
+        <target>Review</target>
+      </trans-unit>
+      <trans-unit id="form.score" datatype="html">
+        <source>Puntuación</source>
+        <target>Score</target>
+      </trans-unit>
+      <trans-unit id="form.creator" datatype="html">
+        <source>Creador</source>
+        <target>Creator</target>
+      </trans-unit>
+
+      <!-- Movie Details -->
+      <trans-unit id="movie.trailer" datatype="html">
+        <source>Trailer</source>
+        <target>Trailer</target>
+      </trans-unit>
+      <trans-unit id="movie.title" datatype="html">
+        <source>Título</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="movie.genre" datatype="html">
+        <source>Género</source>
+        <target>Genre</target>
+      </trans-unit>
+      <trans-unit id="movie.duration" datatype="html">
+        <source>Duración</source>
+        <target>Duration</target>
+      </trans-unit>
+      <trans-unit id="movie.country" datatype="html">
+        <source>País</source>
+        <target>Country</target>
+      </trans-unit>
+      <trans-unit id="movie.releaseDate" datatype="html">
+        <source>Fecha de estreno</source>
+        <target>Release Date</target>
+      </trans-unit>
+      <trans-unit id="movie.director" datatype="html">
+        <source>Director</source>
+        <target>Director</target>
+      </trans-unit>
+      <trans-unit id="movie.actors" datatype="html">
+        <source>Actores</source>
+        <target>Actors</target>
+      </trans-unit>
+      <trans-unit id="movie.reviews" datatype="html">
+        <source>Reseñas</source>
+        <target>Reviews</target>
+      </trans-unit>
+      <trans-unit id="movie.allMovies" datatype="html">
+        <source>Todas sus películas</source>
+        <target>All Their Movies</target>
+      </trans-unit>
+
+      <!-- Loading -->
+      <trans-unit id="loading.actors" datatype="html">
+        <source>actores</source>
+        <target>actors</target>
+      </trans-unit>
+      <trans-unit id="loading.directors" datatype="html">
+        <source>directores</source>
+        <target>directors</target>
+      </trans-unit>
+      <trans-unit id="loading.genres" datatype="html">
+        <source>géneros</source>
+        <target>genres</target>
+      </trans-unit>
+      <trans-unit id="loading.popularMovies" datatype="html">
+        <source>películas populares</source>
+        <target>popular movies</target>
+      </trans-unit>
+
+      <!-- Person Card -->
+      <trans-unit id="person.popularMovies" datatype="html">
+        <source>Películas populares</source>
+        <target>Popular Movies</target>
+      </trans-unit>
+
+      <!-- Additional Labels and Titles -->
+      <trans-unit id="title.genres" datatype="html">
+        <source>Géneros</source>
+        <target>Genres</target>
+      </trans-unit>
+      <trans-unit id="genre.description" datatype="html">
+        <source>Descripción</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="title.amazingMovies" datatype="html">
+        <source>Películas increíbles</source>
+        <target>Amazing Movies</target>
+      </trans-unit>
+      <trans-unit id="title.explorePopularMovies" datatype="html">
+        <source>Explora las películas más populares</source>
+        <target>Explore the Most Popular Movies</target>
+      </trans-unit>
+      <trans-unit id="action.previousMovie" datatype="html">
+        <source>Película anterior</source>
+        <target>Previous Movie</target>
+      </trans-unit>
+      <trans-unit id="action.nextMovie" datatype="html">
+        <source>Película siguiente</source>
+        <target>Next Movie</target>
+      </trans-unit>
+      <trans-unit id="title.popularMovies" datatype="html">
+        <source>Películas populares</source>
+        <target>Popular Movies</target>
+      </trans-unit>
+      <trans-unit id="action.loading" datatype="html">
+        <source>Cargando...</source>
+        <target>Loading...</target>
+      </trans-unit>
+      <trans-unit id="label.genre" datatype="html">
+        <source>Género:</source>
+        <target>Genre:</target>
+      </trans-unit>
+      <trans-unit id="label.duration" datatype="html">
+        <source>Duración:</source>
+        <target>Duration:</target>
+      </trans-unit>
+      <trans-unit id="label.director" datatype="html">
+        <source>Director:</source>
+        <target>Director:</target>
+      </trans-unit>
+      <trans-unit id="label.country" datatype="html">
+        <source>País:</source>
+        <target>Country:</target>
+      </trans-unit>
+      <trans-unit id="label.protagonists" datatype="html">
+        <source>Protagonistas:</source>
+        <target>Cast:</target>
+      </trans-unit>
+      <trans-unit id="label.releaseDate" datatype="html">
+        <source>Fecha de estreno:</source>
+        <target>Release Date:</target>
+      </trans-unit>
+      <trans-unit id="title.actors" datatype="html">
+        <source>Actores</source>
+        <target>Actors</target>
+      </trans-unit>
+      <trans-unit id="title.reviews" datatype="html">
+        <source>Reseñas</source>
+        <target>Reviews</target>
+      </trans-unit>
+      <trans-unit id="message.noReviews" datatype="html">
+        <source>No hay reseñas disponibles.</source>
+        <target>No reviews available.</target>
+      </trans-unit>
+      <trans-unit id="action.addReview" datatype="html">
+        <source>+ Agregar reseña</source>
+        <target>+ Add Review</target>
+      </trans-unit>
+      <trans-unit id="title.newReview" datatype="html">
+        <source>Nueva reseña</source>
+        <target>New Review</target>
+      </trans-unit>
+      <trans-unit id="label.review" datatype="html">
+        <source>Reseña</source>
+        <target>Review</target>
+      </trans-unit>
+      <trans-unit id="label.score" datatype="html">
+        <source>Puntuación (1-5)</source>
+        <target>Score (1-5)</target>
+      </trans-unit>
+      <trans-unit id="label.yourName" datatype="html">
+        <source>Tu nombre</source>
+        <target>Your Name</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

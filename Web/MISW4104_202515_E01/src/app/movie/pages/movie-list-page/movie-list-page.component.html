@@ -1,0 +1,58 @@
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h2 class="text-primary fw-bold mb-4" i18n="@@title.amazingMovies">
+            Películas increíbles
+        </h2>
+        <div class="d-flex justify-content-end mb-4 gap-4">
+            <div class="dropdown">
+                <button
+                    class="btn btn-tertiary dropdown-toggle"
+                    type="button"
+                    (click)="toggleDropdown()"
+                >
+                    {{ selectedGenre() }}
+                </button>
+                @if (showDropdown()) {
+                    <div class="dropdown-menu show">
+                        @for (genre of genres(); track genre) {
+                            <a
+                                class="dropdown-item"
+                                href="javascript:void(0)"
+                                (click)="onFilterByGenre(genre)"
+                            >
+                                {{ genre }}
+                            </a>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="input-group" style="max-width: 300px">
+                <span class="input-group-text border-end-0">
+                    <i class="bi bi-search-heart"></i>
+                </span>
+                <input
+                    type="text"
+                    class="form-control border-start-0 rounded-end shadow-none"
+                    placeholder="Búsqueda"
+                    i18n-placeholder="@@action.search"
+                    (input)="onSearch($any($event.target).value)"
+                />
+            </div>
+        </div>
+    </div>
+    @if (isLoading()) {
+        <app-loader item="películas" />
+    } @else {
+        <div class="row g-4">
+            @for (movie of movies(); track movie.id) {
+                <div class="col-12 col-md-6 col-lg-3">
+                    <app-movie-card
+                        [movie]="movie"
+                        [showDetails]="true"
+                        (showDetailEvent)="showDetailMovie(movie)"
+                    />
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,35 @@
+<div class="container-fluid py-4">
+    <div class="text-center mb-4">
+        <h2 class="text-primary fw-bold mb-4" i18n="@@title.featuredActors">
+            Actores destacados
+        </h2>
+        <div class="d-flex justify-content-end mb-4">
+            <div class="input-group" style="max-width: 300px">
+                <span class="input-group-text border-end-0">
+                    <i class="bi bi-search-heart"></i>
+                </span>
+                <input
+                    type="text"
+                    class="form-control border-start-0 rounded-end shadow-none"
+                    placeholder="Búsqueda"
+                    i18n-placeholder="@@action.search"
+                    (input)="onSearch($any($event.target).value)"
+                />
+            </div>
+        </div>
+    </div>
+    @if (isLoading()) {
+        <app-loader item="actores" />
+    } @else {
+        <div class="row g-4">
+            @for (actor of actors(); track actor.id) {
+                <div class="col-12 col-lg-6">
+                    <app-person-card
+                        [person]="actor"
+                        (showDetailEvent)="showDetailActor(actor.id)"
+                    />
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,37 @@
+<div class="mb-3">
+    <div class="row align-items-start">
+        <div class="col-12 col-md-4 text-end">
+            <label class="form-label fw-bold mb-2 mb-md-0">{{ label }}</label>
+        </div>
+        <div class="col-12 col-md-8">
+            @if (type === "textarea") {
+                <textarea
+                    class="form-control"
+                    [class.is-invalid]="error"
+                    [placeholder]="placeholder"
+                    [value]="value"
+                    [disabled]="disabled"
+                    [rows]="rows"
+                    (input)="onInputChange($event)"
+                    (blur)="onTouched()"
+                ></textarea>
+            } @else {
+                <input
+                    [type]="type"
+                    class="form-control"
+                    [class.is-invalid]="error"
+                    [placeholder]="placeholder"
+                    [value]="value"
+                    [disabled]="disabled"
+                    (input)="onInputChange($event)"
+                    (blur)="onTouched()"
+                />
+            }
+            @if (error) {
+                <div class="invalid-feedback d-block">
+                    {{ error }}
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,313 @@
+@if (movieDetails()) {
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="movie-poster-container">
+                    <img
+                        [src]="movieDetails()!.poster"
+                        [alt]="movieDetails()!.title"
+                        class="img-fluid rounded shadow"
+                    />
+                    <div class="rating-container mt-3 text-center">
+                        @for (star of stars; track star) {
+                            <span
+                                class="star"
+                                [class.filled]="isStarFilled(star)"
+                                [class.half]="isStarHalf(star)"
+                            >
+                                @if (isStarFilled(star)) {
+                                    ★
+                                } @else if (isStarHalf(star)) {
+                                    ★
+                                } @else {
+                                    ☆
+                                }
+                            </span>
+                        }
+                    </div>
+                    @if (
+                        movieDetails()!.platforms &&
+                        movieDetails()!.platforms.length > 0
+                    ) {
+                        <div class="platforms-badge text-center mt-2">
+                            <span class="badge bg-secondary mb-2">{{
+                                movieDetails()!.platforms[0].name
+                            }}</span>
+                        </div>
+                    }
+                    @if (movieDetails()!.youtubeTrailer) {
+                        <div class="text-center mt-3">
+                            <a
+                                [href]="movieDetails()!.youtubeTrailer.url"
+                                target="_blank"
+                                class="btn btn-link text-decoration-underline"
+                            >
+                                Trailer
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="movie-info">
+                    <h3 class="movie-title mb-3">
+                        {{ movieDetails()!.title }}
+                    </h3>
+
+                    <div class="info-item mb-2">
+                        <strong>{{ movieDetails()!.country }}</strong>
+                    </div>
+
+                    <div class="info-item mb-2">
+                        <strong i18n="@@label.releaseDate"
+                            >Fecha de estreno:</strong
+                        >
+                        {{ movieDetails()!.releaseDate | date }}
+                    </div>
+
+                    <div class="info-item mb-4">
+                        <strong i18n="@@label.duration">Duración:</strong>
+                        {{ movieDetails()!.duration }}h
+                    </div>
+
+                    <div class="director-section mb-4">
+                        <h5 class="section-title mb-3" i18n="@@label.director">
+                            Director
+                        </h5>
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="person-photo me-3"
+                                (click)="
+                                    goToDirector(movieDetails()!.director.id)
+                                "
+                                (keydown.enter)="
+                                    goToDirector(movieDetails()!.director.id)
+                                "
+                                role="button"
+                            >
+                                <img
+                                    [src]="movieDetails()!.director.photo"
+                                    [alt]="movieDetails()!.director.name"
+                                    class="rounded"
+                                />
+                            </div>
+                            <div>
+                                <h6
+                                    class="mb-0 person-name"
+                                    (click)="
+                                        goToDirector(
+                                            movieDetails()!.director.id
+                                        )
+                                    "
+                                >
+                                    {{ movieDetails()!.director.name }}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actors-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="section-title mb-0" i18n="@@title.actors">
+                                Actores
+                            </h5>
+                            <button
+                                class="btn btn-primary btn-rounded"
+                                (click)="openAddActorModal()"
+                            >
+                                +
+                            </button>
+                        </div>
+                        @for (actor of movieDetails()!.actors; track actor.id) {
+                            <div class="d-flex align-items-center mb-3">
+                                <div
+                                    class="person-photo me-3"
+                                    (click)="goToActor(actor.id)"
+                                    (keydown.enter)="goToActor(actor.id)"
+                                    role="button"
+                                >
+                                    <img
+                                        [src]="actor.photo"
+                                        [alt]="actor.name"
+                                        class="rounded"
+                                    />
+                                </div>
+                                <div>
+                                    <h6
+                                        class="mb-0 person-name"
+                                        (click)="goToActor(actor.id)"
+                                    >
+                                        {{ actor.name }}
+                                    </h6>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="reviews-section">
+                    <h5 class="review-title mb-3" i18n="@@title.reviews">
+                        Reseñas
+                    </h5>
+                    @if (
+                        movieDetails()!.reviews &&
+                        movieDetails()!.reviews.length > 0
+                    ) {
+                        <div class="reviews-container">
+                            @for (
+                                review of movieDetails()!.reviews;
+                                track review.id
+                            ) {
+                                <div
+                                    class="review-card mb-3 p-3 border rounded"
+                                >
+                                    <p class="review-text mb-2">
+                                        {{ review.text }}
+                                    </p>
+                                    <div
+                                        class="d-flex justify-content-between align-items-center"
+                                    >
+                                        <small class="text-muted fst-italic">{{
+                                            review.creator
+                                        }}</small>
+                                        <div class="review-stars">
+                                            @for (
+                                                star of getReviewStars(
+                                                    review.score
+                                                );
+                                                track star
+                                            ) {
+                                                <span
+                                                    class="star small-star"
+                                                    [class.filled]="
+                                                        star <= review.score
+                                                    "
+                                                >
+                                                    {{
+                                                        star <= review.score
+                                                            ? "★"
+                                                            : "☆"
+                                                    }}
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    } @else {
+                        <p class="text-muted" i18n="@@message.noReviews">
+                            No hay reseñas disponibles.
+                        </p>
+                    }
+
+                    <div class="new-review-section mt-4">
+                        @if (!showReviewForm()) {
+                            <button
+                                class="btn btn-primary btn-sm"
+                                (click)="toggleReviewForm()"
+                            >
+                                <span i18n="@@action.addReview"
+                                    >+ Agregar reseña</span
+                                >
+                            </button>
+                        } @else {
+                            <div
+                                class="review-form-container p-3 border rounded bg-light"
+                            >
+                                <div
+                                    class="d-flex justify-content-between align-items-center mb-3"
+                                >
+                                    <h6 class="mb-0" i18n="@@title.newReview">
+                                        Nueva reseña
+                                    </h6>
+                                    <button
+                                        type="button"
+                                        class="btn-close"
+                                        (click)="toggleReviewForm()"
+                                        aria-label="Cerrar"
+                                    ></button>
+                                </div>
+
+                                <form
+                                    [formGroup]="reviewForm"
+                                    (ngSubmit)="onSubmitReview()"
+                                >
+                                    <app-input-field
+                                        label="Reseña"
+                                        i18n-label="@@label.review"
+                                        type="textarea"
+                                        formControlName="text"
+                                        [rows]="3"
+                                        [error]="getError('text')"
+                                    />
+
+                                    <app-input-field
+                                        label="Puntuación (1-5)"
+                                        i18n-label="@@label.score"
+                                        type="number"
+                                        formControlName="score"
+                                        [error]="getError('score')"
+                                    />
+
+                                    <app-input-field
+                                        label="Tu nombre"
+                                        i18n-label="@@label.yourName"
+                                        type="text"
+                                        formControlName="creator"
+                                        [error]="getError('creator')"
+                                    />
+
+                                    <div
+                                        class="d-flex justify-content-end gap-2"
+                                    >
+                                        <button
+                                            type="button"
+                                            class="btn btn-secondary btn-sm"
+                                            (click)="toggleReviewForm()"
+                                            [disabled]="isSubmitting()"
+                                        >
+                                            <span i18n="@@action.cancel"
+                                                >Cancelar</span
+                                            >
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary btn-sm"
+                                            [disabled]="isSubmitting()"
+                                        >
+                                            @if (isSubmitting()) {
+                                                <span i18n="@@action.publishing"
+                                                    >Publicando...</span
+                                                >
+                                            } @else {
+                                                <span
+                                                    i18n="
+                                                        @@action.publishReview"
+                                                    >Publicar reseña</span
+                                                >
+                                            }
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-association-modal
+        [title]="'Agregar actor - ' + movieDetails()!.title"
+        [items]="availableActors()"
+        [isVisible]="showActorModal()"
+        [successMessage]="'Actor agregado exitosamente'"
+        [errorMessage]="'Error al agregar el actor'"
+        (onClose)="closeActorModal()"
+        (onSelect)="onActorSelected($event)"
+    />
+}

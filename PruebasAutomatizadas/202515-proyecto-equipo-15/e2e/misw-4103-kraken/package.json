@@ -1,0 +1,29 @@
+{
+  "name": "misw-4103-kraken-pseudo",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "",
+  "description": "Repositorio base para el uso Pruebas Automatizadas utilizando Kraken",
+  "keywords": [
+    "kraken",
+    "misw"
+  ],
+  "directories": {
+    "test": "features"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "prepare": "",
+    "test": "npx kraken-node run",
+    "test:ui": "npx kraken-node run",
+    "test:feature": "npx kraken-node run"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "chai": "^5.2.0",
+    "faker": "^5.5.3",
+    "kraken-node": "^1.0.24"
+  }
+}

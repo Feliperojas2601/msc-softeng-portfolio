@@ -1,0 +1,55 @@
+@if (isVisible) {
+    <div class="modal-backdrop" (click)="close()"></div>
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary fw-bold">{{ title }}</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    (click)="close()"
+                    aria-label="Cerrar"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <select
+                        class="form-select"
+                        [(ngModel)]="selectedItemId"
+                        [disabled]="items.length === 0"
+                    >
+                        <option [value]="null" selected disabled>
+                            {{ items.length === 0 ? 'No hay elementos disponibles' : 'Seleccione una opción' }}
+                        </option>
+                        @for (item of items; track item.id) {
+                            <option [value]="item.id">{{ item.name }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-lg px-5"
+                    style="background-color: #ffcccb; color: #000"
+                    (click)="close()"
+                >
+                    Cancelar
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-lg px-5"
+                    style="background-color: #90ee90; color: #000"
+                    [disabled]="!selectedItemId || isSubmitting()"
+                    (click)="confirm()"
+                >
+                    @if (isSubmitting()) {
+                        <span>Agregando...</span>
+                    } @else {
+                        <span>Agregar</span>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+}

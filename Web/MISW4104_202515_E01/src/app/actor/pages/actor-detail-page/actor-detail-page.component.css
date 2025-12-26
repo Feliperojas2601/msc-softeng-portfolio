@@ -1,0 +1,72 @@
+.actor-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.actor-photo {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.actor-name {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.actor-info h3 {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.biography {
+    color: #333;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.birth-date {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.movies-title {
+    background-color: var(--primary-color) !important;
+    color: white;
+    padding: 12px 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-rounded {
+    border-radius: 50px;
+}
+
+@media (max-width: 768px) {
+    .actor-photo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .actor-name {
+        font-size: 1.5rem;
+    }
+
+    .actor-info h3 {
+        font-size: 1.2rem;
+    }
+}

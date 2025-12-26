@@ -1,0 +1,8 @@
+{
+    "BASEURL": "http://localhost:3001/ghost",
+    "SITETITLE": "Test Blog",
+    "FULLNAME": "Test User",
+    "EMAIL": "testmonkey@email.com",
+    "PASSWORD": "testmonkey", 
+    "FAKER_SEED": "42"
+}

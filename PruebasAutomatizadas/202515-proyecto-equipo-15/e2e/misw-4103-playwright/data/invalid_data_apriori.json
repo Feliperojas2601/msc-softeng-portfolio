@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "scenario": "EI001",
+    "feature": "F001",
+    "test_type": "invalid_long_title",
+    "post_title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum cillum dolore eu fugiat",
+    "post_content": "This is valid content for testing long title validation"
+  },
+  {
+    "id": 2,
+    "scenario": "EI002",
+    "feature": "F002",
+    "test_type": "invalid_long_title_page",
+    "page_title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum cillum dolore eu fugiat",
+    "page_content": "This is valid content for testing long title validation in pages"
+  },
+  {
+    "id": 3,
+    "scenario": "EI003",
+    "feature": "F004",
+    "test_type": "invalid_long_tag_name",
+    "tag_name": "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore",
+    "tag_description": "Testing tag creation with extremely long name"
+  },
+  {
+    "id": 4,
+    "scenario": "EI004",
+    "feature": "F004",
+    "test_type": "invalid_slug_reserved_chars",
+    "tag_name": "Test Tag Invalid Slug",
+    "tag_slug": "test/tag?query=1#anchor",
+    "tag_description": "Testing tag slug with reserved URL characters",
+    "expected_sanitized_slug": "test-tag-query-1-anchor"
+  },
+  {
+    "id": 5,
+    "scenario": "EI005",
+    "feature": "F004",
+    "test_type": "invalid_color_format",
+    "tag_name": "Test Tag Invalid Color",
+    "tag_slug": "test-tag-invalid-color",
+    "tag_color": "ZZZZZZ",
+    "tag_description": "Testing tag with invalid hex color format"
+  }
+]

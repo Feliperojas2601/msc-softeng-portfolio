@@ -1,0 +1,26 @@
+name: Setup VRT
+run-name: Setup ${{ github.event.inputs.framework }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      framework:
+        type: choice
+        description: Framework de regresión visual
+        options:
+          - resemblejs
+          - pixelmatch
+          - backstopjs
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - uses: Uniandes-MISW4103/proyecto-base-actions/.github/actions/setup-vrt@main
+        with:
+          framework: ${{ github.event.inputs.framework }}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}

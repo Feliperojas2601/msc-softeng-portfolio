@@ -1,0 +1,73 @@
+.director-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.director-photo {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.director-name {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.director-info h3 {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.biography {
+    color: #333;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.birth-date {
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.movies-title {
+    background-color: var(--primary-color) !important;
+    color: white;
+    padding: 12px 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+}
+
+.movie-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .director-photo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .director-name {
+        font-size: 1.5rem;
+    }
+
+    .director-info h3 {
+        font-size: 1.2rem;
+    }
+}
