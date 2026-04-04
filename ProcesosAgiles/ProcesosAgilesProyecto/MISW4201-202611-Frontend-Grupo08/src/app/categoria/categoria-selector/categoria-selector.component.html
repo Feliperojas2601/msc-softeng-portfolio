@@ -1,0 +1,79 @@
+<div class="cs-wrapper">
+
+  <!-- Input de búsqueda -->
+  <input
+    type="text"
+    class="cs-input"
+    [class.cs-input--activo]="dropdownAbierto"
+    [placeholder]="categoriaSeleccionada ? '' : 'Buscar o seleccionar categoría...'"
+    [(ngModel)]="textoBusqueda"
+    (focus)="abrir()"
+    (input)="filtrar(textoBusqueda)"
+    autocomplete="off"
+  />
+
+  <!-- Chip de selección sobre el input -->
+  <div class="cs-chip" *ngIf="categoriaSeleccionada && !dropdownAbierto">
+    <i class="bi bi-tag-fill"></i>
+    <span>{{ categoriaSeleccionada.nombre }}</span>
+    <button type="button" (click)="limpiarSeleccion()">✕</button>
+  </div>
+
+  <!-- Dropdown -->
+  <div class="cs-dropdown" *ngIf="dropdownAbierto">
+
+    <!-- Acciones fijas -->
+    <div class="cs-actions">
+      <button type="button"
+        class="cs-action-btn cs-action-btn--agregar"
+        [class.cs-action-btn--activo-agregar]="panelAbierto === 'Agregar'"
+        (click)="togglePanel('agregar')">
+        <i class="bi bi-plus-circle-fill"></i> Agregar
+      </button>
+      <button type="button"
+        class="cs-action-btn cs-action-btn--eliminar"
+        [class.cs-action-btn--activo-eliminar]="modoEliminar"
+        (click)="togglePanel('eliminar')">
+        <i class="bi bi-trash-fill"></i> Eliminar
+      </button>
+    </div>
+
+    <!-- Panel agregar inline -->
+    <div class="cs-panel-agregar" *ngIf="panelAbierto === 'Agregar'">
+      <input
+        type="text"
+        [(ngModel)]="nombreNueva"
+        placeholder="Nombre de la categoría..."
+        (keyup.enter)="crearCategoria()"
+      />
+      <button type="button" class="cs-btn-crear" (click)="crearCategoria()">
+        <i class="bi bi-check-lg"></i> Crear
+      </button>
+    </div>
+
+    <!-- Lista de categorías -->
+    <div class="cs-lista" [class.cs-lista--modo-eliminar]="modoEliminar">
+      <div
+        *ngFor="let categoria of categoriasFiltradas"
+        class="cs-item"
+        [class.cs-item--selected]="categoriaSeleccionada?.id === categoria.id"
+        (click)="seleccionar(categoria)">
+        <span>
+          {{ categoria.nombre }}
+          <i class="bi bi-check2" *ngIf="categoriaSeleccionada?.id === categoria.id"></i>
+        </span>
+        <button
+          *ngIf="modoEliminar"
+          type="button"
+          class="cs-btn-del"
+          (click)="eliminarCategoria(categoria, $event)">
+          <i class="bi bi-trash"></i> Quitar
+        </button>
+      </div>
+      <div class="cs-empty" *ngIf="categoriasFiltradas.length === 0">
+        Sin resultados — usa "Agregar" para crear una nueva
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h5 class="modal-title">Nuevo movimiento</h5>
+  <button type="button" class="btn-close" (click)="cancelar()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="movimientoForm" (ngSubmit)="!movimientoForm.invalid && guardar()">
+    <div class="row">
+
+      <!--Fecha-->
+      <div class="col-md-6 mb-3">
+        <label for="fecha">Fecha</label>
+        <input novalidate type="datetime-local" id="fecha" class="form-control" formControlName="fecha"/>
+        <div class="col-lg-10 text-danger mb-2" *ngIf="movimientoForm.get('fecha')!.hasError('required') && movimientoForm.get('fecha')!.touched">
+          <small><i class="bi bi-exclamation-circle"></i> Debe ingresar la fecha</small>
+        </div>
+      </div>
+
+      <!--Concepto-->
+      <div class="col-md-6 mb-3">
+        <label for="concepto">Concepto</label>
+        <input novalidate id="concepto" class="form-control" formControlName="concepto" placeholder="Concepto"/>
+        <div class="col-lg-10 text-danger mb-2" *ngIf="movimientoForm.get('concepto')!.hasError('required') && movimientoForm.get('concepto')!.touched">
+          <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el concepto</small>
+        </div>
+      </div>
+
+      <!--Valor-->
+      <div class="col-md-6 mb-3">
+        <label for="valor">Valor</label>
+        <input novalidate id="valor" class="form-control" formControlName="valor" placeholder="Valor"/>
+        <div class="col-lg-10 text-danger mb-2" *ngIf="movimientoForm.get('valor')!.hasError('required') && movimientoForm.get('valor')!.touched">
+          <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el valor</small>
+        </div>
+      </div>
+
+      <!--Tipo movimiento-->
+      <div class="col-md-6 mb-3">
+        <label for="tipo_movimiento">Tipo de movimiento</label>
+        <select id="tipo_movimiento" formControlName="tipo_movimiento" class="form-select">
+          <option [ngValue]="null" disabled selected>Seleccione un tipo</option>
+          <option *ngFor="let tipo of tiposMovimiento" [ngValue]="tipo">{{ tipo }}</option>
+        </select>
+        <div class="col-lg-10 text-danger mb-2" *ngIf="movimientoForm.get('tipo_movimiento')!.hasError('required') && movimientoForm.get('tipo_movimiento')!.touched">
+          <small><i class="bi bi-exclamation-circle"></i> Debe seleccionar un tipo de movimiento</small>
+        </div>
+      </div>
+
+      <!--Categoría — componente personalizado-->
+      <div class="col-md-6 mb-3">
+        <label>Categoría</label>
+        <app-categoria-selector formControlName="id_categoria"></app-categoria-selector>
+        <div class="col-lg-10 text-danger mb-2" *ngIf="movimientoForm.get('id_categoria')!.hasError('required') && movimientoForm.get('id_categoria')!.touched">
+          <small><i class="bi bi-exclamation-circle"></i> Debe seleccionar una categoría</small>
+        </div>
+      </div>
+
+      <!--Reserva-->
+      <div class="col-md-6 mb-3">
+        <label for="id_reserva">Reserva (opcional)</label>
+        <select id="id_reserva" formControlName="id_reserva" class="form-select">
+          <option [ngValue]="null">Sin reserva asociada</option>
+          <option *ngFor="let reserva of listaReservas" [ngValue]="reserva.id">
+            {{ reserva.nombre }} - {{ reserva.fecha_ingreso }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" [disabled]="!movimientoForm.valid">Guardar</button>&nbsp;
+    <button type="button" class="btn btn-danger ml-3" (click)="cancelar()">Cancelar</button>
+  </form>
+</div>

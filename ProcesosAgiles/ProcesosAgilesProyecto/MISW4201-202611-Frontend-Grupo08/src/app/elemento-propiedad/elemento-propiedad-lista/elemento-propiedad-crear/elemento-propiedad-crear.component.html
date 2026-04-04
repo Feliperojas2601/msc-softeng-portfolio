@@ -1,0 +1,92 @@
+<div class="modal-header">
+  <h5 class="modal-title">Nuevo elemento</h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="elementoForm">
+    <div class="row">
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Nombre <span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+               [class.is-invalid]="elementoForm.get('nombre')!.invalid && elementoForm.get('nombre')!.touched"
+               formControlName="nombre">
+        <div class="invalid-feedback">
+          <span *ngIf="elementoForm.get('nombre')!.hasError('required')">El nombre es requerido.</span>
+          <span *ngIf="elementoForm.get('nombre')!.hasError('soloEspacios')">El nombre no puede contener solo espacios.</span>
+          <span *ngIf="elementoForm.get('nombre')!.hasError('maxlength')">Máximo 40 caracteres.</span>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Tipo <span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+               [class.is-invalid]="elementoForm.get('tipo')!.invalid && elementoForm.get('tipo')!.touched"
+               formControlName="tipo" placeholder="Ej: Mueble, Electrodoméstico">
+        <div class="invalid-feedback">
+          <span *ngIf="elementoForm.get('tipo')!.hasError('required')">El tipo es requerido.</span>
+          <span *ngIf="elementoForm.get('tipo')!.hasError('soloEspacios')">El tipo no puede contener solo espacios.</span>
+          <span *ngIf="elementoForm.get('tipo')!.hasError('maxlength')">Máximo 40 caracteres.</span>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Estado <span class="text-danger">*</span></label>
+        <select class="form-select"
+                [class.is-invalid]="elementoForm.get('estado')!.invalid && elementoForm.get('estado')!.touched"
+                formControlName="estado">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let e of estados" [value]="e">{{e}}</option>
+        </select>
+        <div class="invalid-feedback">Debes seleccionar un estado.</div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Zona <span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+               [class.is-invalid]="elementoForm.get('zona')!.invalid && elementoForm.get('zona')!.touched"
+               formControlName="zona">
+        <div class="invalid-feedback">
+          <span *ngIf="elementoForm.get('zona')!.hasError('required')">La zona es requerida.</span>
+          <span *ngIf="elementoForm.get('zona')!.hasError('soloEspacios')">La zona no puede contener solo espacios.</span>
+          <span *ngIf="elementoForm.get('zona')!.hasError('maxlength')">Máximo 80 caracteres.</span>
+        </div>
+      </div>
+
+      <div class="col-12 mb-3">
+        <label class="form-label">Descripción <span class="text-danger">*</span></label>
+        <textarea class="form-control" rows="2"
+                  [class.is-invalid]="elementoForm.get('descripcion')!.invalid && elementoForm.get('descripcion')!.touched"
+                  formControlName="descripcion"></textarea>
+        <div class="invalid-feedback">
+          <span *ngIf="elementoForm.get('descripcion')!.hasError('required')">La descripción es requerida.</span>
+          <span *ngIf="elementoForm.get('descripcion')!.hasError('soloEspacios')">La descripción no puede contener solo espacios.</span>
+          <span *ngIf="elementoForm.get('descripcion')!.hasError('maxlength')">Máximo 125 caracteres.</span>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="guardar()">
+    Guardar Elemento
+  </button>
+</div>
+
+<ng-template #modalExito let-modal>
+  <div class="modal-header bg-success text-white">
+    <h4 class="modal-title">¡Operación Exitosa!</h4>
+    <button type="button" class="btn-close btn-close-white" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body text-center py-4">
+    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+    <p class="mt-3 fs-5">
+      El elemento <strong>"{{ nombreElementoReciente }}"</strong> ha sido registrado
+    </p>
+  </div>
+  <div class="modal-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-success px-4" (click)="modal.close()">Entendido</button>
+  </div>
+</ng-template>

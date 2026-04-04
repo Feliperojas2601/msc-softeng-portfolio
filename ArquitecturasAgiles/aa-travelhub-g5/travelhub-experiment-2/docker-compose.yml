@@ -1,0 +1,103 @@
+services:
+  autorizador:
+    build: ./autorizador
+    ports:
+      - "5001:5001"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=travelhub
+      - DB_USER=travelhub
+      - DB_PASSWORD=travelhub123
+      - TZ=America/Bogota
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - travelhub-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  reservas:
+    build: ./reservas
+    ports:
+      - "5003:5003"
+    environment:
+      - AUTORIZADOR_URL=http://autorizador:5001
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=travelhub
+      - DB_USER=travelhub
+      - DB_PASSWORD=travelhub123
+      - TZ=America/Bogota
+    depends_on:
+      db:
+        condition: service_healthy
+      autorizador:
+        condition: service_healthy
+    networks:
+      - travelhub-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5003/reservas/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=travelhub
+      - POSTGRES_USER=travelhub
+      - POSTGRES_PASSWORD=travelhub123
+      - TZ=America/Bogota
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - travelhub-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U travelhub -d travelhub"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=America/Bogota
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-postgresql-datasource
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - db
+    networks:
+      - travelhub-net
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: test-runner/Dockerfile
+    depends_on:
+      autorizador:
+        condition: service_healthy
+      reservas:
+        condition: service_healthy
+    networks:
+      - travelhub-net
+
+networks:
+  travelhub-net:
+    driver: bridge
+
+volumes:
+  pgdata:

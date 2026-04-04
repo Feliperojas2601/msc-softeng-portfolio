@@ -1,0 +1,30 @@
+<app-encabezado></app-encabezado>
+<h1>Reservas</h1>
+      
+      Reservas <button type="button" class="btn btn-warning" (click)="crearReserva()"><i class="bi bi-plus-circle"></i></button>
+      <div>
+      <table class="table" border="0">
+        <thead>
+          <th>Nombre</th>
+          <th>Fecha check-in</th>
+          <th>Fecha check-out</th>
+          <th>Plataforma reserva</th>
+          <th>Total reserva</th>
+          <th>Comisión</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservas">
+            <td>{{reserva.nombre}}</td>
+            <td>{{reserva.fecha_ingreso}}</td>
+            <td>{{reserva.fecha_salida}}</td>
+            <td>{{reserva.plataforma_reserva}}</td>
+            <td>{{reserva.total_reserva}}</td>
+            <td>{{reserva.comision}}</td>
+            <td>
+              <button [disabled]="false" type="button" class="btn btn-primary" (click)="editarReserva(reserva.id)"><i class="bi bi-pencil"></i></button>&nbsp;
+              <button [disabled]="false" type="button" class="btn btn-danger" (click)="borrarReserva(reserva.id)"><i class="bi bi-trash"></i></button>&nbsp;
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

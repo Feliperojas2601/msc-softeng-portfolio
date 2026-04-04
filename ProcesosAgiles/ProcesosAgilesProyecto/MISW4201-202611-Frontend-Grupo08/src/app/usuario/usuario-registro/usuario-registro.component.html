@@ -1,0 +1,127 @@
+<div class="container py-5">
+  <div class="row justify-content-center align-items-center">
+
+    <div class="col-12 col-lg-5 card shadow-sm py-2 align-self-start corta-card">
+      <div class="card-body text-center">
+        <h2 class="my-2 text-primary">Corta Estancia</h2>
+        <p class="text-muted">Administrador de propiedades de corta estancia</p>
+      </div>
+    </div>
+
+    <div class="col-xs-10 col-lg-6 ps-lg-5">
+      <div class="row">
+        <div class="mb-4">
+          <h1 class="text-center">Registro</h1>
+        </div>
+
+        <form [formGroup]="this.usuarioForm" (ngSubmit)="registroUsuario()">
+
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="user" class="col-lg-3 col-form-label">Usuario</label>
+              <div class="col-lg-9">
+                <input formControlName="username" type="text" class="form-control" placeholder="Usuario" required>
+              </div>
+              <!--En case de que el campo user se encuentre en blanco-->
+              <div class="row ps-lg-4"
+                *ngIf="usuarioForm.get('username')?.hasError('required') && usuarioForm.get('username')?.touched">
+                <div class="col-lg-9 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> Debe ingresar un user</small>
+                </div>
+              </div>
+              <!--En caso de un user posea más de 50 caracteres-->
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('username')?.hasError('maxlength')">
+                <div class="col-lg-9 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> El user no debe exceder los 50 carácteres</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="rol" class="col-lg-3 col-form-label">Rol</label>
+              <div class="col-lg-9">
+                <select formControlName="role" class="form-select" required>
+                  <option value="" disabled selected>Seleccione un rol</option>
+                  <option value="ADMIN">Administrador</option>
+                  <option value="PROPIETARIO">Propietario</option>
+                </select>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('role')?.hasError('required') && usuarioForm.get('role')?.touched">
+                <div class="col-lg-9 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> Debe seleccionar un rol</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="password" class="col-lg-3 col-form-label">Contraseña</label>
+              <div class="col-lg-9">
+                <input formControlName="password" type="password" class="form-control" placeholder="*********" required>
+              </div>
+              <div class="row ps-lg-4"
+                *ngIf="usuarioForm.get('password')?.hasError('required') && usuarioForm.get('password')?.touched">
+                <div class="col-lg-10 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> Debe ingresar una contraseña</small>
+                </div>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('password')?.hasError('maxlength')">
+                <div class="col-lg-9 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> La contraseña no debe exceder 50 carácteres</small>
+                </div>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('password')?.hasError('minlength')">
+                <div class="col-lg-10 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> La contraseña debe tener más de 4 carácteres</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="mb-3 row">
+              <label for="confirmPassword" class="col-lg-3 col-form-label">Confirmar contraseña</label>
+              <div class="col-lg-9">
+                <input formControlName="confirmPassword" type="password" class="form-control" placeholder="*********">
+              </div>
+              <div class="row ps-lg-4"
+                *ngIf="usuarioForm.get('confirmPassword')?.hasError('required') && usuarioForm.get('confirmPassword')?.touched">
+                <div class="col-lg-10 offset-lg-3 text-danger password-message">
+                  <small><i class="bi bi-exclamation-circle"></i> Debe ingresar una contraseña</small>
+                </div>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('confirmPassword')?.hasError('maxlength')">
+                <div class="col-lg-10 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> La contraseña no debe exceder 50 carácteres</small>
+                </div>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('confirmPassword')?.hasError('minlength')">
+                <div class="col-lg-10 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> La contraseña debe tener más de 4 carácteres</small>
+                </div>
+              </div>
+              <div class="row ps-lg-4" *ngIf="usuarioForm.get('confirmPassword')?.value !== usuarioForm.get('password')?.value">
+                <div class="col-lg-9 offset-lg-3 text-danger">
+                  <small><i class="bi bi-exclamation-circle"></i> Las contraseñas no coinciden</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 text-center mt-3">
+            <button type="submit" class="btn btn-warning col-8"
+              [disabled]="!usuarioForm.valid || usuarioForm.get('confirmPassword')?.value !== usuarioForm.get('password')?.value">Registrarse</button>
+          </div>
+          <div class="col-12 text-center mt-2">
+            <p>¿Ya tienes cuenta? <a href="/">Inicia sesión</a></p>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

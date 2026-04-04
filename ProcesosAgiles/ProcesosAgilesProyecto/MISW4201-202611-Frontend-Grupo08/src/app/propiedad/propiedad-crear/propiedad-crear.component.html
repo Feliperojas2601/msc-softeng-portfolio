@@ -1,0 +1,90 @@
+<div class="modal-header">
+  <h5 class="modal-title">Agregar nueva propiedad</h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="propiedadForm" (ngSubmit)="!propiedadForm.invalid && guardar()">
+    <div class="row">
+        <!--Nombre propiedad-->
+        <div class="col-md-6 mb-3">
+          <label for="nombre_propiedad">Nombre Propiedad</label>
+          <input novalidate id="nombre_propiedad" class="form-control" formControlName="nombre_propiedad" placeholder="Nombre propiedad"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('nombre_propiedad')!.hasError('required') && propiedadForm.get('nombre_propiedad')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el nombre de la propiedad</small>
+          </div>
+        </div>
+
+        <!--Ciudad-->
+        <div class="col-md-6 mb-3">
+          <label for="ciudad">Ciudad</label>
+          <input novalidate id="ciudad" class="form-control" formControlName="ciudad" placeholder="Ciudad"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('ciudad')!.hasError('required') && propiedadForm.get('ciudad')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar la ciudad</small>
+          </div>
+        </div>
+
+        <!--Municipio-->
+        <div class="col-md-6 mb-3">
+          <label for="municipio">Municipio</label>
+          <input novalidate id="municipio" class="form-control" formControlName="municipio" placeholder="Municipio"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('municipio')!.hasError('required') && propiedadForm.get('municipio')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el municipio</small>
+          </div>
+        </div>
+
+        <!--Direccion-->
+        <div class="col-md-6 mb-3">
+          <label for="direccion">Dirección</label>
+          <input novalidate id="direccion" class="form-control" formControlName="direccion" placeholder="Dirección"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('direccion')!.hasError('required') && propiedadForm.get('direccion')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar la dirección</small>
+          </div>
+        </div>
+
+        <!--Nombre propietario-->
+        <div class="col-md-6 mb-3">
+          <label for="nombre_propietario">Nombre Propietario</label>
+          <select  id="nombre_propietario" formControlName="nombre_propietario" class="form-select">
+            <option value="" disabled selected>Seleccione un propietario</option>
+            <option *ngFor="let p of listaPropietarios" [ngValue]="p.usuario">{{ p.usuario }}</option>
+          </select>
+          <div class="col-lg-10 text-danger mb-2" *ngIf=" propiedadForm.get('nombre_propietario')!.hasError('required') && propiedadForm.get('nombre_propietario')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe seleccionar un propietario</small>
+          </div>
+        </div>
+
+        <!--Numero contacto-->
+        <div class="col-md-6 mb-3">
+          <label for="numero-contacto">Número de contacto</label>
+          <input novalidate id="numero_contacto" class="form-control" formControlName="numero_contacto" placeholder="Número de contacto"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('numero_contacto')!.hasError('required') && propiedadForm.get('numero_contacto')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el número de contacto</small>
+          </div>
+        </div>
+
+        <!--Banco-->
+        <div class="col-md-6 mb-3">
+          <label for="banco">Banco</label>
+          <select formControlName="banco" class="form-control">
+            <option [ngValue]="null" [selected]="true"></option>
+            <option *ngFor="let banco of listaBancos" [ngValue]="banco">{{banco}}</option>
+          </select>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('banco')!.hasError('required') && propiedadForm.get('banco')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe seleccionar un banco</small>
+          </div>
+        </div>
+
+        <!--Numero cuenta-->
+        <div class="col-md-6 mb-3">
+          <label for="numero-cuenta">Número de cuenta</label>
+          <input novalidate id="numero_cuenta" class="form-control" formControlName="numero_cuenta" placeholder="Número de cuenta"/>
+          <div class="col-lg-10 text-danger mb-2" *ngIf="propiedadForm.get('numero_cuenta')!.hasError('required') && propiedadForm.get('numero_cuenta')!.touched">
+            <small><i class="bi bi-exclamation-circle"></i> Debe ingresar el número de cuenta</small>
+          </div>
+        </div>        
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" [disabled]="!propiedadForm.valid">Guardar</button>&nbsp;
+    <button type="button" class="btn btn-danger ml-3" (click)="cancelar()">Cancelar</button>
+  </form>
+</div>

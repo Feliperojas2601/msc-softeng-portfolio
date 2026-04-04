@@ -1,0 +1,34 @@
+<nav class="site-nav" aria-label="Navegación principal">
+    <div class="nav-inner">
+        <a class="nav-brand" routerLink="/propiedades">
+            <span class="brand-icon">
+                <i class="bi bi-buildings"></i>
+            </span>
+            <span class="brand-text">Corta Estancia</span>
+        </a>
+        <ul class="nav-links">
+            <li>
+                <a 
+                    class="nav-link" 
+                    routerLink="/propiedades" 
+                    routerLinkActive="nav-link--active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                >
+                    <i class="bi bi-house-door"></i>
+                    <span>Propiedades</span>
+                </a>
+            </li>
+            <li>
+                <a 
+                    class="nav-link" 
+                    routerLink="/" 
+                    routerLinkActive="nav-link--active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                >
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Salir</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

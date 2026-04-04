@@ -1,0 +1,155 @@
+/* ── Wrapper ────────────────────────────────────── */
+.cs-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Input ──────────────────────────────────────── */
+.cs-input {
+  width: 100%;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  background: white;
+  cursor: pointer;
+}
+.cs-input:focus,
+.cs-input--activo { border-color: #6366f1; }
+
+/* ── Chip flotante ──────────────────────────────── */
+.cs-chip {
+  position: absolute;
+  top: 50%; left: 10px;
+  transform: translateY(-50%);
+  background: #ede9fe;
+  color: #6366f1;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+.cs-chip button {
+  background: none;
+  border: none;
+  color: #6366f1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 0;
+}
+
+/* ── Dropdown ───────────────────────────────────── */
+.cs-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  z-index: 200;
+  overflow: hidden;
+}
+
+/* ── Botones Agregar / Eliminar ─────────────────── */
+.cs-actions {
+  display: flex;
+  border-bottom: 1px solid #f1f5f9;
+}
+.cs-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: background 0.15s;
+}
+.cs-action-btn--agregar { color: #6366f1; border-right: 1px solid #f1f5f9; }
+.cs-action-btn--agregar:hover,
+.cs-action-btn--activo-agregar { background: #f5f3ff; }
+
+.cs-action-btn--eliminar { color: #ef4444; }
+.cs-action-btn--eliminar:hover,
+.cs-action-btn--activo-eliminar { background: #fef2f2; }
+
+/* ── Panel agregar inline ───────────────────────── */
+.cs-panel-agregar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.cs-panel-agregar input {
+  flex: 1;
+  border: 1.5px solid #6366f1;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.88rem;
+  outline: none;
+}
+.cs-btn-crear {
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.83rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.cs-btn-crear:hover { background: #4338ca; }
+
+/* ── Lista ──────────────────────────────────────── */
+.cs-lista { max-height: 200px; overflow-y: auto; }
+
+.cs-item {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #1e293b;
+  transition: background 0.15s;
+}
+.cs-item:hover { background: #f8fafc; }
+.cs-item--selected { background: #ede9fe; color: #6366f1; font-weight: 600; }
+
+.cs-lista--modo-eliminar .cs-item:hover { background: #fef2f2; cursor: default; }
+
+.cs-btn-del {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s;
+}
+.cs-btn-del:hover { background: #fee2e2; }
+
+.cs-empty {
+  padding: 12px 14px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  text-align: center;
+}

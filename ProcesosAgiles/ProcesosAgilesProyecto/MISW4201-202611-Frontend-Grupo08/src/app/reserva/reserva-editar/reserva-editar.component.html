@@ -1,0 +1,175 @@
+<app-encabezado></app-encabezado>
+<h1>
+  Editar reserva
+</h1>
+
+<form
+ [formGroup]="reservaForm"
+ (ngSubmit)="!reservaForm.invalid && editarReserva(reservaForm.value)"
+>
+  <div class="row">
+    <div class="col col-6">
+      <!--Nombre-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="nombre">Nombre</label>
+        <input
+          novalidate
+          id="nombre"
+          class="form-control"
+          formControlName="nombre"
+          placeholder="Nombre"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="reservaForm.get('nombre')!.hasError('required') && reservaForm.get('nombre')!.touched"
+        >
+          Contenido requerido
+        </div>
+      </div>
+
+      <!--Fecha checkin-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="fecha_ingreso">Fecha check-in</label>
+        <input
+          novalidate
+          type="datetime-local"
+          id="fecha_ingreso"
+          class="form-control"
+          formControlName="fecha_ingreso"
+          placeholder="Fecha de ingreso"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="
+            reservaForm.get('fecha_ingreso')!.hasError('required') &&
+            reservaForm.get('fecha_ingreso')!.touched
+          "
+        >
+          Contenido requerido
+        </div>
+      </div>
+
+      <!--Fecha checkout-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="fecha_salida">Fecha check-out</label>
+        <input
+          novalidate
+          id="fecha_salida"
+          type="datetime-local"
+          class="form-control"
+          formControlName="fecha_salida"
+          placeholder="Fecha de salida"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="
+            reservaForm.get('fecha_salida')!.hasError('required') &&
+            reservaForm.get('fecha_salida')!.touched
+          "
+        >
+          Contenido requerido
+        </div>
+      </div>
+
+      <!--Numero personas-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="descripcion">Número de personas</label>
+        <input
+          novalidate
+          id="numero_personas"
+          type="number"
+          class="form-control"
+          formControlName="numero_personas"
+          placeholder="Número de personas"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="
+            reservaForm.get('numero_personas')!.hasError('required') &&
+            reservaForm.get('numero_personas')!.touched
+          "
+        >
+          Por favor diligencie este campo
+        </div>
+      </div>
+
+      <!--Total reserva-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="descripcion">Total reserva</label>
+        <input
+          novalidate
+          id="total_reserva"
+          type="number"
+          class="form-control"
+          formControlName="total_reserva"
+          placeholder="Precio total de la reserva"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="
+            reservaForm.get('total_reserva')!.hasError('required') &&
+            reservaForm.get('total_reserva')!.touched
+          "
+        >
+          Por favor diligencie este campo
+        </div>
+      </div>
+
+      <!--Plataforma-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="nombre">Plataforma</label>
+        <input
+          novalidate
+          id="plataforma_reserva"
+          class="form-control"
+          formControlName="plataforma_reserva"
+          placeholder="Booking / AirBnB / Directo"
+        />
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="
+            reservaForm.get('plataforma_reserva')!.hasError('required') &&
+            reservaForm.get('plataforma_reserva')!.touched
+          "
+        >
+          Contenido requerido
+        </div>
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          *ngIf="reservaForm.get('plataforma_reserva')!.hasError('minlength')"
+        >
+          El contenido es muy corto, debe tener al menos dos caracteres.
+        </div>
+      </div>
+
+      <!--Comision-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="descripcion">Comisión</label>
+        <input
+          novalidate
+          id="comision"
+          type="number"
+          class="form-control"
+          formControlName="comision"
+          placeholder="Comisión cobrada por la plataforma"
+        />
+      </div>
+
+      <!--Observaciones-->
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="nombre">Observaciones</label>
+        <input
+          novalidate
+          id="observaciones"
+          class="form-control"
+          formControlName="observaciones"
+          placeholder="Observaciones de la reserva"
+        />
+      </div>
+      
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!reservaForm.valid">Guardar</button>&nbsp;
+  <button type="button" class="btn btn-danger ml-3" (click)="cancelarEditarReserva()">Cancelar</button>
+</form>

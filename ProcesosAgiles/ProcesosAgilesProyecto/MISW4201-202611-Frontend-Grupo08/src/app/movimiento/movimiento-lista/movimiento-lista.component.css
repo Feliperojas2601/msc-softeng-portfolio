@@ -1,0 +1,339 @@
+.movimientos-page {
+    position: relative;
+    min-height: calc(100vh - 70px);
+    background: var(--surface);
+    overflow: hidden;
+}
+
+/* Wide container override for master-detail */
+.wide {
+    max-width: 1200px;
+}
+
+/* Master-detail layout */
+.master-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+}
+
+.master-panel {
+    min-width: 0;
+}
+
+.detail-panel {
+    position: sticky;
+    top: 20px;
+}
+
+/* Detail card */
+.detail-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    animation: cardEnter 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+}
+
+.detail-header--egreso {
+    background: var(--movimientos-bg);
+}
+
+.detail-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.detail-icon i {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.detail-icon--egreso {
+    background: var(--movimientos-color);
+}
+
+.detail-tipo {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 2px;
+}
+
+.detail-valor {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.detail-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.detail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.detail-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.detail-value {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+/* Placeholder when nothing selected */
+.detail-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 48px 24px;
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.detail-placeholder i {
+    font-size: 2rem;
+}
+
+.detail-placeholder p {
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* Clickable rows */
+.row-selectable {
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.row-selectable:hover {
+    background: var(--accent-light) !important;
+}
+
+.row-selected {
+    background: var(--accent-light) !important;
+}
+
+.row-selected td {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .master-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-panel {
+        position: static;
+    }
+}
+
+.section-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+    animation: cardEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card-accent {
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent) 0%, #d4a853 50%, var(--edit-color) 100%);
+    opacity: 0.7;
+}
+
+.card-accent--egreso {
+    background: linear-gradient(90deg, var(--movimientos-color) 0%, #d4a853 100%);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    padding: 18px 24px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.section-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon i {
+    font-size: 1.1rem;
+    color: var(--accent);
+}
+
+.card-icon--egreso {
+    background: var(--movimientos-bg);
+}
+
+.card-icon--egreso i {
+    color: var(--movimientos-color);
+}
+
+.section-label {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.section-count {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 10px;
+}
+
+/* Tabla */
+.mov-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.mov-table thead tr {
+    background: var(--surface);
+}
+
+.mov-table th {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.73rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.mov-table td {
+    padding: 13px 16px;
+    text-align: left;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.mov-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.mov-table tbody tr:hover {
+    background: var(--surface);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 6px;
+}
+
+/* Total */
+.total-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.total-label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.total-value {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Estado vacío */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 40px 24px;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 2rem;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.9rem;
+}

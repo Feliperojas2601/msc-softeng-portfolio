@@ -1,0 +1,182 @@
+<app-encabezado></app-encabezado>
+
+<div class="elementos-propiedad-page">
+  <div class="bg-grain"></div>
+  <div class="page-container">
+
+    <header class="page-header">
+      <div class="title-block">
+        <h1 class="page-title">Elementos de la Propiedad</h1>
+        <p class="page-subtitle">
+          {{ elementos.length }} elemento{{ elementos.length !== 1 ? 's' : '' }} en la propiedad
+        </p>
+      </div>
+      <button type="button" class="btn-add" (click)="abrirModalCrear()" aria-label="Agregar elemento">
+        <i class="bi bi-plus-lg"></i>
+        <span>Nuevo Elemento</span>
+      </button>
+    </header>
+
+    <div *ngIf="elementos.length === 0" class="empty-full">
+      <i class="bi bi-box-seam"></i>
+      <p>No hay elementos registrados en esta propiedad</p>
+      <button class="btn-add" (click)="abrirModalCrear()">Crear el primero</button>
+    </div>
+
+    <div class="master-detail-layout" *ngIf="elementos.length > 0">
+
+      <!-- MASTER PANEL -->
+      <div class="master-panel">
+        <div class="section-card">
+          <div class="card-accent"></div>
+          <table class="elem-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Tipo / Zona</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let elemento of elementos"
+                  class="row-selectable"
+                  [class.row-selected]="elementoSeleccionado?.id === elemento.id"
+                  (click)="seleccionarElemento(elemento)">
+                <td class="td-nombre">{{ elemento.nombre }}</td>
+                <td>
+                  <small class="tipo-text">{{ elemento.tipo }}</small>
+                  <span class="zona-badge">{{ elemento.zona }}</span>
+                </td>
+                <td>
+                  <span class="estado-badge"
+                    [ngClass]="{
+                      'estado-excelente': elemento.estado === 'Excelente',
+                      'estado-bueno':     elemento.estado === 'Bueno',
+                      'estado-regular':   elemento.estado === 'Regular',
+                      'estado-danado':    elemento.estado === 'Dañado'
+                    }">{{ elemento.estado }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DETAIL PANEL -->
+      <div class="detail-panel">
+        <ng-container *ngIf="elementoSeleccionado; else sinSeleccion">
+          <div class="detail-card">
+            <div class="detail-header">
+              <div class="detail-icon">
+                <i class="bi bi-box-seam-fill"></i>
+              </div>
+              <div>
+                <p class="detail-subtitulo">Elemento</p>
+                <p class="detail-nombre">{{ elementoSeleccionado.nombre }}</p>
+              </div>
+            </div>
+            <div class="detail-body">
+              <div class="detail-field">
+                <span class="detail-label">Tipo</span>
+                <span class="detail-value">{{ elementoSeleccionado.tipo }}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-label">Zona</span>
+                <span class="detail-value">{{ elementoSeleccionado.zona }}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-label">Estado</span>
+                <span class="estado-badge"
+                  [ngClass]="{
+                    'estado-excelente': elementoSeleccionado.estado === 'Excelente',
+                    'estado-bueno':     elementoSeleccionado.estado === 'Bueno',
+                    'estado-regular':   elementoSeleccionado.estado === 'Regular',
+                    'estado-danado':    elementoSeleccionado.estado === 'Dañado'
+                  }">{{ elementoSeleccionado.estado }}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-label">Fecha de registro</span>
+                <span class="detail-value">{{ elementoSeleccionado.fecha_registro | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="detail-field">
+                <span class="detail-label">Descripción</span>
+                <span class="detail-value">{{ elementoSeleccionado.descripcion }}</span>
+              </div>
+            </div>
+            <div class="detail-actions">
+              <button type="button" class="btn-action btn-edit" (click)="abrirModalEditar(elementoSeleccionado)">
+                <i class="bi bi-pencil-fill"></i>
+                <span>Editar</span>
+              </button>
+              <button type="button" class="btn-action btn-delete" (click)="eliminarElemento(elementoSeleccionado)">
+                <i class="bi bi-trash-fill"></i>
+                <span>Eliminar</span>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #sinSeleccion>
+          <div class="detail-placeholder">
+            <i class="bi bi-hand-index"></i>
+            <p>Selecciona un elemento para ver sus detalles</p>
+          </div>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <!-- Modales -->
+    <ng-template #modalExito let-modal>
+      <div class="modal-header bg-success text-white">
+        <h4 class="modal-title">¡Operación Exitosa!</h4>
+        <button type="button" class="btn-close btn-close-white" (click)="modal.close()"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+        <p class="mt-3 fs-5">
+          El elemento <strong>"{{ nombreElementoReciente }}"</strong> ha sido registrado.
+        </p>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-success px-4" (click)="modal.close()">Entendido</button>
+      </div>
+    </ng-template>
+
+    <ng-template #modalConfirmarEliminar let-modal>
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Confirmar eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="modal.dismiss()"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+        <p class="mt-3 fs-5">
+          ¿Estás seguro de que deseas eliminar <strong>"{{ nombreElementoReciente }}"</strong>?
+        </p>
+        <p class="text-muted small">Esta acción no se puede deshacer</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+        <button type="button" class="btn btn-danger px-4" (click)="modal.close('confirmar')">
+          <i class="bi bi-trash me-2"></i>Sí, eliminar
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template #modalEliminarConfirmado let-modal>
+      <div class="modal-header bg-danger text-white">
+        <h4 class="modal-title">¡Operación Exitosa!</h4>
+        <button type="button" class="btn-close btn-close-white" (click)="modal.close()"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 3rem;"></i>
+        <p class="mt-3 fs-5">
+          El elemento <strong>"{{ nombreElementoReciente }}"</strong> ha sido eliminado.
+        </p>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-danger px-4" (click)="modal.close()">Entendido</button>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

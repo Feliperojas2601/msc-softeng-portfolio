@@ -1,0 +1,80 @@
+<div class="container py-5">
+  <div class="row justify-content-center align-items-center">
+
+    <div class="col-12 col-lg-5 card shadow-sm py-2 align-self-start corta-card">
+      <div class="card-body text-center">
+        <h2 class="my-2 text-primary">Corta Estancia</h2>
+        <p class="text-muted">Administrador de propiedades de corta estancia</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 ps-lg-5">
+      <div class="row">
+        <div class="mb-4">
+          <h1 class="text-center">Ingreso</h1>
+        </div>
+
+        <form [formGroup]="loginForm">
+          <div class="mb-3 row">
+            <label for="username" class="col-lg-3 col-form-label">Usuario</label>
+            <div class="col-lg-9">
+              <input formControlName="username" type="text" class="form-control" placeholder="Usuario">
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched && !intentoEnvio">
+              <div class="col-lg-10 offset-lg-3 text-danger mb-2">
+                <small><i class="bi bi-exclamation-circle"></i> Debe ingresar su username</small>
+              </div>
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="intentoEnvio && !loginForm.get('username')?.value && loginForm.get('password')?.value">
+              <div class="col-lg-10 offset-lg-3 text-danger mb-2">
+                <small><i class="bi bi-exclamation-circle"></i> Debe ingresar su username</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="password" class="col-lg-3 col-form-label">Contraseña</label>
+            <div class="col-lg-9">
+              <input formControlName="password" type="password" class="form-control" placeholder="*********">
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="intentoEnvio && !loginForm.get('username')?.value && !loginForm.get('password')?.value">
+              <div class="col-lg-10 offset-lg-3 text-danger mb-2">
+                <small><i class="bi bi-exclamation-triangle-fill"></i> El username y la contraseña están vacíos</small>
+              </div>
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="loginForm.get('password')?.hasError('minlength')">
+              <div class="col-lg-10 offset-lg-3 text-danger">
+                <small><i class="bi bi-exclamation-circle"></i> La contraseña debe tener al menos 4 caracteres</small>
+              </div>
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="!intentoEnvio && loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+              <div class="col-lg-10 offset-lg-3 text-danger mb-2">
+                <small><i class="bi bi-exclamation-circle"></i> Debe ingresar la contraseña</small>
+              </div>
+            </div>
+
+            <div class="row ps-lg-4" *ngIf="intentoEnvio && loginForm.get('username')?.value && !loginForm.get('password')?.value">
+              <div class="col-lg-10 offset-lg-3 text-danger mb-2">
+                <small><i class="bi bi-exclamation-circle"></i> Debe ingresar la contraseña</small>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="col-12 text-center mt-3">
+            <button (click)="loginUsuario()" type="button" class="btn btn-info col-8 shadow-sm">
+              Ingresar
+            </button>
+          </div>
+        </form>
+        <div class="col-12 text-center mt-3">
+            <p>¿No tienes cuenta? <a routerLink="/registro" class="text-decoration-none">Regístrate</a></p>
+          </div>
+      </div>
+    </div>
+  </div>

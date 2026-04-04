@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar elemento</h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="elementoForm">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Nombre <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="nombre">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Tipo <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="tipo" placeholder="Ej: Mueble, Electrodoméstico">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Estado <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="estado">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let e of estados" [value]="e">{{e}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Zona <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="zona">
+      </div>
+      <div class="col-12 mb-3">
+        <label class="form-label">Descripción <span class="text-danger">*</span></label>
+        <textarea class="form-control" formControlName="descripcion" rows="2"></textarea>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="elementoForm.invalid" (click)="editar()">
+    Actualizar Elemento
+  </button>
+</div>
+<ng-template #modalExito let-modal>
+  <div class="modal-header bg-success text-white">
+    <h4 class="modal-title">¡Operación Exitosa!</h4>
+    <button type="button" class="btn-close btn-close-white" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body text-center py-4">
+    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+    <p class="mt-3 fs-5">El elemento <strong>"{{ nombreElementoReciente }}"</strong> ha sido actualizado</p>
+  </div>
+  <div class="modal-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-success px-4" (click)="modal.close()">Entendido</button>
+  </div>
+</ng-template>

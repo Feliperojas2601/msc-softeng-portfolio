@@ -1,0 +1,168 @@
+<app-encabezado></app-encabezado>
+
+<div class="movimientos-page">
+    <div class="bg-grain"></div>
+    <div class="page-container">
+
+        <header class="page-header">
+            <div class="title-block">
+                <h1 class="page-title">Movimientos</h1>
+                <p class="page-subtitle">
+                    {{ (ingresos.length + egresos.length) }} movimiento{{ (ingresos.length + egresos.length) !== 1 ? 's' : '' }} registrado{{ (ingresos.length + egresos.length) !== 1 ? 's' : '' }}
+                </p>
+            </div>
+            <button type="button" class="btn-add" (click)="crearMovimiento()" aria-label="Agregar movimiento">
+                <i class="bi bi-plus-lg"></i>
+                <span>Nuevo movimiento</span>
+            </button>
+        </header>
+
+        <div class="master-detail-layout">
+
+            <!-- MASTER PANEL -->
+            <div class="master-panel">
+
+                <!-- INGRESOS -->
+                <section class="section-card">
+                    <div class="card-accent"></div>
+                    <div class="section-header">
+                        <div class="section-title-row">
+                            <div class="card-icon">
+                                <i class="bi bi-arrow-down-circle-fill"></i>
+                            </div>
+                            <span class="section-label">Ingresos</span>
+                            <span class="section-count">{{ ingresos.length }} registro{{ ingresos.length !== 1 ? 's' : '' }}</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="ingresos.length > 0; else sinIngresos">
+                        <table class="mov-table">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ingreso of ingresos"
+                                    class="row-selectable"
+                                    [class.row-selected]="movimientoSeleccionado?.id === ingreso.id"
+                                    (click)="seleccionarMovimiento(ingreso)">
+                                    <td>{{ ingreso.concepto }}</td>
+                                    <td>$ {{ ingreso.valor | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="total-row">
+                            <span class="total-label">Total ingresos</span>
+                            <span class="total-value">$ {{ totalIngresos | number }}</span>
+                        </div>
+                    </div>
+                    <ng-template #sinIngresos>
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p>Sin ingresos registrados</p>
+                        </div>
+                    </ng-template>
+                </section>
+
+                <!-- EGRESOS -->
+                <section class="section-card section-card--egreso">
+                    <div class="card-accent card-accent--egreso"></div>
+                    <div class="section-header">
+                        <div class="section-title-row">
+                            <div class="card-icon card-icon--egreso">
+                                <i class="bi bi-arrow-up-circle-fill"></i>
+                            </div>
+                            <span class="section-label">Egresos</span>
+                            <span class="section-count">{{ egresos.length }} registro{{ egresos.length !== 1 ? 's' : '' }}</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="egresos.length > 0; else sinEgresos">
+                        <table class="mov-table">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let egreso of egresos"
+                                    class="row-selectable"
+                                    [class.row-selected]="movimientoSeleccionado?.id === egreso.id"
+                                    (click)="seleccionarMovimiento(egreso)">
+                                    <td>{{ egreso.concepto }}</td>
+                                    <td>$ {{ egreso.valor | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="total-row">
+                            <span class="total-label">Total egresos</span>
+                            <span class="total-value">$ {{ totalEgresos | number }}</span>
+                        </div>
+                    </div>
+                    <ng-template #sinEgresos>
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p>Sin egresos registrados</p>
+                        </div>
+                    </ng-template>
+                </section>
+
+            </div>
+
+            <!-- DETAIL PANEL -->
+            <div class="detail-panel">
+                <ng-container *ngIf="movimientoSeleccionado; else sinSeleccion">
+                    <div class="detail-card">
+                        <div class="detail-header" [class.detail-header--egreso]="movimientoSeleccionado.tipo_movimiento === 'EGRESO'">
+                            <div class="detail-icon" [class.detail-icon--egreso]="movimientoSeleccionado.tipo_movimiento === 'EGRESO'">
+                                <i class="bi" [ngClass]="movimientoSeleccionado.tipo_movimiento === 'INGRESO' ? 'bi-arrow-down-circle-fill' : 'bi-arrow-up-circle-fill'"></i>
+                            </div>
+                            <div>
+                                <p class="detail-tipo">{{ movimientoSeleccionado.tipo_movimiento }}</p>
+                                <p class="detail-valor">$ {{ movimientoSeleccionado.valor | number }}</p>
+                            </div>
+                        </div>
+                        <div class="detail-body">
+                            <div class="detail-field">
+                                <span class="detail-label">Fecha</span>
+                                <span class="detail-value">{{ movimientoSeleccionado.fecha | date:'dd/MM/yyyy' }}</span>
+                            </div>
+                            <div class="detail-field">
+                                <span class="detail-label">Concepto</span>
+                                <span class="detail-value">{{ movimientoSeleccionado.concepto }}</span>
+                            </div>
+                            <div class="detail-field">
+                                <span class="detail-label">Categoría</span>
+                                <span class="detail-value">{{ nombreCategoria(movimientoSeleccionado.id_categoria) || '—' }}</span>
+                            </div>
+                            <div class="detail-field" *ngIf="movimientoSeleccionado.id_reserva">
+                                <span class="detail-label">Reserva #</span>
+                                <span class="detail-value">{{ movimientoSeleccionado.id_reserva }}</span>
+                            </div>
+                        </div>
+                        <div class="detail-actions">
+                            <button type="button" class="btn-action btn-edit" (click)="editarMovimiento(movimientoSeleccionado.id)">
+                                <i class="bi bi-pencil-fill"></i>
+                                <span>Editar</span>
+                            </button>
+                            <button type="button" class="btn-action btn-delete" (click)="borrarMovimiento(movimientoSeleccionado.id)">
+                                <i class="bi bi-trash-fill"></i>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #sinSeleccion>
+                    <div class="detail-placeholder">
+                        <i class="bi bi-hand-index"></i>
+                        <p>Selecciona un movimiento para ver sus detalles</p>
+                    </div>
+                </ng-template>
+            </div>
+
+        </div>
+    </div>
+</div>

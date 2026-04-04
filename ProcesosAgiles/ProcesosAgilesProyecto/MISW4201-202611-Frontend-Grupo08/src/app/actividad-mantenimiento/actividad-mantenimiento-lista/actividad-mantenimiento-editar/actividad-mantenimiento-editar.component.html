@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h5 class="modal-title">Editar actividad</h5>
+  <button type="button" class="btn-close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="editarForm">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Concepto <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="concepto" required>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Categoría</label>
+        <select class="form-select" formControlName="categoria">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let c of categorias" [value]="c">{{c}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Periodicidad <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="periodicidad">
+          <option [ngValue]="null">Seleccione...</option>
+          <option *ngFor="let p of periodicidades" [value]="p">{{p}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Costo <span class="text-danger">*</span></label>
+        <input class="form-control" formControlName="costo" required>
+      </div>
+    </div>
+    <div *ngIf="errorDuplicado" class="alert alert-warning mt-2">
+      {{ errorDuplicado }}
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancelar</button>
+  <button type="button" class="btn btn-primary" [disabled]="editarForm.invalid" (click)="guardar()">
+    Guardar cambios
+  </button>
+</div>

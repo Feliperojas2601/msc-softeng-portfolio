@@ -1,0 +1,268 @@
+.actividades-propiedad-page {
+    position: relative;
+    min-height: calc(100vh - 70px);
+    background: var(--surface);
+    overflow: hidden;
+}
+
+/* Master-detail layout */
+.master-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+}
+
+.master-panel {
+    min-width: 0;
+}
+
+.detail-panel {
+    position: sticky;
+    top: 20px;
+}
+
+/* Section card */
+.section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    animation: cardEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Table */
+.elem-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.elem-table thead tr {
+    background: var(--surface);
+}
+
+.elem-table th {
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.73rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.elem-table td {
+    padding: 13px 16px;
+    text-align: left;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.elem-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.td-nombre {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tipo-text {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Estado badges */
+.estado-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.estado-programado {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.estado-en-progreso {
+    background: #fef9c3;
+    color: #713f12;
+}
+
+.estado-finalizado {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.estado-cancelado {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Clickable rows */
+.row-selectable {
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.row-selectable:hover {
+    background: var(--accent-light);
+}
+
+.row-selected {
+    background: var(--accent-light);
+}
+
+.row-selected td {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Detail card */
+.detail-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    animation: cardEnter 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+}
+
+.detail-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.detail-icon i {
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.detail-subtitulo {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 2px;
+}
+
+.detail-nombre {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.detail-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.detail-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.detail-value {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+/* Placeholder when nothing selected */
+.detail-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 48px 24px;
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.detail-placeholder i {
+    font-size: 2rem;
+}
+
+.detail-placeholder p {
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* Empty full state */
+.empty-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 64px 24px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.empty-full i {
+    font-size: 3rem;
+}
+
+.empty-full p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .master-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-panel {
+        position: static;
+    }
+}

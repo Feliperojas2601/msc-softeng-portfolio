@@ -1,0 +1,65 @@
+name: verificacion y merge de release a main
+
+# Controls when the action will run. 
+on:
+  push:
+    branches: [develop]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job1:
+    name: Pruebas
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
+    - name: Configuración de entorno de python
+      uses: actions/setup-python@v2
+    - name: Instalación de librerías y dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: validar_palabra
+      id: validar_palabra
+      if: ${{ contains(github.event.head_commit.message, 'completada') }} 
+      run: echo "palabra clave encontrada"
+    - name: crear_release
+      id: crear_release
+      if: steps.validar_palabra.outcome == 'success'
+      run: |
+        BRANCH_NAME="release-${{ github.run_number }}"
+        git checkout -b $BRANCH_NAME
+        git push -f -u origin $BRANCH_NAME
+        echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+    - name: Mezcla develop -> release
+      id: mezcla_develop_release
+      if: steps.validar_palabra.outcome == 'success'
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: develop
+        target-branch: ${{ steps.crear_release.outputs.branch_name }}
+    - name: Correr pruebas
+      id: correr_pruebas
+      if: steps.validar_palabra.outcome == 'success'
+      run: python -m pytest tests
+    - name: Validar resultado con errores
+      if: ${{ failure() }}
+      env:
+        MENSAJE_ERROR: Una o varias pruebas fallaron
+      run: |
+        echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+        exit 1
+    - name: Validar resultado sin errores
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: Todas las pruebas fueron exitosas
+      run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
+    - name: Mezcla release -> main
+      id: mezcla_release_main
+      if: steps.correr_pruebas.outcome == 'success'
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ steps.crear_release.outputs.branch_name }}
+        target-branch: main
