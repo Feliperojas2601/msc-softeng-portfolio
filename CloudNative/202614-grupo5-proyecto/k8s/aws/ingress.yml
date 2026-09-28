@@ -1,0 +1,91 @@
+# Ingress del host unico (Entrega 2 + Entrega 3).
+#
+# `/rf003`, `/rf004`, `/rf005` van al orquestador; `/users`, `/posts`,
+# `/offers` y `/routes` a los servicios de dominio expuestos. Cada app sirve
+# bajo su propio prefijo (APIRouter), asi que no hace falta rewrite-target.
+#
+# Entrega 3: `/credit-cards` va a credit_cards_app (service
+# credit-cards-app-service) y `/native` va a TrueNative
+# (service true-native-service, ver k8s-true-native-deployment.yml). Ambos
+# exponen sus rutas con ese mismo prefijo internamente, igual que las apps
+# existentes.
+#
+# ingress-nginx lo instala el pipeline via Helm (Service LoadBalancer). Para
+# que el API server pueda llamar a su admission webhook (puerto 8443 en los
+# nodos) el SG de los nodos debe permitirlo: ver
+# terraform/modules/eks/main.tf -> node_security_group_additional_rules.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clonatdevs-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /rf003
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator-app-service
+                port:
+                  number: 80
+          - path: /rf004
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator-app-service
+                port:
+                  number: 80
+          - path: /rf005
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator-app-service
+                port:
+                  number: 80
+          - path: /users
+            pathType: Prefix
+            backend:
+              service:
+                name: users-app-service
+                port:
+                  number: 80
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: posts-app-service
+                port:
+                  number: 80
+          - path: /offers
+            pathType: Prefix
+            backend:
+              service:
+                name: offers-app-service
+                port:
+                  number: 80
+          - path: /routes
+            pathType: Prefix
+            backend:
+              service:
+                name: routes-app-service
+                port:
+                  number: 80
+          - path: /credit-cards
+            pathType: Prefix
+            backend:
+              service:
+                name: credit-cards-app-service
+                port:
+                  number: 80
+          - path: /native
+            pathType: Prefix
+            backend:
+              service:
+                name: true-native-service
+                port:
+                  number: 80

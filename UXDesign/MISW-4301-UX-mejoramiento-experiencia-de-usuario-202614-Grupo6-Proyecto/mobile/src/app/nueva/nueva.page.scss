@@ -1,0 +1,165 @@
+@use '../../theme/design-tokens' as tokens;
+
+.pagina {
+  --background: #{tokens.$color-papel};
+  font-family: tokens.$font-family-base;
+}
+
+// ---- Header -------------------------------------------------------------------
+
+.app-bar {
+  position: relative;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid tokens.$color-bruma;
+  padding: 0 16px;
+}
+
+.app-bar__back {
+  font-size: 24px;
+  color: tokens.$color-tinta;
+  text-decoration: none;
+  width: 12px;
+}
+
+.app-bar__title {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 18px;
+  flex: 1 1 0;
+}
+
+.app-bar__check {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: tokens.$color-bruma;
+  color: tokens.$color-texto-atenuado;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+.hint {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 20px 16px 0;
+}
+
+// ---- Cuerpo ---------------------------------------------------------------
+
+.pagina-body {
+  min-height: calc(100dvh - 48px - 34px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo__label {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.campo__caja {
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid tokens.$color-bruma;
+  background-color: tokens.$color-papel;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+
+  &--activa {
+    border: 2px solid tokens.$color-amanecer;
+  }
+}
+
+.campo__valor {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 14px;
+  flex: 1 1 0;
+}
+
+.campo__chevron {
+  color: tokens.$color-texto-atenuado;
+  font-size: 14px;
+}
+
+.campo__input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 14px;
+}
+
+// ---- Días -----------------------------------------------------------------
+
+.dias {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  flex: 0 0 auto;
+  width: 33px;
+  height: 30px;
+  border-radius: 16px;
+  border: 1px solid tokens.$color-bruma;
+  background-color: tokens.$color-papel;
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &--activo {
+    background-color: tokens.$color-tinta;
+    border-color: tokens.$color-tinta;
+    color: tokens.$color-papel;
+  }
+}
+
+// ---- Botón primario ---------------------------------------------------------
+
+.btn-primario {
+  margin-top: auto;
+  height: 48px;
+  border-radius: 24px;
+  border: none;
+  background-color: tokens.$color-amanecer;
+  color: tokens.$color-papel;
+  font-family: tokens.$font-family-base;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}

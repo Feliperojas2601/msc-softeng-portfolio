@@ -1,0 +1,39 @@
+<ion-content class="pagina" [fullscreen]="true">
+
+  <!-- Header -->
+  <header class="app-bar">
+    <a class="app-bar__back" routerLink="/nueva">‹</a>
+    <span class="app-bar__title">Snooze · 2/3</span>
+    <span class="app-bar__check">✓</span>
+  </header>
+
+  <p class="hint">ⓘ Toca una duración; usa − y + para el límite.</p>
+
+  <div class="pagina-body">
+    <div class="contenido">
+
+      <!-- Duración -->
+      <div class="campo">
+        <span class="campo__label">DURACIÓN</span>
+        <div class="chips">
+          <button type="button" class="chip" *ngFor="let duracion of alarma.duraciones" [class.chip--activo]="duracion === alarma.duracionSeleccionada" (click)="seleccionarDuracion(duracion)">
+            {{ duracion }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Límite de posposiciones -->
+      <div class="campo">
+        <span class="campo__label">Límite de posposiciones</span>
+        <div class="stepper">
+          <button type="button" class="stepper__btn" (click)="ajustarLimite(-1)" aria-label="Restar">–</button>
+          <span class="stepper__valor">{{ alarma.limitePosposiciones }}</span>
+          <button type="button" class="stepper__btn" (click)="ajustarLimite(1)" aria-label="Sumar">+</button>
+        </div>
+        <p class="campo__ayuda">0 posposiciones = modo sin snooze.</p>
+      </div>
+    </div>
+
+    <button type="button" class="btn-primario" (click)="onContinuar()">Continuar</button>
+  </div>
+</ion-content>

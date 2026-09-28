@@ -1,0 +1,87 @@
+# Componente que recibe POST /notify (de identity_webhook_app y, proximamente,
+# credit_cards_app) y publica el resultado a un Topic de SNS (RF-006 y RF-007).
+# Es interno, sin ruta propia en el Ingress.
+#
+# Es el unico componente del sistema que usa el SDK de AWS. No se crea ningun
+# rol IAM nuevo (Academy Learner Lab no lo permite): usa las mismas
+# credenciales de sesion temporal que ya usa el pipeline para Terraform,
+# disponibles como variables de entorno en el mismo job que aplica estos
+# manifiestos (ver el paso "Configure AWS credentials" del pipeline).
+apiVersion: v1
+kind: Secret
+metadata:
+  name: notifications-app-aws-secret
+  namespace: default
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+  AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+  AWS_SESSION_TOKEN: "${AWS_SESSION_TOKEN}"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-app-deployment
+  namespace: default
+  labels:
+    app: notifications-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notifications-app
+  template:
+    metadata:
+      labels:
+        app: notifications-app
+    spec:
+      containers:
+        - name: notifications-app
+          image: ${ECR_REGISTRY}/notifications_app:v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30008
+          envFrom:
+            - secretRef:
+                name: notifications-app-aws-secret
+          env:
+            - name: APP_PORT
+              value: "30008"
+            - name: AWS_REGION
+              value: "us-east-1"
+            - name: SNS_TOPIC_ARN
+              value: "${NOTIFICATIONS_SNS_TOPIC_ARN}"
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 30008
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 30008
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-app-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: notifications-app
+  ports:
+    - port: 80
+      targetPort: 30008

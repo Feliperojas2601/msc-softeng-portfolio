@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "notifications_app"
+version = "1.0.0"
+description = "Publishes result notifications (RF-006 credit cards, RF-007 identity) to SNS."
+authors = [
+  "clonatdevs"
+]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+packages = [{include = "*", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+fastapi = "~0.115.12"
+uvicorn = "~0.27.1"
+python-dotenv = "~1.0.1"
+pydantic = "~2.6.1"
+pydantic-settings = "~2.1.0"
+boto3 = "~1.34.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "~25.1.0"
+ruff = "~0.11.12"
+bandit = "~1.8.3"
+pytest = "~8.4.0"
+pytest-cov = "~6.1.1"
+pytest-env = "~1.1.5"
+pytest-asyncio = "~0.23.5"
+httpx = "~0.27.0"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.bandit]
+exclude_dirs = ["./tests"]
+skips = ["B101"]
+
+[tool.ruff]
+src = ["src"]
+fix = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.pytest.ini_options]
+python_files = "test_*.py"
+pythonpath = "src"
+testpaths = [
+  "tests"
+]
+asyncio_mode = "auto"
+env = [
+  "SNS_TOPIC_ARN = arn:aws:sns:us-east-1:000000000000:test-topic",
+  "AWS_REGION = us-east-1",
+  "AWS_ACCESS_KEY_ID = testing",
+  "AWS_SECRET_ACCESS_KEY = testing",
+]

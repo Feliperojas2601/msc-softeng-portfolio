@@ -1,0 +1,191 @@
+@use '../../theme/design-tokens' as tokens;
+
+.pagina {
+  --background: #{tokens.$color-papel};
+  font-family: tokens.$font-family-base;
+}
+
+// ---- Header -------------------------------------------------------------------
+
+.app-bar {
+  position: relative;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid tokens.$color-bruma;
+  padding: 0 16px;
+}
+
+.app-bar__back {
+  font-size: 24px;
+  color: tokens.$color-tinta;
+  text-decoration: none;
+  width: 12px;
+}
+
+.app-bar__title {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 18px;
+  flex: 1 1 0;
+}
+
+.app-bar__check {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: tokens.$color-bruma;
+  color: tokens.$color-texto-atenuado;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex: 0 0 auto;
+
+  &--listo {
+    background-color: tokens.$color-salvia-tint;
+    color: tokens.$color-salvia-oscuro;
+  }
+}
+
+.hint {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 20px 16px 0;
+}
+
+// ---- Cuerpo -----------------------------------------------------------------
+
+.pagina-body {
+  min-height: calc(100dvh - 48px - 34px);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.campo__label {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ayuda {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 11px;
+  margin: 0;
+}
+
+// ---- Stepper ------------------------------------------------------------------
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 200px;
+}
+
+.stepper__btn {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1.5px solid tokens.$color-bruma-oscuro;
+  background-color: tokens.$color-papel;
+  color: tokens.$color-texto-atenuado;
+  font-size: 20px;
+  font-family: tokens.$font-family-base;
+  cursor: pointer;
+}
+
+.stepper__valor {
+  flex: 1 1 0;
+  text-align: center;
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+// ---- Banner de info -----------------------------------------------------------
+
+.banner {
+  position: relative;
+  border-radius: 8px;
+  padding: 12px 14px 12px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+  }
+
+  &--info {
+    background-color: tokens.$color-bruma;
+
+    &::before {
+      background-color: tokens.$color-bruma-oscuro;
+    }
+
+    .banner__tag {
+      color: tokens.$color-texto-atenuado;
+    }
+  }
+}
+
+.banner__tag {
+  font-family: tokens.$font-family-base;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.banner__texto {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 12px;
+  margin: 0;
+}
+
+// ---- Botón primario ---------------------------------------------------------
+
+.btn-primario {
+  margin-top: auto;
+  height: 48px;
+  border-radius: 24px;
+  border: none;
+  background-color: tokens.$color-amanecer;
+  color: tokens.$color-papel;
+  font-family: tokens.$font-family-base;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}

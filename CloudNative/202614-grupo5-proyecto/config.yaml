@@ -1,0 +1,83 @@
+team:
+  name: clonatdevs
+  members:
+    - user: jf.rojasc123
+      percentage: 25
+    - user: g.zambranoz
+      percentage: 25
+    - user: ga.gonzalezo1
+      percentage: 25
+    - user: l.pinzonm2
+      percentage: 25
+board: https://github.com/orgs/MISW-4301-Desarrollo-Apps-en-la-Nube/projects/335
+docs: https://silver-couscous-pzo5v4j.pages.github.io/
+default_env: student1
+
+tf_stacks:
+  - database
+  - apps
+
+k8s_manifests:
+  - k8s/aws
+
+apps:
+  - users_app:
+      folder: users_app
+      image_name: users_app
+      image_tag: v1.0.0
+      authors:
+        - jf.rojasc123
+  - posts_app:
+      folder: posts_app
+      image_name: posts_app
+      image_tag: v1.0.0
+      authors:
+        - g.zambranoz
+  - offers_app:
+      folder: offers_app
+      image_name: offers_app
+      image_tag: v1.0.0
+      authors:
+        - l.pinzonm2
+  - routes_app:
+      folder: routes_app
+      image_name: routes_app
+      image_tag: v1.0.0
+      authors:
+        - ga.gonzalezo1
+  - orchestrator_app:
+      folder: orchestrator_app
+      image_name: orchestrator_app
+      image_tag: v1.0.0
+      authors:
+        - jf.rojasc123
+  - scores_app:
+      folder: scores_app
+      image_name: scores_app
+      image_tag: v1.0.0
+      authors:
+        - ga.gonzalezo1
+  - identity_webhook_app:
+      folder: identity_webhook_app
+      image_name: identity_webhook_app
+      image_tag: v1.0.0
+      authors:
+        - jf.rojasc123
+  - notifications_app:
+      folder: notifications_app
+      image_name: notifications_app
+      image_tag: v1.0.0
+      authors:
+        - l.pinzonm2
+  - credit_cards_app:
+      folder: credit_cards_app
+      image_name: credit_cards_app
+      image_tag: v1.0.2
+      authors:
+        - jf.rojasc123
+  - credit_cards_mediator_app:
+      folder: credit_cards_mediator_app
+      image_name: credit_cards_mediator_app
+      image_tag: v1.0.2
+      authors:
+        - jf.rojasc123

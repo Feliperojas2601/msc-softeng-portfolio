@@ -1,0 +1,31 @@
+services:
+  scores_db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: scores_db
+      POSTGRES_USER: scores_app
+      POSTGRES_PASSWORD: scores_app
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scores_app -d scores_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  scores_app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "30004:30004"
+    environment:
+      DB_HOST: scores_db
+      DB_PORT: 5432
+      DB_NAME: scores_db
+      DB_USER: scores_app
+      DB_PASSWORD: scores_app
+      APP_PORT: 30004
+    depends_on:
+      scores_db:
+        condition: service_healthy

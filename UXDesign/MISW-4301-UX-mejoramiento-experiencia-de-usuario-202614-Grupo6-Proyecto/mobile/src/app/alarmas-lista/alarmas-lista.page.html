@@ -1,0 +1,67 @@
+<ion-content class="pagina" [fullscreen]="true">
+
+  <!-- Header -->
+  <header class="app-bar">
+    <span class="app-bar__title">Alarmas</span>
+  </header>
+
+  <!-- Deco de círculos -->
+  <svg class="deco-circles" xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none" aria-hidden="true">
+    <circle cx="30" cy="34" r="18" stroke="#B3A78E" stroke-width="1.5"/>
+    <circle cx="42" cy="26" r="14" stroke="#E68A3E" stroke-width="1.5"/>
+    <circle cx="44" cy="42" r="12" stroke="#6E9C7E" stroke-width="1.5"/>
+  </svg>
+
+  <div class="pagina-body">
+
+    <!-- Lista de alarmas -->
+    <div class="lista">
+      <button type="button" class="item-alarma" *ngFor="let alarma of alarmas" (click)="toggleAlarma(alarma)">
+        <svg class="item-alarma__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 6.6c1.03 0 2.03.41 2.76 1.14.73.73 1.14 1.73 1.14 2.76v1.5c0 1.34.3 2.6.88 3.7H7.22c.58-1.1.88-2.36.88-3.7v-1.5c0-1.03.41-2.03 1.14-2.76A3.9 3.9 0 0 1 12 6.6Z" stroke="#B4651F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 5.7V4.1M10.1 19.4a2.1 2.1 0 0 0 3.8 0" stroke="#B4651F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+
+        <span class="item-alarma__texto">
+          <span class="item-alarma__titulo">{{ alarma.etiqueta }}</span>
+          <span class="item-alarma__subtitulo">{{ alarma.reto }}</span>
+        </span>
+
+        <span class="switch" [class.switch--on]="alarma.activa">
+          <span class="switch__knob"></span>
+        </span>
+      </button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Simular alarma sonando + FAB -->
+    <div class="fila-inferior">
+      <a class="simular" (click)="onSimularAlarmaSonando()">▸ Simular: alarma sonando</a>
+
+      <button type="button" class="fab" routerLink="/nueva" aria-label="Crear alarma">
+        <span class="fab__v"></span>
+        <span class="fab__h"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav__tab bottom-nav__tab--active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 6.6c1.03 0 2.03.41 2.76 1.14.73.73 1.14 1.73 1.14 2.76v1.5c0 1.34.3 2.6.88 3.7H7.22c.58-1.1.88-2.36.88-3.7v-1.5c0-1.03.41-2.03 1.14-2.76A3.9 3.9 0 0 1 12 6.6Z" stroke="#B4651F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 5.7V4.1M10.1 19.4a2.1 2.1 0 0 0 3.8 0" stroke="#B4651F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Alarmas</span>
+    </div>
+
+    <div class="bottom-nav__tab">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="8.2" r="2.8" stroke="#75736C" stroke-width="1.6"/>
+        <path d="M5.4 19.8c0-3.3 3-5.5 6.6-5.5s6.6 2.2 6.6 5.5" stroke="#75736C" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Perfil</span>
+    </div>
+  </nav>
+</ion-content>

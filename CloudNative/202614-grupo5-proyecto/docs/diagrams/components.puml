@@ -1,0 +1,64 @@
+@startuml
+
+skinparam componentStyle uml1
+
+actor "User" as user
+
+frame "env" {
+    component "Ingress NGINX" as ingress
+
+    component orchestrator_app
+    component users_app
+    component posts_app
+    component offers_app
+    component routes_app
+    component scores_app
+    component credit_cards_app
+    component credit_cards_mediator_app
+
+    component identity_webhook_app
+    component notifications_app
+    component true_native
+
+    database clonatdevs
+    database credit_cards_db
+
+    users_app -down-> clonatdevs
+    posts_app -down-> clonatdevs
+    offers_app -down-> clonatdevs
+    routes_app -down-> clonatdevs
+    scores_app -down-> clonatdevs
+    credit_cards_app -down-> credit_cards_db
+
+    ingress --> orchestrator_app : /rf003, /rf004, /rf005
+    ingress --> users_app : /users
+    ingress --> posts_app : /posts
+    ingress --> offers_app : /offers
+    ingress --> routes_app : /routes
+    ingress --> credit_cards_app : /credit-cards
+    ingress --> true_native : /native
+
+    orchestrator_app --> users_app
+    orchestrator_app --> posts_app
+    orchestrator_app --> offers_app
+    orchestrator_app --> routes_app
+    orchestrator_app --> scores_app
+
+    users_app -right-> true_native
+    true_native -down-> identity_webhook_app
+    identity_webhook_app -left-> users_app
+    identity_webhook_app -down-> notifications_app
+
+    credit_cards_app -right-> true_native
+    credit_cards_mediator_app -down-> credit_cards_app : Polling HTTP (claim / ack / release)
+    credit_cards_mediator_app -right-> true_native : GET /native/cards/{ruv}
+    credit_cards_mediator_app -down-> notifications_app : POST /notify
+}
+
+cloud "AWS SNS" as sns
+
+notifications_app --> sns : sns:Publish
+
+user ..> ingress : HTTP / HTTPS (unico host)
+
+@enduml

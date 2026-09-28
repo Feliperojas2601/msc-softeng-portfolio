@@ -1,0 +1,14 @@
+services:
+  identity_webhook_app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "30007:30007"
+    environment:
+      APP_PORT: 30007
+      TRUE_NATIVE_SECRET_TOKEN: change-me
+      USERS_APP_BASE_URL: http://host.docker.internal:30000
+      NOTIFICATIONS_APP_URL: http://host.docker.internal:30008
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

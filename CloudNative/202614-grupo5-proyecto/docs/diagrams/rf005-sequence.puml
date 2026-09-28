@@ -1,0 +1,97 @@
+@startuml rf005-sequence
+
+title RF-005 - Consultar publicacion (GET /rf005/posts/{id})
+
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+actor "Usuario" as user
+participant "Ingress" as ingress
+participant "orchestrator_app" as orch
+participant "users_app" as users
+participant "posts_app" as posts
+participant "routes_app" as routes
+participant "offers_app" as offers
+participant "scores_app" as scores
+
+user -> ingress : GET /rf005/posts/{id}\nAuthorization: Bearer <token>
+ingress -> orch : enruta la peticion (un solo host)
+activate orch
+
+alt no viene el header Authorization
+    orch --> user : 403 (sin cuerpo)
+end
+
+orch -> users : GET /users/me\nAuthorization: Bearer <token>
+activate users
+alt token valido
+    users --> orch : 200 { id, username, status, ... }
+else token invalido o vencido
+    users --> orch : 401
+    orch --> user : 401
+else users_app no responde / timeout
+    users --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate users
+
+orch -> posts : GET /posts/{id}
+activate posts
+alt la publicacion existe
+    posts --> orch : 200 { id, routeId, userId, expireAt, createdAt }
+else la publicacion no existe
+    posts --> orch : 404
+    orch --> user : 404
+else posts_app no responde / timeout
+    posts --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate posts
+
+group Regla de negocio RF-005 [orchestrator_app]
+    alt post.userId != caller.id
+        orch --> user : 403 (no es el propietario)
+    end
+end
+
+orch -> routes : GET /routes/{post.routeId}
+activate routes
+alt trayecto disponible
+    routes --> orch : 200 { id, flightId, origin, destiny, bagCost,\nplannedStartDate, plannedEndDate }
+else routes_app no responde / inconsistencia
+    routes --> orch : error
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate routes
+
+orch -> offers : GET /offers?post={id}
+activate offers
+alt ofertas disponibles (posiblemente vacia)
+    offers --> orch : 200 [ { id, userId, description, size, fragile, offer, createdAt }, ... ]
+else offers_app no responde / timeout
+    offers --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate offers
+
+group Utilidad por oferta [orchestrator_app]
+    loop por cada oferta obtenida
+        orch -> scores : GET /scores/{offerId}
+        activate scores
+        alt score disponible
+            scores --> orch : 200 { utility, ... }
+            note over orch : oferta.score = utility
+        else score no encontrado / scores_app no responde / timeout
+            scores --> orch : error o 404
+            note over orch : oferta.score = null\n(no se traduce a 503)
+        end
+        deactivate scores
+    end
+    orch -> orch : ordenar ofertas descendente por score\n(null al final)
+end
+
+orch --> ingress : 200 { data: { id, expireAt, route, plannedStartDate,\nplannedEndDate, createdAt, offers: [...] } }
+ingress --> user : 200 { data: { ... } }
+deactivate orch
+
+@enduml

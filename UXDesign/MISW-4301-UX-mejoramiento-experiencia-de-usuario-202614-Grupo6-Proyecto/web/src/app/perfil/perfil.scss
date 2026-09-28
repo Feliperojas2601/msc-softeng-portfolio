@@ -1,0 +1,463 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+// ============================================================================
+// Shell (sidebar + contenido) — idéntico al de detalle-alarma.scss, sin
+// cambios. Se duplica acá porque los estilos de componente en Angular están
+// encapsulados por componente (no hay forma de "importar" el CSS de otro
+// componente sin crear un partial compartido).
+// ============================================================================
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.icon--accent {
+  color: tokens.$color-sem-acento;
+}
+
+.icon--logo {
+  width: 22px;
+  height: 22px;
+}
+
+.shell,
+:host {
+  height: 100vh;
+  display: block;
+}
+
+.sidebar.sidebar {
+  width: 240px;
+  background-color: tokens.$color-sem-superficie;
+  border-right: 1px solid tokens.$color-sem-borde;
+}
+
+.sidebar__inner {
+  position: relative;
+  height: 100%;
+  padding: 24px 16px 160px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 24px;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__logo-text {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  color: tokens.$color-sem-texto-secundario;
+  @include typography.web-cuerpo;
+  transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--active {
+    background-color: tokens.$color-sem-acento-suave;
+    color: tokens.$color-sem-acento-fuerte;
+
+    &:hover {
+      background-color: tokens.$color-sem-acento-suave;
+    }
+  }
+}
+
+.sidebar__user {
+  position: absolute !important;
+  left: 16px;
+  right: 16px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.dashboard__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-block__avatar {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-exito-suave;
+  color: tokens.$color-salvia-oscuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: tokens.$font-family-base;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.user-block__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-block__name {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.user-block__email {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 6px 0;
+  cursor: pointer;
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: tokens.$color-sem-peligro;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.content {
+  background-color: tokens.$color-sem-fondo;
+  height: 100%;
+}
+
+.topbar {
+  display: flex;
+  height: 76px;
+  padding: 0 40px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid tokens.$color-sem-borde;
+  box-sizing: border-box;
+}
+
+.topbar__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topbar__title {
+  @include typography.web-titulo-pagina;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+.topbar__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+  margin: 0;
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: tokens.$color-sem-superficie;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: tokens.$color-sem-texto-secundario;
+  transition: background-color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+.toggle {
+  width: 50px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: tokens.$color-sem-borde;
+  position: relative;
+  flex: 0 0 auto;
+  transition: background-color 150ms ease;
+
+  &--on {
+    background-color: tokens.$color-sem-exito;
+  }
+}
+
+.toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-fondo;
+  transition: transform 150ms ease;
+
+  .toggle--on & {
+    transform: translateX(22px);
+  }
+}
+
+.btn-outline {
+  height: 44px;
+  min-width: 140px;
+  padding: 0 24px;
+  border-radius: 22px;
+  border: 1.5px solid tokens.$color-sem-acento;
+  color: tokens.$color-sem-acento;
+  background: transparent;
+  @include typography.web-boton;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 80ms ease;
+  flex: 0 0 auto;
+
+  &:hover {
+    background-color: tokens.$color-sem-acento-suave;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ============================================================================
+// Contenido — Figma node 116:137 "W01-perfil"
+// ============================================================================
+
+.perfil {
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// ---- Cuenta ------------------------------------------------------------------
+
+.cuenta {
+  background-color: tokens.$color-sem-superficie;
+  border-radius: 20px;
+  padding: 24px 28px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cuenta__avatar {
+  flex: 0 0 auto;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-exito-suave;
+  color: tokens.$color-salvia-oscuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: tokens.$font-family-base;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.cuenta__datos {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cuenta__nombre {
+  @include typography.web-titulo-pagina;
+  color: tokens.$color-sem-texto;
+}
+
+.cuenta__email {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.cuenta__meta {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+// ---- Columnas ------------------------------------------------------------------
+
+.columnas {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.card {
+  background-color: tokens.$color-sem-fondo;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 16px;
+  padding: 22px 24px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card--preferencias {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.card--emergencia {
+  flex: 0 0 420px;
+  width: 420px;
+}
+
+.card__title {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+// ---- Preferencias --------------------------------------------------------------
+
+.preferencia {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.preferencia__texto {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.preferencia__label {
+  @include typography.web-subtitulo;
+  color: tokens.$color-sem-texto;
+}
+
+.preferencia__desc {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+// ---- Salidas de emergencia -------------------------------------------------------
+
+.emergencia__resumen {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.emergencia__numero {
+  @include typography.web-dato;
+  color: tokens.$color-terracota;
+}
+
+.emergencia__periodo {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+.emergencia__item {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: tokens.$color-sem-peligro-suave;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.emergencia__item-titulo {
+  @include typography.web-subtitulo;
+  color: tokens.$color-sem-texto;
+}
+
+.emergencia__item-subtitulo {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.emergencia__nota {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+  margin: 0;
+}

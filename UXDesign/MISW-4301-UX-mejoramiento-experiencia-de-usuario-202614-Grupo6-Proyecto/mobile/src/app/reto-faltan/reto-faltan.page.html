@@ -1,0 +1,47 @@
+<ion-content class="pagina" [fullscreen]="true" role="button" tabindex="0" (click)="onTapSimulate()" (keydown.enter)="onTapSimulate()" (keydown.space)="onTapSimulate(); $event.preventDefault()">
+  <header class="app-bar">
+    <a class="app-bar__back" routerLink="/alarmas-lista" (click)="$event.stopPropagation()">‹</a>
+    <span class="app-bar__title">Reto activo</span>
+  </header>
+
+  <!-- Deco de sol -->
+  <svg class="deco-sunrise" xmlns="http://www.w3.org/2000/svg" width="78" height="46" viewBox="0 0 78 46" fill="none" aria-hidden="true">
+    <path d="M17.875 40.625C17.875 28.925 27.3 19.5 39 19.5C50.7 19.5 60.125 28.925 60.125 40.625" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.875 40.625H73.125" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M39 15.4375V8.125" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M51.5938 18.85L55.25 12.5125" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M26.4063 18.85L22.75 12.5125" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M60.775 28.0313L67.1125 24.375" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.225 28.0313L10.8875 24.375" stroke="#E68A3E" stroke-width="1.65039" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <div class="pagina-body">
+    <div class="contenido">
+      
+      <!-- Anillo de progreso -->
+      <div class="anillo" [style.background]="ringGradient">
+        <div class="anillo__hueco">
+          <span class="anillo__valor">{{ currentSteps }}</span>
+          <span class="anillo__label">de {{ totalSteps }} pasos</span>
+        </div>
+      </div>
+
+      <!-- Progreso -->
+      <p class="progreso-texto">{{ currentSteps }} / {{ totalSteps }} pasos caminados</p>
+
+      <!-- Barra de progreso -->
+      <div class="barra">
+        <span class="barra__label">Caminando…</span>
+        <div class="barra__track">
+          <div class="barra__fill" [style.width.%]="progressPercent"></div>
+        </div>
+      </div>
+
+      <!-- Banner de aviso -->
+      <div class="banner banner--aviso">
+        <span class="banner__tag">AVISO</span>
+        <p class="banner__texto">Aún faltan {{ missingSteps }} pasos. Al completar podrás cerrar la alarma.</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

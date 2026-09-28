@@ -1,0 +1,45 @@
+<ion-content class="pagina" [fullscreen]="true">
+
+  <!-- Header -->
+  <header class="app-bar">
+    <a class="app-bar__back" routerLink="/alarmas-lista">‹</a>
+    <span class="app-bar__title">Nueva alarma · 1/3</span>
+    <span class="app-bar__check">✓</span>
+  </header>
+
+  <p class="hint">Toca cada campo o chip para editarlo.</p>
+
+  <div class="pagina-body">
+    <div class="contenido">
+
+      <!-- Hora -->
+      <div class="campo">
+        <span class="campo__label">HORA</span>
+        <div class="campo__caja campo__caja--activa">
+          <span class="campo__valor">{{ alarma.hora }}</span>
+          <span class="campo__chevron">▾</span>
+        </div>
+      </div>
+
+      <!-- Días -->
+      <div class="campo">
+        <span class="campo__label">DÍAS</span>
+        <div class="dias">
+          <button type="button" class="chip" *ngFor="let dia of alarma.dias" [class.chip--activo]="dia.active" (click)="toggleDia(dia)">
+            {{ dia.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Etiqueta -->
+      <div class="campo">
+        <span class="campo__label">ETIQUETA</span>
+        <div class="campo__caja">
+          <input class="campo__input" type="text" name="etiqueta" [(ngModel)]="alarma.etiqueta" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-primario" (click)="onContinuar()">Continuar</button>
+  </div>
+</ion-content>

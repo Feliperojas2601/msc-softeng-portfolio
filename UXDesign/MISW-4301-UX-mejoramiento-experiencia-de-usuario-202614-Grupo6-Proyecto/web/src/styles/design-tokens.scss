@@ -1,0 +1,125 @@
+// ============================================================================
+// Design Tokens — snoozeless (Web)
+// Fuente: Figma file "snoozeless - mockups - web"
+// https://www.figma.com/design/dlNlMlowd1u96uNKAq91fk/snoozeless---mockups---web
+// Extraído vía Figma MCP (Plugin API) — todos los valores son exactos,
+// tal como los reporta el archivo de Figma al momento de la extracción.
+// No editar a mano: regenerar desde Figma si el design system cambia.
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1. COLOR — Tokens primitivos
+// Colección de Variables de Figma: "Color" (modo: "Default")
+// ----------------------------------------------------------------------------
+
+$color-papel:            #FAF6F0;
+$color-papel-2:          #F3EEE4;
+$color-papel-3:          #ECE4D7;
+$color-tinta:            #2B2A26;
+$color-tinta-80:         #615F58;
+$color-amanecer:         #E68A3E;
+$color-amanecer-oscuro:  #B4651F;
+$color-amanecer-soft:    #F7E3CE;
+$color-amanecer-tint:    #F4CB9F;
+$color-bruma:            #D9CFC0;
+$color-bruma-oscuro:     #B3A78E;
+$color-salvia:           #6E9C7E;
+$color-salvia-oscuro:    #4F7359;
+$color-salvia-tint:      #C6D8CC;
+$color-texto-atenuado:   #75736C;
+$color-terracota:        #C0523F;
+$color-terracota-suave:  #F3DBD4;
+
+// ----------------------------------------------------------------------------
+// 2. COLOR — Tokens semánticos (namespace "sem/" en Figma)
+// Cada uno es un alias de Variable en Figma que apunta a un token primitivo
+// de la sección anterior. Se referencian aquí (no se duplica el hex) para
+// conservar la misma relación de alias que existe en el archivo de Figma.
+// ----------------------------------------------------------------------------
+
+$color-sem-fondo:             $color-papel;           // sem/Fondo            → Papel
+$color-sem-superficie:        $color-papel-2;         // sem/Superficie       → Papel 2
+$color-sem-superficie-alta:   $color-papel-3;         // sem/Superficie alta  → Papel 3
+$color-sem-borde:             $color-bruma;           // sem/Borde            → Bruma
+$color-sem-borde-fuerte:      $color-bruma-oscuro;    // sem/Borde fuerte     → Bruma oscuro
+$color-sem-texto:             $color-tinta;           // sem/Texto            → Tinta
+$color-sem-texto-secundario:  $color-tinta-80;        // sem/Texto secundario → Tinta 80
+$color-sem-texto-atenuado:    $color-texto-atenuado;  // sem/Texto atenuado   → Texto atenuado
+$color-sem-acento:            $color-amanecer;        // sem/Acento           → Amanecer
+$color-sem-acento-fuerte:     $color-amanecer-oscuro; // sem/Acento fuerte    → Amanecer oscuro
+$color-sem-acento-suave:      $color-amanecer-soft;   // sem/Acento suave     → Amanecer soft
+$color-sem-exito:             $color-salvia;          // sem/Éxito            → Salvia
+$color-sem-exito-suave:       $color-salvia-tint;     // sem/Éxito suave      → Salvia tint
+$color-sem-peligro:           $color-terracota;       // sem/Peligro          → Terracota
+$color-sem-peligro-suave:     $color-terracota-suave; // sem/Peligro suave    → Terracota suave
+
+// ----------------------------------------------------------------------------
+// 3. TIPOGRAFÍA — Familia base
+// Todos los Text Styles del archivo usan la misma familia tipográfica.
+// ----------------------------------------------------------------------------
+
+$font-family-base: 'Comfortaa', sans-serif;
+
+// ----------------------------------------------------------------------------
+// 4. TIPOGRAFÍA — Escala "Web/*" (escala oficial)
+// ----------------------------------------------------------------------------
+
+// Web/Display
+$font-web-display-weight:         700;
+$font-web-display-size:           40px;
+$font-web-display-line-height:    48px;
+$font-web-display-letter-spacing: 0px;
+
+// Web/Título de página
+$font-web-titulo-pagina-weight:         700;
+$font-web-titulo-pagina-size:           30px;
+$font-web-titulo-pagina-line-height:    38px;
+$font-web-titulo-pagina-letter-spacing: 0px;
+
+// Web/Título de sección
+$font-web-titulo-seccion-weight:         600;
+$font-web-titulo-seccion-size:           20px;
+$font-web-titulo-seccion-line-height:    28px;
+$font-web-titulo-seccion-letter-spacing: 0px;
+
+// Web/Subtítulo
+$font-web-subtitulo-weight:         500;
+$font-web-subtitulo-size:           16px;
+$font-web-subtitulo-line-height:    24px;
+$font-web-subtitulo-letter-spacing: 0px;
+
+// Web/Cuerpo
+$font-web-cuerpo-weight:         400;
+$font-web-cuerpo-size:           15px;
+$font-web-cuerpo-line-height:    24px;
+$font-web-cuerpo-letter-spacing: 0px;
+
+// Web/Cuerpo S
+$font-web-cuerpo-s-weight:         400;
+$font-web-cuerpo-s-size:           13px;
+$font-web-cuerpo-s-line-height:    20px;
+$font-web-cuerpo-s-letter-spacing: 0px;
+
+// Web/Etiqueta
+$font-web-etiqueta-weight:         500;
+$font-web-etiqueta-size:           12px;
+$font-web-etiqueta-line-height:    16px;
+$font-web-etiqueta-letter-spacing: 0.6px;
+
+// Web/Botón
+$font-web-boton-weight:         600;
+$font-web-boton-size:           15px;
+$font-web-boton-line-height:    20px;
+$font-web-boton-letter-spacing: 0px;
+
+// Web/Dato
+$font-web-dato-weight:         700;
+$font-web-dato-size:           34px;
+$font-web-dato-line-height:    40px;
+$font-web-dato-letter-spacing: 0px;
+
+// Web/Reloj
+$font-web-reloj-weight:         500;
+$font-web-reloj-size:           56px;
+$font-web-reloj-line-height:    64px;
+$font-web-reloj-letter-spacing: 0px;

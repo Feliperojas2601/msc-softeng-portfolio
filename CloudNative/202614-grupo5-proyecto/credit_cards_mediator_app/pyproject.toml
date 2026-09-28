@@ -1,0 +1,19 @@
+[project]
+name = "credit-cards-mediator"
+version = "0.1.0"
+description = "Background worker that polls credit card verification status."
+requires-python = ">=3.13"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.4.0,<9.0.0"
+ruff = ">=0.11.13,<1.0.0"
+
+[tool.pytest.ini_options]
+pythonpath = [".", "src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+src = ["src"]

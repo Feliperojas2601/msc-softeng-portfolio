@@ -1,0 +1,94 @@
+# Despliegue de TrueNative (imagen del curso, no propia). Expone
+# verificacion de identidad (RF-007, webhook) y de tarjetas (RF-006,
+# polling). El puerto real del contenedor es 3000 (Flask), confirmado
+# inspeccionando la imagen publicada en ghcr.io.
+#
+# Nombre de archivo: el enunciado pide "k8s-true-native-deployment.yaml",
+# pero el pipeline de despliegue solo aplica archivos con extension .yml
+# dentro de cada carpeta de k8s_manifests (glob "$dir"/*.yml en el workflow
+# reutilizable ci_entrega2_deploy.yml de recursos-evaluador). Se usa .yml
+# para que el pipeline efectivamente lo despliegue, conservando el resto
+# del nombre pedido.
+#
+# SECRET_TOKEN sale de la variable de Terraform true_native_secret_token
+# (terraform/stacks/apps/variables.tf), expuesta como output y disponible
+# aqui como ${TRUE_NATIVE_SECRET_TOKEN} por el mecanismo de envsubst del
+# pipeline. El mismo valor lo usan users_app, credit_cards_app e
+# identity_webhook_app para autenticarse contra TrueNative y para validar
+# la firma del webhook (ver identity_webhook_app/README.md).
+#
+# NO configurar esto como secret de GitHub (ver el comentario en
+# variables.tf): rompe ecr_registry, db_host y db_port para TODAS las
+# apps, no solo TrueNative, porque GitHub Actions descarta el output
+# combinado completo (tf_outputs) si detecta que contiene un valor igual
+# a un secret registrado.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: true-native-secret
+  namespace: default
+type: Opaque
+stringData:
+  SECRET_TOKEN: "${TRUE_NATIVE_SECRET_TOKEN}"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: true-native-deployment
+  namespace: default
+  labels:
+    app: true-native
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: true-native
+  template:
+    metadata:
+      labels:
+        app: true-native
+    spec:
+      containers:
+        - name: true-native
+          image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/true-native:2.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: true-native-secret
+          readinessProbe:
+            httpGet:
+              path: /native/ping
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /native/ping
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: true-native-service
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: true-native
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30006

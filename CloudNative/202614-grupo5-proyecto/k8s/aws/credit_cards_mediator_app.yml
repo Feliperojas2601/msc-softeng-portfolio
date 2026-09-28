@@ -1,0 +1,54 @@
+# Worker de RF-006 que hace polling del estado de verificacion de tarjetas.
+# Reemplaza un diseno anterior basado en Lambda + SQS: los pods de EKS
+# corren con LabEksNodeRole (provisto por AWS Academy), sin permisos de
+# SQS, y Academy bloquea por completo adjuntarle una politica nueva
+# (iam:AttachRolePolicy -> AccessDenied, verificado en vivo). Un worker
+# desplegado junto al resto de las apps no necesita ningun permiso de AWS:
+# solo llama por HTTP a TrueNative, credit_cards_app, users_app y
+# notifications_app por DNS de cluster, igual que identity_webhook_app.
+#
+# Sin Service ni Ingress: no atiende peticiones, solo hace polling en un
+# loop propio (ver credit_cards_mediator_app/src/worker.py). Sin probes:
+# no expone HTTP, y un pod colgado se recupera igual via el reinicio normal
+# de Kubernetes si el proceso muere.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-cards-mediator-app-deployment
+  namespace: default
+  labels:
+    app: credit-cards-mediator-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: credit-cards-mediator-app
+  template:
+    metadata:
+      labels:
+        app: credit-cards-mediator-app
+    spec:
+      containers:
+        - name: credit-cards-mediator-app
+          image: ${ECR_REGISTRY}/credit_cards_mediator_app:v1.0.2
+          imagePullPolicy: Always
+          env:
+            - name: TRUE_NATIVE_BASE_URL
+              value: http://true-native-service
+            - name: TRUE_NATIVE_SECRET_TOKEN
+              value: "${TRUE_NATIVE_SECRET_TOKEN}"
+            - name: CARDS_API_BASE_URL
+              value: http://credit-cards-app-service
+            - name: CARDS_API_SECRET
+              value: "${CREDIT_CARDS_INTERNAL_SECRET}"
+            - name: USERS_API_BASE_URL
+              value: http://users-app-service
+            - name: NOTIFICATIONS_API_BASE_URL
+              value: http://notifications-app-service
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi

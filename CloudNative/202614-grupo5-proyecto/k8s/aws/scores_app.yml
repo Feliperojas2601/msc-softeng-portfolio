@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: scores-db-secret
+type: Opaque
+stringData:
+  DB_HOST: "${DB_HOST}"
+  DB_PORT: "${DB_PORT}"
+  DB_NAME: "${DB_NAME}"
+  DB_USER: "${DB_USERNAME}"
+  DB_PASSWORD: "${DB_PASSWORD}"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scores-app-deployment
+  labels:
+    app: scores-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scores-app
+  template:
+    metadata:
+      labels:
+        app: scores-app
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z "${DB_HOST}" "${DB_PORT}"; do echo esperando la base de datos; sleep 2; done
+      containers:
+        - name: scores-app
+          image: ${ECR_REGISTRY}/scores_app:v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30004
+          envFrom:
+            - secretRef:
+                name: scores-db-secret
+          env:
+            - name: APP_PORT
+              value: "30004"
+          readinessProbe:
+            httpGet:
+              path: /scores/ping
+              port: 30004
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /scores/ping
+              port: 30004
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scores-app-service
+spec:
+  type: ClusterIP
+  selector:
+    app: scores-app
+  ports:
+    - port: 80
+      targetPort: 30004

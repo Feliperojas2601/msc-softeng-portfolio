@@ -1,0 +1,754 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+// ============================================================================
+// Shell (sidebar + contenido) — mismo patrón que dashboard.scss
+// ============================================================================
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.icon--accent {
+  color: tokens.$color-sem-acento;
+}
+
+.icon--logo {
+  width: 22px;
+  height: 22px;
+}
+
+.shell,
+:host {
+  height: 100vh;
+  display: block;
+}
+
+.sidebar.sidebar {
+  width: 240px;
+  background-color: tokens.$color-sem-superficie; // rgba(243,238,228,1) exacto de Figma
+  border-right: 1px solid tokens.$color-sem-borde;
+  // Nada de position/display/height acá — eso lo maneja Material internamente
+  // para las animaciones de abrir/cerrar. Toda la estructura vive en
+  // .sidebar__inner, un div propio que sí controlo por completo.
+}
+
+.sidebar__inner {
+  position: relative;
+  height: 100%;
+  padding: 24px 16px 160px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 24px;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__logo-text {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  color: tokens.$color-sem-texto-secundario;
+  @include typography.web-cuerpo;
+  transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--active {
+    background-color: tokens.$color-sem-acento-suave;
+    color: tokens.$color-sem-acento-fuerte;
+
+    &:hover {
+      background-color: tokens.$color-sem-acento-suave;
+    }
+  }
+}
+
+.sidebar__user {
+  position: absolute !important;
+  left: 16px;
+  right: 16px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.dashboard__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-block__avatar {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-exito-suave;
+  color: tokens.$color-salvia-oscuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: tokens.$font-family-base;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.user-block__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-block__name {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.user-block__email {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 6px 0;
+  cursor: pointer;
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: tokens.$color-sem-peligro;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.content {
+  background-color: tokens.$color-sem-fondo;
+  height: 100%;
+}
+
+// ============================================================================
+// Barra superior
+// ============================================================================
+
+.topbar {
+  display: flex;
+  height: 76px;
+  padding: 0 40px;
+  align-items: center;
+  justify-content: space-between;
+  //gap: 24px;
+  //margin-bottom: 24px;
+  border-bottom: 1px solid tokens.$color-sem-borde;
+  box-sizing: border-box;
+}
+
+.topbar__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.topbar__title {
+  @include typography.web-titulo-pagina;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+.topbar__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+  margin: 0;
+}
+
+.topbar__usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__search {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: tokens.$color-sem-superficie;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 120ms ease, transform 80ms ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+.topbar__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-exito-suave;
+  color: tokens.$color-salvia-oscuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include typography.web-subtitulo;
+}
+
+.topbar__nombre {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar__nombre-text {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto;
+}
+
+.topbar__email {
+  @include typography.web-etiqueta;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+// ============================================================================
+// Contenido — Figma node 121:107
+// ============================================================================
+
+.detalle {
+  padding: 22px 40px 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// ---- Fila superior: volver / simular ---------------------------------------
+
+.fila-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.volver {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+.volver__chevron {
+  transform: rotate(180deg);
+}
+
+.simular {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-acento;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.75;
+    text-decoration: underline;
+  }
+}
+
+// ---- Resumen de la alarma ---------------------------------------------------
+
+.resumen {
+  background-color: tokens.$color-sem-superficie;
+  border-radius: 20px;
+  padding: 26px 28px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.resumen__hora {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resumen__time {
+  @include typography.web-reloj;
+  color: tokens.$color-sem-texto;
+}
+
+.resumen__dias-texto {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.resumen__detalles {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resumen__chips {
+  display: flex;
+  gap: 8px;
+}
+
+.day-chip {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include typography.web-subtitulo;
+  background-color: transparent;
+  border: 1px solid tokens.$color-sem-borde;
+  color: tokens.$color-sem-texto-secundario;
+
+  &--active {
+    background-color: tokens.$color-sem-texto;
+    border-color: tokens.$color-sem-texto;
+    color: tokens.$color-sem-fondo;
+  }
+}
+
+.resumen__datos {
+  display: flex;
+  gap: 40px;
+}
+
+.dato {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dato__label {
+  @include typography.web-etiqueta;
+  color: tokens.$color-sem-texto-atenuado;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dato__value {
+  @include typography.web-subtitulo;
+  color: tokens.$color-sem-texto;
+  white-space: nowrap;
+}
+
+.resumen__acciones {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.btn-outline {
+  height: 44px;
+  min-width: 140px;
+  padding: 0 24px;
+  border-radius: 22px;
+  border: 1.5px solid tokens.$color-sem-acento;
+  color: tokens.$color-sem-acento;
+  background: transparent;
+  @include typography.web-boton;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-acento-suave;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// ---- Insights: distribución + tiempo de respuesta --------------------------
+
+.insights-row {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.card {
+  background-color: tokens.$color-sem-fondo;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 16px;
+  padding: 22px 24px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card--dona {
+  flex: 0 0 440px;
+  width: 440px;
+}
+
+.card--respuesta {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.card--historial {
+  width: 100%;
+}
+
+.card__title {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+.card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+  margin: 0;
+}
+
+.dona-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dona {
+  flex: 0 0 auto;
+}
+
+.leyenda {
+  flex: 1 1 0;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.leyenda__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leyenda__color {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+
+  &--exito {
+    background-color: tokens.$color-sem-exito;
+  }
+
+  &--acento {
+    background-color: tokens.$color-sem-acento;
+  }
+
+  &--peligro {
+    background-color: tokens.$color-terracota;
+  }
+}
+
+.leyenda__label {
+  flex: 1 1 0;
+  min-width: 0;
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.leyenda__value {
+  flex: 0 0 auto;
+  @include typography.web-subtitulo;
+  color: tokens.$color-sem-texto;
+}
+
+// ---- Gráfico de tiempo de respuesta -----------------------------------------
+
+.response-chart {
+  display: flex;
+  gap: 12px;
+  height: 190px;
+}
+
+.response-bar {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 190px;
+}
+
+.response-bar__value,
+.response-bar__day {
+  @include typography.web-etiqueta;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+.response-bar__fill {
+  width: 100%;
+  border-radius: 8px;
+  background-color: tokens.$color-sem-acento-suave;
+
+  &--highlight {
+    background-color: tokens.$color-sem-acento;
+  }
+}
+
+// ---- Historial reciente (reutiliza el patrón de activity-item) ------------
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 76px;
+  padding: 0 20px 0 18px;
+  box-sizing: border-box;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 14px;
+  background-color: tokens.$color-sem-fondo;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+
+  &:hover {
+    border-color: tokens.$color-sem-borde-fuerte;
+  }
+
+  &:active {
+    background-color: tokens.$color-sem-acento-suave;
+  }
+}
+
+.activity-item__icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-acento-suave;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-item__text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.activity-item__title {
+  @include typography.web-subtitulo;
+  color: tokens.$color-sem-texto;
+}
+
+.activity-item__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+.activity-item__chevron {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+}
+
+.status-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  @include typography.web-cuerpo-s;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex: 0 0 auto;
+  }
+
+  &--exito {
+    background-color: tokens.$color-sem-exito-suave;
+    color: tokens.$color-salvia-oscuro;
+  }
+
+  &--peligro {
+    background-color: tokens.$color-sem-peligro-suave;
+    color: tokens.$color-terracota;
+  }
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: tokens.$color-sem-superficie;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: tokens.$color-sem-texto-secundario;
+  transition: background-color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+.toggle {
+  width: 50px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: tokens.$color-sem-borde;
+  position: relative;
+  flex: 0 0 auto;
+  transition: background-color 150ms ease;
+
+  &--on {
+    background-color: tokens.$color-sem-exito;
+  }
+}
+
+.toggle__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-fondo;
+  transition: transform 150ms ease;
+
+  .toggle--on & {
+    transform: translateX(22px);
+  }
+}
+
+.dona {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  position: relative;
+
+  // El hueco del centro, para que se vea como dona y no como pastel
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 24px;
+    border-radius: 50%;
+    background-color: tokens.$color-sem-fondo;
+  }
+}

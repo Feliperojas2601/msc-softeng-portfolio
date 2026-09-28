@@ -1,0 +1,104 @@
+@startuml rf007-sequence
+
+title RF-007 - Verificar la identidad del usuario al crearlo
+
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+actor "Usuario" as user
+participant "Ingress" as ingress
+participant "users_app" as users
+participant "TrueNative\n(proveedor externo)" as tn
+participant "identity_webhook_app" as verif
+participant "notifications_app" as notif
+participant "AWS SNS" as sns
+actor "Buzon\nEMAIL_TO_NOTIFY" as mail
+
+== 1. Creacion del usuario y solicitud de verificacion ==
+
+user -> ingress : POST /users\n{ username, password, email, dni, fullName, phoneNumber }
+ingress -> users : enruta la peticion
+activate users
+
+group Validaciones [users_app]
+    alt cuerpo invalido o campos faltantes
+        users --> user : 400
+    else username o email ya registrados
+        users --> user : 412
+    end
+end
+
+users -> users : crea el usuario con status = POR_VERIFICAR\ncreatedAt = updatedAt = ahora (UTC)
+
+users -> tn : POST /native/verify\nAuthorization: Bearer SECRET_TOKEN\n{ user: { email, dni, fullName, phone },\n  transactionIdentifier: <uuid nuevo>,\n  userIdentifier: user.id,\n  userWebhook: <url publica de /verify-callback> }
+activate tn
+alt solicitud aceptada
+    tn --> users : 201 { RUV, userIdentifier, transactionIdentifier, createdAt, task_status: ACCEPTED }
+else TrueNative responde otro codigo / no responde / timeout
+    tn --> users : error
+    users -> users : registra advertencia en el log\n(el usuario permanece POR_VERIFICAR)
+end
+deactivate tn
+
+users --> ingress : 201 { id, createdAt }
+ingress --> user : 201 { id, createdAt }
+deactivate users
+
+== 2. Resultado de la verificacion (webhook, <= 120 s despues) ==
+
+tn -> ingress : PATCH /verify-callback\n{ RUV, userIdentifier, createdAt, status, score, verifyToken }
+ingress -> verif : enruta la peticion (endpoint publico)
+activate verif
+
+group Autenticidad del mensaje [identity_webhook_app]
+    verif -> verif : esperado = SHA256(SECRET_TOKEN:RUV:score)
+    alt esperado != verifyToken
+        verif --> tn : 200 (se ignora el mensaje, no se actualiza nada)
+    end
+end
+
+verif -> users : GET /users/{userIdentifier}
+activate users
+users --> verif : 200 { id, email, fullName, dni, phoneNumber, status, ... }
+deactivate users
+
+verif -> users : PATCH /users/{userIdentifier}\n{ status: VERIFICADO | NO_VERIFICADO }
+activate users
+users -> users : actualiza status\nupdatedAt = ahora (UTC)
+users --> verif : 200 { msg: "el usuario ha sido actualizado" }
+deactivate users
+
+group Notificacion del resultado (siempre, sin importar el estado)
+    verif -> notif : POST /notify\n{ type: IDENTITY_VERIFICATION, userId, email, fullName, status, ruv }
+    activate notif
+    alt notificacion publicada
+        notif -> sns : Publish(Subject, Message)
+        activate sns
+        sns -> mail : correo con estado final, RUV\ny datos del usuario
+        sns --> notif : MessageId
+        deactivate sns
+        notif --> verif : 200 { msg: "ok" }
+    else notifications_app no responde / falla
+        notif --> verif : error
+        verif -> verif : registra advertencia en el log\n(el estado ya aplicado no se revierte)
+    end
+    deactivate notif
+end
+
+verif --> ingress : 200 { msg: "ok" }
+ingress --> tn : 200 { msg: "ok" }
+deactivate verif
+
+== 3. Acceso a la plataforma segun el estado ==
+
+user -> ingress : POST /users/auth { username, password }
+ingress -> users : enruta la peticion
+activate users
+alt status == VERIFICADO
+    users --> user : 200 { id, token, expireAt }
+else status == POR_VERIFICAR o NO_VERIFICADO
+    users --> user : rechazo: el usuario no puede ingresar
+end
+deactivate users
+
+@enduml

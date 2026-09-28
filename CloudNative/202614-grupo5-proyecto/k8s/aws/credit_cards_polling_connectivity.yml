@@ -1,0 +1,72 @@
+# Balanceadores internos (NLB con anotación aws-load-balancer-internal) para
+# que la Lambda de credit_cards_mediator_app, fuera del cluster en la VPC,
+# alcance notifications_app, users_app, credit_cards_app y true_native. Sus
+# Services ClusterIP normales no son enrutables desde una Lambda en VPC. Se
+# aplican junto con el resto de k8s_manifests; el stack credit_cards_polling
+# (post_k8s_stacks) los lee ya creados para wirear la Lambda sin pasos manuales.
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-lambda-service
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: notifications-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 30008
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-app-lambda-service
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: users-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 30000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: credit-cards-app-lambda-service
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: credit-cards-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 30006
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: true-native-lambda-service
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: true-native
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000

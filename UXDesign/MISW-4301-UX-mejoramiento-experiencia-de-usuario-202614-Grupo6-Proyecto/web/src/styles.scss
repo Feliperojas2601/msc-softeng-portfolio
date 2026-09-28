@@ -1,0 +1,59 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+@use './styles/design-tokens' as tokens;
+@use './styles/theme-colors' as theme-colors;
+
+// Fuente de la marca: Comfortaa, pesos 400/500/600/700.
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap');
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: ( primary: theme-colors.$primary-palette, tertiary: theme-colors.$tertiary-palette, ), typography: 'Comfortaa', density: 0,
+    )
+  );
+
+  // --------------------------------------------------------------------
+  // Overrides de tokens del sistema M3: forzamos el hex exacto de la marca
+  // en los roles que lo necesitan, en vez del tono más cercano que generó
+  // la rampa tonal de mat.theme() a partir de las paletas de arriba.
+  //
+  // "warn" no existe como key dentro de mat.theme()/mat.define-theme() en
+  // la API M3 (sí existía en la API M2 anterior) — el color de error se
+  // sobreescribe aquí como variable del sistema en su lugar.
+  // --------------------------------------------------------------------
+  --mat-sys-primary: #{tokens.$color-sem-acento};
+  --mat-sys-tertiary: #{tokens.$color-sem-exito};
+
+  --mat-sys-error: #{tokens.$color-sem-peligro};
+  --mat-sys-error-container: #{tokens.$color-sem-peligro-suave};
+  --mat-sys-on-error-container: #{tokens.$color-sem-peligro};
+
+  --mat-sys-background: #{tokens.$color-sem-fondo};
+  --mat-sys-surface: #{tokens.$color-sem-fondo};
+  --mat-sys-on-surface: #{tokens.$color-sem-texto};
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* You can add global styles to this file, and also import other style files */

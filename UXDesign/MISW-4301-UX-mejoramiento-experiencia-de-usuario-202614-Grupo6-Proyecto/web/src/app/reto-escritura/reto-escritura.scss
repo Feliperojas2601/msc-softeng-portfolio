@@ -1,0 +1,218 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: tokens.$color-sem-fondo;
+}
+
+.pantalla {
+    position: relative;
+    min-height: 100vh;
+}
+
+.volver {
+    position: absolute;
+    top: 24px;
+    left: 32px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    @include typography.web-boton;
+    color: tokens.$color-sem-texto;
+
+    &:hover {
+        opacity: 0.75;
+    }
+}
+
+.banda {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background-color: tokens.$color-amanecer-soft;
+    border-bottom-left-radius: 36px;
+    border-bottom-right-radius: 36px;
+}
+
+.escenario {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.logo__text {
+    @include typography.web-titulo-seccion;
+    color: tokens.$color-sem-texto;
+}
+
+.tarjeta {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: tokens.$color-sem-fondo;
+    border: 1px solid tokens.$color-sem-borde;
+    border-radius: 24px;
+    box-shadow: 0px 12px 32px 0px rgba(43, 41, 38, 0.08);
+    padding: 40px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.insignia {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 999px;
+    background-color: tokens.$color-sem-acento;
+    color: tokens.$color-papel;
+    @include typography.web-etiqueta;
+}
+
+.insignia__punto {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+.titulo {
+    @include typography.web-titulo-pagina;
+    color: tokens.$color-sem-texto;
+    text-align: center;
+    margin: 0;
+}
+
+.frase-objetivo {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: tokens.$color-sem-superficie;
+    border-radius: 14px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.frase-objetivo__text {
+    @include typography.web-titulo-seccion;
+    color: tokens.$color-sem-texto-secundario;
+    margin: 0;
+    text-align: center;
+}
+
+.campo-escritura {
+    width: 100%;
+    box-sizing: border-box;
+    height: 64px;
+    border-radius: 14px;
+    border: 2px solid tokens.$color-sem-acento;
+    background-color: tokens.$color-sem-fondo;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    transition: border-color 120ms ease;
+
+    &--error {
+        border-color: tokens.$color-terracota;
+    }
+
+    &--completo {
+        border-color: tokens.$color-salvia;
+    }
+}
+
+.campo-escritura__input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    @include typography.web-subtitulo;
+    font-size: 16px;
+    color: tokens.$color-sem-texto;
+    caret-color: tokens.$color-sem-acento;
+}
+
+.progreso {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progreso__barra {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background-color: tokens.$color-sem-borde;
+    overflow: hidden;
+}
+
+.progreso__avance {
+    height: 100%;
+    border-radius: 999px;
+    background-color: tokens.$color-sem-acento;
+    transition: width 120ms ease, background-color 120ms ease;
+
+    &--error {
+        background-color: tokens.$color-terracota;
+    }
+}
+
+.progreso__contador {
+    display: flex;
+    justify-content: space-between;
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+}
+
+.progreso__error {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-terracota;
+    margin: 0;
+}
+
+.salida-emergencia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    padding-bottom: 64px;
+}
+
+.salida-emergencia__cta {
+    @include typography.web-boton;
+    color: tokens.$color-terracota;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.salida-emergencia__hint {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+    margin: 0;
+}

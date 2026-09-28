@@ -1,0 +1,158 @@
+<mat-sidenav-container class="shell">
+  <!-- ============================================================ -->
+  <!-- Sidebar (idéntico al de detalle-alarma, "Perfil" activo) -->
+  <!-- ============================================================ -->
+  <mat-sidenav mode="side" [opened]="true" class="sidebar" disableClose>
+    <div class="sidebar__inner">
+    <div class="sidebar__logo">
+
+      <!-- Amanecer (sol saliendo del horizonte), no un sol de mediodía -->
+      <svg class="icon icon--accent icon--logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 14a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <line x1="2" y1="14" x2="22" y2="14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <line x1="12" y1="2" x2="12" y2="5" />
+          <line x1="4.5" y1="6.5" x2="6.4" y2="8.2" />
+          <line x1="19.5" y1="6.5" x2="17.6" y2="8.2" />
+        </g>
+      </svg>
+      <span class="sidebar__logo-text">snoozeless</span>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="sidebar__nav">
+      <a class="nav-item" routerLink="/dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6.2002 4.90039H8.7998C9.14459 4.90039 9.47593 5.03648 9.71973 5.28027C9.96352 5.52407 10.0996 5.85541 10.0996 6.2002V8.7998C10.0996 9.14459 9.96352 9.47593 9.71973 9.71973C9.47593 9.96352 9.14459 10.0996 8.7998 10.0996H6.2002C5.85541 10.0996 5.52407 9.96352 5.28027 9.71973C5.03648 9.47593 4.90039 9.14459 4.90039 8.7998V6.2002C4.90039 5.85541 5.03648 5.52407 5.28027 5.28027C5.52407 5.03648 5.85541 4.90039 6.2002 4.90039Z" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15.2002 4.90039H17.7998C18.1446 4.90039 18.4759 5.03648 18.7197 5.28027C18.9635 5.52407 19.0996 5.85541 19.0996 6.2002V8.7998C19.0996 9.14459 18.9635 9.47593 18.7197 9.71973C18.4759 9.96352 18.1446 10.0996 17.7998 10.0996H15.2002C14.8554 10.0996 14.5241 9.96352 14.2803 9.71973C14.0365 9.47593 13.9004 9.14459 13.9004 8.7998V6.2002C13.9004 5.85541 14.0365 5.52407 14.2803 5.28027C14.5241 5.03648 14.8554 4.90039 15.2002 4.90039Z" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.2002 13.9004H8.7998C9.14459 13.9004 9.47593 14.0365 9.71973 14.2803C9.96352 14.5241 10.0996 14.8554 10.0996 15.2002V17.7998C10.0996 18.1446 9.96352 18.4759 9.71973 18.7197C9.47593 18.9635 9.14459 19.0996 8.7998 19.0996H6.2002C5.85541 19.0996 5.52407 18.9635 5.28027 18.7197C5.03648 18.4759 4.90039 18.1446 4.90039 17.7998V15.2002C4.90039 14.8554 5.03648 14.5241 5.28027 14.2803C5.52407 14.0365 5.85541 13.9004 6.2002 13.9004Z" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15.2002 13.9004H17.7998C18.1446 13.9004 18.4759 14.0365 18.7197 14.2803C18.9635 14.5241 19.0996 14.8554 19.0996 15.2002V17.7998C19.0996 18.1446 18.9635 18.4759 18.7197 18.7197C18.4759 18.9635 18.1446 19.0996 17.7998 19.0996H15.2002C14.8554 19.0996 14.5241 18.9635 14.2803 18.7197C14.0365 18.4759 13.9004 18.1446 13.9004 17.7998V15.2002C13.9004 14.8554 14.0365 14.5241 14.2803 14.2803C14.5241 14.0365 14.8554 13.9004 15.2002 13.9004Z" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <!-- Navegación -->
+      <a class="nav-item nav-item--active" routerLink="/perfil">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12.0002 5.40039C13.5466 5.4005 14.8 6.65386 14.8 8.2002C14.7999 9.74644 13.5465 10.9999 12.0002 11C10.4539 11 9.20055 9.7465 9.20044 8.2002C9.20044 6.6538 10.4538 5.40039 12.0002 5.40039Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.40002 19.8C5.40002 16.5 8.40002 14.3 12 14.3C15.6 14.3 18.6 16.5 18.6 19.8" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Perfil</span>
+      </a>
+
+    </nav>
+
+    <!-- Usuario -->
+    <div class="sidebar__user">
+      <div class="user-block">
+        <div class="user-block__avatar">{{ user.initials }}</div>
+        <div class="user-block__info">
+          <span class="user-block__name">{{ user.name }}</span>
+          <span class="user-block__email">{{ user.email }}</span>
+        </div>
+      </div>
+
+      <!-- Botón de cierre de sesión -->
+      <button type="button" class="logout-button" routerLink="/login">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9" />
+            <line x1="21" y1="12" x2="10" y2="12" />
+            <polyline points="17 8 21 12 17 16" />
+          </g>
+        </svg>
+        <span>Cerrar sesión</span>
+      </button>
+
+    </div>
+    </div>
+  </mat-sidenav>
+
+  <!-- ============================================================ -->
+  <!-- Contenido -->
+  <!-- ============================================================ -->
+  <mat-sidenav-content class="content">
+
+    <!-- Barra superior (idéntica en estructura, título/subtítulo propios) -->
+    <header class="topbar">
+
+      <!-- Titulo y subtítulo -->
+      <div class="topbar__titulo">
+        <h1 class="topbar__title">Perfil</h1>
+        <p class="topbar__subtitle">Tu cuenta y tus preferencias</p>
+      </div>
+
+      <!-- Acciones -->
+      <div class="dashboard__header-actions">
+
+          <!-- Botón de busqueda -->
+          <button type="button" class="icon-button" aria-label="Buscar">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+              <line x1="20" y1="20" x2="16" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <!-- Usuario -->
+          <div class="user-block">
+            <div class="user-block__avatar">{{ user.initials }}</div>
+            <div class="user-block__info">
+              <span class="user-block__name">{{ user.name }}</span>
+              <span class="user-block__email">{{ user.email }}</span>
+            </div>
+          </div>
+
+        </div>
+    </header>
+
+    <main class="perfil">
+
+      <!-- Cuenta -->
+      <div class="cuenta">
+        <div class="cuenta__avatar">{{ user.initials }}</div>
+
+        <div class="cuenta__datos">
+          <span class="cuenta__nombre">{{ user.name }}</span>
+          <span class="cuenta__email">{{ user.email }}</span>
+          <span class="cuenta__meta">{{ memberSince }}</span>
+        </div>
+
+        <a class="btn-outline" href="javascript:void(0)">Editar perfil</a>
+      </div>
+
+      <!-- Columnas: preferencias + salidas de emergencia -->
+      <div class="columnas">
+        <div class="card card--preferencias">
+          <h2 class="card__title">Preferencias</h2>
+
+          <div class="preferencia" *ngFor="let pref of preferences">
+            <div class="preferencia__texto">
+              <span class="preferencia__label">{{ pref.label }}</span>
+              <span class="preferencia__desc">{{ pref.description }}</span>
+            </div>
+
+            <div class="toggle" [class.toggle--on]="pref.active" role="switch" [attr.aria-checked]="pref.active">
+              <span class="toggle__knob"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--emergencia">
+          <h2 class="card__title">Salidas de emergencia</h2>
+
+          <div class="emergencia__resumen">
+            <span class="emergencia__numero">{{ emergencyCount }}</span>
+            <span class="emergencia__periodo">en los últimos 30 días</span>
+          </div>
+
+          <div class="emergencia__item" *ngFor="let salida of emergencyExits">
+            <span class="emergencia__item-titulo">{{ salida.title }}</span>
+            <span class="emergencia__item-subtitulo">{{ salida.subtitle }}</span>
+          </div>
+
+          <p class="emergencia__nota">El registro es solo tuyo. Úsalo para entender tus días difíciles, no para castigarte.</p>
+        </div>
+      </div>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,59 @@
+@startuml
+
+skinparam linetype polyline
+skinparam linetype ortho
+
+entity users {
+    id : String
+    username : String
+    email : String
+    phoneNumber : String
+    dni : String
+    fullName : String
+    password : String
+    salt : String
+    token : String
+    status : String
+    expireAt : DateTime
+    createdAt : DateTime
+    updatedAt : DateTime
+}
+
+entity routes {
+    id : String 
+    flightId : String
+    sourceAirportCode : String
+    sourceCountry : String
+    destinyAirportCode : String
+    destinyCountry : String
+    bagCost : Integer
+    plannedStartDate : DateTime
+    plannedEndDate : DateTime
+    createdAt : DateTime
+    updatedAt : DateTime
+}
+
+entity posts {
+    id : String 
+    routeId : String
+    userId : String
+    expireAt : DateTime
+    createdAt : DateTime
+}
+
+entity offers {
+    id : String 
+    postId : String 
+    userId : String
+    description : String
+    size : String
+    fragile : Boolean
+    offer : Number
+    createdAt : DateTime
+}
+
+posts  --> "1" users
+posts --> "1" routes
+offers "*" --> "1" posts
+
+@enduml

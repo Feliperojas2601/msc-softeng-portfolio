@@ -1,0 +1,182 @@
+<mat-sidenav-container class="shell">
+  <!-- ============================================================ -->
+  <!-- Sidebar -->
+  <!-- ============================================================ -->
+  <mat-sidenav mode="side" [opened]="true" class="sidebar" disableClose>
+    <div class="sidebar__inner">
+    <div class="sidebar__logo">
+      <!-- Amanecer (sol saliendo del horizonte), no un sol de mediodía -->
+      <svg class="icon icon--accent icon--logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 14a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <line x1="2" y1="14" x2="22" y2="14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <line x1="12" y1="2" x2="12" y2="5" />
+          <line x1="4.5" y1="6.5" x2="6.4" y2="8.2" />
+          <line x1="19.5" y1="6.5" x2="17.6" y2="8.2" />
+        </g>
+      </svg>
+      <span class="sidebar__logo-text">snoozeless</span>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a class="nav-item nav-item--active" routerLink="/dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6.2002 4.90039H8.7998C9.14459 4.90039 9.47593 5.03648 9.71973 5.28027C9.96352 5.52407 10.0996 5.85541 10.0996 6.2002V8.7998C10.0996 9.14459 9.96352 9.47593 9.71973 9.71973C9.47593 9.96352 9.14459 10.0996 8.7998 10.0996H6.2002C5.85541 10.0996 5.52407 9.96352 5.28027 9.71973C5.03648 9.47593 4.90039 9.14459 4.90039 8.7998V6.2002C4.90039 5.85541 5.03648 5.52407 5.28027 5.28027C5.52407 5.03648 5.85541 4.90039 6.2002 4.90039Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15.2002 4.90039H17.7998C18.1446 4.90039 18.4759 5.03648 18.7197 5.28027C18.9635 5.52407 19.0996 5.85541 19.0996 6.2002V8.7998C19.0996 9.14459 18.9635 9.47593 18.7197 9.71973C18.4759 9.96352 18.1446 10.0996 17.7998 10.0996H15.2002C14.8554 10.0996 14.5241 9.96352 14.2803 9.71973C14.0365 9.47593 13.9004 9.14459 13.9004 8.7998V6.2002C13.9004 5.85541 14.0365 5.52407 14.2803 5.28027C14.5241 5.03648 14.8554 4.90039 15.2002 4.90039Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.2002 13.9004H8.7998C9.14459 13.9004 9.47593 14.0365 9.71973 14.2803C9.96352 14.5241 10.0996 14.8554 10.0996 15.2002V17.7998C10.0996 18.1446 9.96352 18.4759 9.71973 18.7197C9.47593 18.9635 9.14459 19.0996 8.7998 19.0996H6.2002C5.85541 19.0996 5.52407 18.9635 5.28027 18.7197C5.03648 18.4759 4.90039 18.1446 4.90039 17.7998V15.2002C4.90039 14.8554 5.03648 14.5241 5.28027 14.2803C5.52407 14.0365 5.85541 13.9004 6.2002 13.9004Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15.2002 13.9004H17.7998C18.1446 13.9004 18.4759 14.0365 18.7197 14.2803C18.9635 14.5241 19.0996 14.8554 19.0996 15.2002V17.7998C19.0996 18.1446 18.9635 18.4759 18.7197 18.7197C18.4759 18.9635 18.1446 19.0996 17.7998 19.0996H15.2002C14.8554 19.0996 14.5241 18.9635 14.2803 18.7197C14.0365 18.4759 13.9004 18.1446 13.9004 17.7998V15.2002C13.9004 14.8554 14.0365 14.5241 14.2803 14.2803C14.5241 14.0365 14.8554 13.9004 15.2002 13.9004Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" routerLink="/perfil">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12.0002 5.40039C13.5466 5.4005 14.8 6.65386 14.8 8.2002C14.7999 9.74644 13.5465 10.9999 12.0002 11C10.4539 11 9.20055 9.7465 9.20044 8.2002C9.20044 6.6538 10.4538 5.40039 12.0002 5.40039Z" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.40002 19.8C5.40002 16.5 8.40002 14.3 12 14.3C15.6 14.3 18.6 16.5 18.6 19.8" stroke="#615F58" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Perfil</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__user">
+      <div class="user-block">
+        <div class="user-block__avatar">{{ user.initials }}</div>
+        <div class="user-block__info">
+          <span class="user-block__name">{{ user.name }}</span>
+          <span class="user-block__email">{{ user.email }}</span>
+        </div>
+      </div>
+      <button type="button" class="logout-button" routerLink="/login">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h9" />
+            <line x1="21" y1="12" x2="10" y2="12" />
+            <polyline points="17 8 21 12 17 16" />
+          </g>
+        </svg>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+    </div>
+  </mat-sidenav>
+
+  <!-- ============================================================ -->
+  <!-- Contenido -->
+  <!-- ============================================================ -->
+  <mat-sidenav-content class="content">
+    <main class="dashboard">
+      <header class="dashboard__header">
+        <div class = "dashboard-title-details">
+          <h1 class="dashboard__title">Dashboard</h1>
+          <p class="dashboard__subtitle">Tus alarmas y tu progreso</p>
+        </div>
+
+        <div class="dashboard__header-actions">
+          <button type="button" class="icon-button" aria-label="Buscar">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8" />
+              <line x1="20" y1="20" x2="16" y2="16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="user-block">
+            <div class="user-block__avatar">{{ user.initials }}</div>
+            <div class="user-block__info">
+              <span class="user-block__name">{{ user.name }}</span>
+              <span class="user-block__email">{{ user.email }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Fila de KPIs -->
+      <section class="dashboard-info">
+        <section class="kpi-row">
+          <mat-card class="kpi-card" *ngFor="let kpi of kpiCards">
+            <span class="kpi-card__value">{{ kpi.value }}</span>
+            <span class="kpi-card__label">{{ kpi.label }}</span>
+            <span class="kpi-card__delta" [class.kpi-card__delta--neutral]="kpi.deltaVariant === 'neutral'">{{ kpi.delta }}</span>
+          </mat-card>
+        </section>
+
+        <!-- Próxima alarma -->
+        <mat-card class="next-alarm">
+          <div class="next-alarm__col next-alarm__col--main">
+            <span class="next-alarm__tag">PRÓXIMA ALARMA</span>
+            <span class="next-alarm__time">06:30</span>
+            <span class="next-alarm__subtitle">Mañana · Gym · Reto de escritura</span>
+          </div>
+
+          <!-- Próxima alarma -->
+          <div class="next-alarm__col next-alarm__col--side">
+            <div class="next-alarm__days">
+              <span class="day-chip" *ngFor="let day of nextAlarmDays" [class.day-chip--active]="day.active">{{ day.label }}</span>
+            </div>
+            <button mat-flat-button color="primary" class="next-alarm__cta" routerLink="/alarma/gym">
+              Ver detalle
+            </button>
+          </div>
+        </mat-card>
+
+        <!-- Dos columnas: actividad reciente + resumen semanal -->
+        <section class="dashboard__columns">
+          <mat-card class="activity-card">
+            <div class="activity-card__header">
+              <h2 class="activity-card__title">Actividad reciente</h2>
+              <a class="activity-card__link" href="javascript:void(0)">Ver todo</a>
+            </div>
+            
+            <!--Listado de actividades recientes-->
+            <ul class="activity-list">
+              <li class="activity-item" *ngFor="let item of recentActivity">
+                <span class="activity-item__icon">
+                  
+                  <!--Campana de solo contorno (stroke), no rellena-->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 6.60034C13.0343 6.60034 14.0264 7.01061 14.7578 7.74194C15.4892 8.47329 15.9003 9.46548 15.9004 10.4998V11.9998C15.9004 13.3406 16.2017 14.5996 16.7793 15.7H7.2207C7.79829 14.5996 8.09961 13.3406 8.09961 11.9998V10.4998C8.09966 9.46548 8.51084 8.47329 9.24219 7.74194C9.92786 7.05632 10.8428 6.65304 11.8066 6.60522L12 6.60034Z" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 5.69998V4.09998" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10.1 19.4C10.2315 19.8002 10.486 20.1486 10.8272 20.3956C11.1684 20.6425 11.5788 20.7755 12 20.7755C12.4212 20.7755 12.8316 20.6425 13.1728 20.3956C13.514 20.1486 13.7685 19.8002 13.9 19.4" stroke="#B4651F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+
+                <!--Titulo y subtítulo-->
+                <div class="activity-item__text">
+                  <span class="activity-item__title">{{ item.title }}</span>
+                  <span class="activity-item__subtitle">{{ item.subtitle }}</span>
+                </div>
+
+                <!--Status-->
+                <span class="status-badge" [ngClass]="'status-badge--' + item.statusVariant">
+                  <span class="status-badge__dot" aria-hidden="true"></span>
+                    {{ item.status }}
+                </span>
+
+                <!--Chevron-->
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none">
+                  <path d="M0.900024 0.900024L7.40002 7.40002L0.900024 13.9" stroke="#75736C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </li>
+            </ul>
+          </mat-card>
+
+          <!--Weekly summary-->
+          <div class="weekly-card">
+            <div class="weekly-card__header">
+              <h2 class="weekly-card__title">Resumen semanal</h2>
+              <p class="weekly-card__subtitle">Posposiciones por día</p>
+            </div>
+
+            <!--Weekly chart-->
+            <div class="weekly-chart">
+              <div class="weekly-chart__bar" *ngFor="let bar of weeklySnoozes">
+                <div class="weekly-chart__track">
+                  <div class="weekly-chart__fill" [ngClass]="'weekly-chart__fill--' + bar.variant" [style.height.px]="bar.heightPx" ></div>
+                </div>
+                <span class="weekly-chart__label">{{ bar.day }}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

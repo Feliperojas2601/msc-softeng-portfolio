@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "identity_webhook_app"
+version = "1.0.0"
+description = "Webhook receiver for TrueNative identity verification callbacks (RF-007)."
+authors = [
+  "clonatdevs"
+]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+packages = [{include = "*", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+fastapi = "~0.115.12"
+uvicorn = "~0.27.1"
+python-dotenv = "~1.0.1"
+pydantic = "~2.6.1"
+pydantic-settings = "~2.1.0"
+httpx = "~0.27.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "~25.1.0"
+ruff = "~0.11.12"
+bandit = "~1.8.3"
+pytest = "~8.4.0"
+pytest-cov = "~6.1.1"
+pytest-env = "~1.1.5"
+pytest-asyncio = "~0.23.5"
+respx = "~0.21.1"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.bandit]
+exclude_dirs = ["./tests"]
+skips = ["B101"]
+
+[tool.ruff]
+src = ["src"]
+fix = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.pytest.ini_options]
+python_files = "test_*.py"
+pythonpath = "src"
+testpaths = [
+  "tests"
+]
+asyncio_mode = "auto"
+env = [
+  "TRUE_NATIVE_SECRET_TOKEN = test-secret",
+  "USERS_APP_BASE_URL = http://users-app.test",
+  "NOTIFICATIONS_APP_URL = http://notifications-app.test"
+]

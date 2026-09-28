@@ -1,0 +1,36 @@
+<ion-content class="pagina" [fullscreen]="true">
+
+  <!-- Header -->
+  <header class="app-bar">
+    <a class="app-bar__back" routerLink="/snooze">‹</a>
+    <span class="app-bar__title">Reto de movimiento · 3/3</span>
+    <span class="app-bar__check app-bar__check--listo">✓</span>
+  </header>
+
+  <p class="hint">Usa − y + para ajustar los pasos a caminar.</p>
+
+  <div class="pagina-body">
+    <div class="contenido">
+
+      <!-- Pasos a caminar -->
+      <div class="campo">
+        <span class="campo__label">Pasos a caminar</span>
+        <div class="stepper">
+          <button type="button" class="stepper__btn" (click)="ajustarPasos(-5)" aria-label="Restar">–</button>
+          <span class="stepper__valor">{{ alarma.pasosCaminar }}</span>
+          <button type="button" class="stepper__btn" (click)="ajustarPasos(5)" aria-label="Sumar">+</button>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="banner banner--info">
+        <span class="banner__tag">INFO</span>
+        <p class="banner__texto">Deberás caminar {{ alarma.pasosCaminar }} pasos para posponer o cerrar la alarma.</p>
+      </div>
+
+      <p class="ayuda">Al completar el reto se habilita el botón de cerrar la alarma.</p>
+    </div>
+
+    <button type="button" class="btn-primario" (click)="onGuardar()">Guardar</button>
+  </div>
+</ion-content>

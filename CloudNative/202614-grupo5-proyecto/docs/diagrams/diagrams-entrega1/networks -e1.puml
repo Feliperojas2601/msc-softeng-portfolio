@@ -1,0 +1,108 @@
+@startuml
+
+skinparam frame<<dashed>> {
+    BorderStyle dashed
+}
+
+cloud Internet
+
+
+frame "k8s" <<dashed>> {
+
+    node "Node" {
+        circle "Port: 30000" as users_nodeport
+        circle "Port: 30001" as posts_nodeport
+        circle "Port: 30002" as routes_nodeport
+        circle "Port: 30003" as offers_nodeport
+
+
+        frame "users-network" as users_network {
+
+            component "users-app-service" as users_app_service
+
+            frame "users-app" <<pod>> as users_app_pod {
+                frame "users_app" <<Contenedor>> as users_app
+            }
+
+            component "users-db-service" as users_db_service
+
+            frame "users-db" <<pod>> as users_db_pod {
+                frame "users_db" <<Contenedor>> as users_db
+            }
+
+            users_app_service --> users_app: Port:xxxx
+            users_app --> users_db_service: Port:5432
+            users_db_service --> users_db: Port:5432
+        }
+
+        frame "posts-network" as posts_network {
+
+            component "posts-app-service" as posts_app_service
+
+            frame "posts-app" <<pod>> as posts_app_pod {
+                frame "posts_app" <<Contenedor>> as posts_app
+            }
+
+            component "posts-db-service" as posts_db_service
+
+            frame "posts-db" <<pod>> as posts_db_pod {
+                frame "posts_db" <<Contenedor>> as posts_db
+            }
+
+            posts_app_service --> posts_app: Port:xxxx
+            posts_app --> posts_db_service: Port:5432
+            posts_db_service --> posts_db: Port:5432
+        }
+
+        frame "offers-network" as offers_network {
+
+            component "offers-app-service" as offers_app_service
+
+            frame "offers-app" <<pod>> as offers_app_pod {
+                frame "offers_app" <<Contenedor>> as offers_app
+            }
+
+            component "offers-db-service" as offers_db_service
+
+            frame "offers-db" <<pod>> as offers_db_pod {
+                frame "offers_db" <<Contenedor>> as offers_db
+            }
+
+            offers_app_service --> offers_app: Port:xxxx
+            offers_app --> offers_db_service: Port:5432
+            offers_db_service --> offers_db: Port:5432
+        }
+
+        frame "routes-network" as routes_network {
+
+            component "routes-app-service" as routes_app_service
+
+            frame "routes-app" <<pod>> as routes_app_pod {
+                frame "routes_app" <<Contenedor>> as routes_app
+            }
+
+            component "routes-db-service" as routes_db_service
+
+            frame "routes-db" <<pod>> as routes_db_pod {
+                frame "routes_db" <<Contenedor>> as routes_db
+            }
+
+            routes_app_service --> routes_app: Port:5432
+            routes_app --> routes_db_service: Port:5432
+            routes_db_service --> routes_db: Port:5432
+        }
+
+        users_nodeport --> users_app_service: Port:80
+        posts_nodeport --> posts_app_service: Port:80
+        routes_nodeport --> routes_app_service: Port:80
+        offers_nodeport --> offers_app_service: Port:80
+    }
+}
+
+
+Internet ..> users_nodeport 
+Internet ..> posts_nodeport 
+Internet ..> routes_nodeport 
+Internet ..> offers_nodeport 
+
+@enduml

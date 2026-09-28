@@ -1,0 +1,673 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+// ============================================================================
+// Shell (sidebar + contenido) — mismo patrón que dashboard.scss / detalle-alarma.scss
+// ============================================================================
+
+.icon {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    color: currentColor;
+}
+
+.icon--accent {
+    color: tokens.$color-sem-acento;
+}
+
+.icon--logo {
+    width: 22px;
+    height: 22px;
+}
+
+.shell,
+:host {
+    height: 100vh;
+    display: block;
+}
+
+.sidebar.sidebar {
+    width: 240px;
+    background-color: tokens.$color-sem-superficie;
+    border-right: 1px solid tokens.$color-sem-borde;
+}
+
+.sidebar__inner {
+    position: relative;
+    height: 100%;
+    padding: 24px 16px 160px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.sidebar__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 8px 24px;
+    color: tokens.$color-sem-texto;
+}
+
+.sidebar__logo-text {
+    @include typography.web-titulo-seccion;
+    color: tokens.$color-sem-texto;
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    color: tokens.$color-sem-texto-secundario;
+    @include typography.web-cuerpo;
+    transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+
+    &:hover {
+        background-color: tokens.$color-sem-superficie;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &--active {
+        background-color: tokens.$color-sem-acento-suave;
+        color: tokens.$color-sem-acento-fuerte;
+
+        &:hover {
+            background-color: tokens.$color-sem-acento-suave;
+        }
+    }
+}
+
+.sidebar__user {
+    position: absolute !important;
+    left: 16px;
+    right: 16px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 16px;
+}
+
+.dashboard__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 0 0 auto;
+}
+
+.user-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-block__avatar {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: tokens.$color-sem-exito-suave;
+    color: tokens.$color-salvia-oscuro;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: tokens.$font-family-base;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.user-block__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.user-block__name {
+    @include typography.web-cuerpo;
+    color: tokens.$color-sem-texto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+}
+
+.user-block__email {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-secundario;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+    border: none;
+    background: none;
+    padding: 6px 0;
+    cursor: pointer;
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-secundario;
+    transition: color 120ms ease;
+
+    &:hover {
+        color: tokens.$color-sem-peligro;
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+.content {
+    background-color: tokens.$color-sem-fondo;
+    height: 100%;
+}
+
+// ============================================================================
+// Barra superior
+// ============================================================================
+
+.topbar {
+    display: flex;
+    height: 76px;
+    padding: 0 40px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid tokens.$color-sem-borde;
+    box-sizing: border-box;
+}
+
+.topbar__titulo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.topbar__title {
+    @include typography.web-titulo-pagina;
+    color: tokens.$color-sem-texto;
+    margin: 0;
+}
+
+.topbar__subtitle {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+    margin: 0;
+}
+
+.icon-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: tokens.$color-sem-superficie;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: tokens.$color-sem-texto-secundario;
+    transition: background-color 120ms ease, transform 80ms ease;
+
+    &:hover {
+        background-color: tokens.$color-sem-superficie;
+    }
+
+    &:active {
+        transform: scale(0.94);
+    }
+}
+
+// ============================================================================
+// Contenido — Figma node 121:170
+// ============================================================================
+
+.detalle {
+    padding: 22px 40px 28px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.volver {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+
+    &:hover {
+        opacity: 0.75;
+    }
+}
+
+// ---- Banda "está sonando ahora" --------------------------------------------
+
+.sonando {
+    background-color: tokens.$color-sem-acento;
+    border-radius: 20px;
+    padding: 22px 28px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.sonando__estado {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sonando__title {
+    @include typography.web-titulo-pagina;
+    color: tokens.$color-papel;
+    margin: 0;
+}
+
+.sonando__subtitle {
+    @include typography.web-cuerpo;
+    color: tokens.$color-amanecer-soft;
+    margin: 0;
+}
+
+.sonando__acciones {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-badge {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 999px;
+    @include typography.web-etiqueta;
+    white-space: nowrap;
+    width: fit-content;
+
+    &__dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: currentColor;
+        flex: 0 0 auto;
+    }
+
+    &--vivo {
+        background-color: tokens.$color-papel;
+        color: tokens.$color-sem-acento-fuerte;
+    }
+}
+
+.btn-ghost-invert {
+    height: 44px;
+    min-width: 140px;
+    padding: 0 24px;
+    border-radius: 22px;
+    border: 1.5px solid tokens.$color-papel;
+    background: transparent;
+    color: tokens.$color-papel;
+    @include typography.web-boton;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 120ms ease, transform 80ms ease;
+
+    &:hover {
+        background-color: rgba(250, 246, 240, 0.12);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.btn-solid-invert {
+    height: 44px;
+    min-width: 140px;
+    padding: 0 24px;
+    border-radius: 22px;
+    background-color: tokens.$color-papel;
+    color: tokens.$color-sem-acento-fuerte;
+    @include typography.web-boton;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: opacity 120ms ease, transform 80ms ease;
+
+    &:hover {
+        opacity: 0.9;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+// ---- Resumen de la alarma ---------------------------------------------------
+
+.resumen {
+    background-color: tokens.$color-sem-superficie;
+    border-radius: 20px;
+    padding: 26px 28px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.resumen__hora {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.resumen__time {
+    @include typography.web-reloj;
+    color: tokens.$color-sem-texto;
+}
+
+.resumen__dias-texto {
+    @include typography.web-cuerpo;
+    color: tokens.$color-sem-texto-secundario;
+}
+
+.resumen__detalles {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.resumen__chips {
+    display: flex;
+    gap: 8px;
+}
+
+.day-chip {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include typography.web-subtitulo;
+    background-color: transparent;
+    border: 1px solid tokens.$color-sem-borde;
+    color: tokens.$color-sem-texto-secundario;
+
+    &--active {
+        background-color: tokens.$color-sem-texto;
+        border-color: tokens.$color-sem-texto;
+        color: tokens.$color-sem-fondo;
+    }
+}
+
+.resumen__datos {
+    display: flex;
+    gap: 40px;
+}
+
+.dato {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dato__label {
+    @include typography.web-etiqueta;
+    color: tokens.$color-sem-texto-atenuado;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.dato__value {
+    @include typography.web-subtitulo;
+    color: tokens.$color-sem-texto;
+    white-space: nowrap;
+}
+
+.resumen__acciones {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.btn-outline {
+    height: 44px;
+    min-width: 140px;
+    padding: 0 24px;
+    border-radius: 22px;
+    border: 1.5px solid tokens.$color-sem-acento;
+    color: tokens.$color-sem-acento;
+    background: transparent;
+    @include typography.web-boton;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 120ms ease, transform 80ms ease;
+
+    &:hover {
+        background-color: tokens.$color-sem-acento-suave;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+// ---- Insights: distribución + tiempo de respuesta --------------------------
+
+.insights-row {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.card {
+    background-color: tokens.$color-sem-fondo;
+    border: 1px solid tokens.$color-sem-borde;
+    border-radius: 16px;
+    padding: 22px 24px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.card--dona {
+    flex: 0 0 440px;
+    width: 440px;
+}
+
+.card--respuesta {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.card__title {
+    @include typography.web-titulo-seccion;
+    color: tokens.$color-sem-texto;
+    margin: 0;
+}
+
+.card__header {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.card__subtitle {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+    margin: 0;
+}
+
+.dona-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.dona {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 24px;
+        border-radius: 50%;
+        background-color: tokens.$color-sem-fondo;
+    }
+}
+
+.leyenda {
+    flex: 1 1 0;
+    min-width: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.leyenda__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.leyenda__color {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+
+    &--exito {
+        background-color: tokens.$color-sem-exito;
+    }
+
+    &--acento {
+        background-color: tokens.$color-sem-acento;
+    }
+
+    &--peligro {
+        background-color: tokens.$color-terracota;
+    }
+}
+
+.leyenda__label {
+    flex: 1 1 0;
+    min-width: 0;
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-secundario;
+}
+
+.leyenda__value {
+    flex: 0 0 auto;
+    @include typography.web-subtitulo;
+    color: tokens.$color-sem-texto;
+}
+
+// ---- Gráfico de tiempo de respuesta -----------------------------------------
+
+.response-chart {
+    display: flex;
+    gap: 12px;
+    height: 190px;
+}
+
+.response-bar {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    height: 190px;
+}
+
+.response-bar__value,
+.response-bar__day {
+    @include typography.web-etiqueta;
+    color: tokens.$color-sem-texto-atenuado;
+}
+
+.response-bar__fill {
+    width: 100%;
+    border-radius: 8px;
+    background-color: tokens.$color-sem-acento-suave;
+
+    &--highlight {
+        background-color: tokens.$color-sem-acento;
+    }
+}
+
+.toggle {
+    width: 50px;
+    height: 28px;
+    border-radius: 999px;
+    background-color: tokens.$color-sem-borde;
+    position: relative;
+    flex: 0 0 auto;
+    transition: background-color 150ms ease;
+
+    &--on {
+        background-color: tokens.$color-sem-exito;
+    }
+}
+
+.toggle__knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: tokens.$color-sem-fondo;
+    transition: transform 150ms ease;
+
+    .toggle--on & {
+        transform: translateX(22px);
+    }
+}

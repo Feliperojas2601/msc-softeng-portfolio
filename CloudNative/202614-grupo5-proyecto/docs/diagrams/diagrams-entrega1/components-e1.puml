@@ -1,0 +1,35 @@
+@startuml
+
+skinparam componentStyle uml1
+
+actor "User" as user
+
+frame "env" {
+    component users_app
+    database users_db
+
+    component posts_app
+    database posts_db
+
+    component offers_app
+    database offers_db
+
+    component routes_app
+    database routes_db
+
+    users_app --> users_db
+    posts_app --> posts_db
+    offers_app --> offers_db
+    routes_app --> routes_db
+
+  }
+
+user ..> users_app
+user ..> posts_app
+user ..> offers_app
+user ..> routes_app
+
+
+
+
+@enduml

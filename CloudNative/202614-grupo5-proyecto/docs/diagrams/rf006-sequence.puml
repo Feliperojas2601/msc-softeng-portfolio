@@ -1,0 +1,85 @@
+@startuml
+title RF-006 - Creación síncrona y verificación por polling en contenedor
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 190
+actor Cliente as client
+participant "Ingress" as ingress
+participant "Tarjetas\nAPI síncrona" as cards
+participant "Usuarios" as users
+participant "TrueNative" as native
+database "BD tarjetas\n+ outbox" as db
+participant "Mediator\n(contenedor, bucle cada 2s)" as worker
+participant "Notificaciones" as notify
+participant "SNS" as sns
+== Petición inicial: límite de 5 segundos ==
+client -> ingress : POST /credit-cards + Bearer
+ingress -> cards : Crear tarjeta
+cards -> users : GET /users/me
+users --> cards : Identidad y autorización, o error
+alt No autorizado o usuarios indisponible
+  cards --> ingress : Error sin tokenización
+  ingress --> client : Error
+else Usuario autorizado
+  cards -> native : Tokenizar en /native/cards
+  native --> cards : Token y datos, o fallo
+  alt Sin token confirmado
+    cards -> db : Intento fallido, sin CreditCard\nSin evento de verificación
+    cards --> ingress : Error de inscripción
+    ingress --> client : Error
+  else Token y datos válidos
+    cards -> db : Transacción: CreditCard POR_VERIFICAR\n+ evento en outbox
+    alt Commit exitoso
+      db --> cards : Confirmación
+      cards --> ingress : Creación pendiente
+      ingress --> client : Respuesta inicial
+    else Commit fallido
+      db --> cards : Rollback
+      cards --> ingress : Error temporal
+      ingress --> client : Error; token remoto a conciliar
+    end
+  end
+end
+== Bucle del Mediator: reclama, verifica y finaliza (independiente, cada 2 segundos) ==
+loop cada 2 segundos, indefinidamente
+  worker -> cards : POST /credit-cards/internal/verification-events/claim
+  cards -> db : Reclamar eventos pendientes con lease
+  cards --> worker : Lista de eventos reclamados (puede ser vacía)
+  loop por cada evento reclamado
+    worker -> cards : GET /credit-cards/internal/{cardId}/verification
+    cards --> worker : Estado actual de la tarjeta
+    alt Tarjeta ya en estado terminal
+      worker -> notify : POST /notify
+      notify -> sns : Publish
+      sns --> notify : Aceptación
+      notify --> worker : 200
+      worker -> cards : POST .../verification-events/{eventId}/ack
+    else Tarjeta pendiente
+      worker -> native : GET /native/cards/{ruv}
+      alt TrueNative responde 202 (pendiente)
+        worker -> cards : POST .../verification-events/{eventId}/release
+        note right of worker : Libera el lease sin cambiar el estado;\nse reintenta en el siguiente ciclo del bucle
+      else TrueNative responde resultado terminal (aprobado o rechazado)
+        worker -> cards : PATCH /credit-cards/internal/{cardId}/verification\n{status}
+        cards -> db : Actualiza estado y updatedAt
+        cards --> worker : Tarjeta actualizada
+        worker -> notify : POST /notify
+        notify -> sns : Publish
+        sns --> notify : Aceptación
+        notify --> worker : 200
+        worker -> cards : POST .../verification-events/{eventId}/ack
+      else TrueNative no responde, timeout o error de proveedor
+        note right of worker : No se libera ni se confirma el evento;\nel lease vence solo y el evento vuelve\na quedar disponible para un ciclo futuro
+      end
+    end
+  end
+end
+sns --> client : Correo a suscripción confirmada (asíncrono, fuera de este diagrama)
+legend bottom
+  El Mediator es un contenedor con un bucle de polling (sin SQS ni Lambda); no depende de IAM nuevo.
+  El lease en la outbox evita que dos ciclos procesen el mismo evento a la vez.
+  Un fallo de notificación no revierte el estado ya persistido de la tarjeta; el evento queda sin "ack" y se reintenta.
+endlegend
+@enduml

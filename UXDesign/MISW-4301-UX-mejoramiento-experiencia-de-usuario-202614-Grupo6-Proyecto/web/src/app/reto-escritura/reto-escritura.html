@@ -1,0 +1,84 @@
+<div class="pantalla">
+  
+  <!-- Botón de volver -->
+  <a class="volver" routerLink="/alarma/gym/vivo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M12.5 4.5L6.5 10L12.5 15.5" stroke="#2B2A26" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Volver</span>
+  </a>
+
+  <!-- Botón de cancelar -->
+  <div class="banda"></div>
+
+  <!-- Escenario -->
+  <div class="escenario">
+    <div class="logo">
+      
+      <!-- Logo de Snoozeless -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M6 14a6 6 0 0 1 12 0" stroke="#E68A3E" stroke-width="1.6" stroke-linecap="round" />
+        <line x1="2" y1="14" x2="22" y2="14" stroke="#E68A3E" stroke-width="1.6" stroke-linecap="round" />
+        <g stroke="#E68A3E" stroke-width="1.6" stroke-linecap="round">
+          <line x1="12" y1="2" x2="12" y2="5" />
+          <line x1="4.5" y1="6.5" x2="6.4" y2="8.2" />
+          <line x1="19.5" y1="6.5" x2="17.6" y2="8.2" />
+        </g>
+      </svg>
+
+      <!-- Texto de la marca -->
+      <span class="logo__text">snoozeless</span>
+    </div>
+
+    <div class="tarjeta">
+      
+      <!-- Icono de alarma -->
+      <span class="insignia">        
+        <span class="insignia__punto" aria-hidden="true"></span>
+        Alarma en vivo · 06:30
+      </span>
+
+      <!-- Título -->
+      <h1 class="titulo">Escribe la frase para apagar la alarma</h1>
+
+      <!-- Texto de la frase objetivo -->
+      <div class="frase-objetivo">
+        <p class="frase-objetivo__text">&ldquo;{{ targetPhrase }}&rdquo;</p>
+      </div>
+
+      <!-- Campo de escritura -->
+      <div class="campo-escritura" [class.campo-escritura--error]="hasError" [class.campo-escritura--completo]="isComplete">        
+        <input
+          class="campo-escritura__input"
+          type="text"
+          name="typedText"
+          autocomplete="off"
+          spellcheck="false"
+          [(ngModel)]="typedText"
+          (ngModelChange)="onTypedTextChange()"
+          aria-label="Escribe aquí la frase para apagar la alarma"
+        />
+      </div>
+
+      <!-- Progreso -->
+      <div class="progreso">
+        <div class="progreso__barra">
+          <div class="progreso__avance" [class.progreso__avance--error]="hasError" [style.width.%]="progressPercent"></div>
+        </div>
+        
+        <!-- Texto de progreso -->
+        <div class="progreso__contador">
+          <span>{{ typedText.length }} / {{ targetPhrase.length }} caracteres</span>
+          <span *ngIf="!hasError">Escríbela exactamente como aparece arriba</span>
+        </div>
+        <p class="progreso__error" *ngIf="hasError">No coincide con la frase objetivo. Corrígela antes de continuar.</p>
+      </div>
+    </div>
+
+    <!-- Salida de emergencia -->
+    <div class="salida-emergencia">
+      <a class="salida-emergencia__cta" href="javascript:void(0)">¿Es una emergencia?</a>
+      <p class="salida-emergencia__hint">Apaga la alarma sin completar el reto. Quedará registrado en tu perfil.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+# Componente RF-007 que recibe el callback (webhook) de TrueNative con el
+# resultado de la verificacion de identidad. Es un componente interno, sin
+# ruta propia en el Ingress: TrueNative y users_app lo llaman por DNS de
+# cluster (http://identity-webhook-app-service), y el no expone nada al
+# usuario final.
+#
+# No usa AWS SDK ni IAM propio (Academy Learner Lab no permite crear roles
+# IAM nuevos): las notificaciones se publican via HTTP directo al componente
+# de notificaciones, no via SNS.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-webhook-app-deployment
+  namespace: default
+  labels:
+    app: identity-webhook-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-webhook-app
+  template:
+    metadata:
+      labels:
+        app: identity-webhook-app
+    spec:
+      containers:
+        - name: identity-webhook-app
+          image: ${ECR_REGISTRY}/identity_webhook_app:v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30007
+          env:
+            - name: APP_PORT
+              value: "30007"
+            - name: TRUE_NATIVE_SECRET_TOKEN
+              value: "${TRUE_NATIVE_SECRET_TOKEN}"
+            - name: USERS_APP_BASE_URL
+              value: http://users-app-service
+            - name: NOTIFICATIONS_APP_URL
+              value: http://notifications-app-service
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 30007
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 30007
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-webhook-app-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: identity-webhook-app
+  ports:
+    - port: 80
+      targetPort: 30007

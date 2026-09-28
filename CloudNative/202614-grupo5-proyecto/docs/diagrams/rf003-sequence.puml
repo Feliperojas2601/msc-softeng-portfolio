@@ -1,0 +1,114 @@
+@startuml rf003-sequence
+
+title RF-003 - Crear publicacion (POST /rf003/posts)
+
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+actor "Usuario" as user
+participant "Ingress" as ingress
+participant "orchestrator_app" as orch
+participant "users_app" as users
+participant "routes_app" as routes
+participant "posts_app" as posts
+
+user -> ingress : POST /rf003/posts\nAuthorization: Bearer <token>\n{ flightId, expireAt, plannedStartDate, plannedEndDate, origin, destiny, bagCost }
+ingress -> orch : enruta la peticion (un solo host)
+activate orch
+
+group Validacion del cuerpo [orchestrator_app]
+    alt cuerpo invalido: campo faltante / tipo invalido
+        orch --> user : 400 (sin cuerpo)
+    end
+end
+
+alt no viene el header Authorization
+    orch --> user : 403 (sin cuerpo)
+end
+
+orch -> users : GET /users/me\nAuthorization: Bearer <token>
+activate users
+alt token valido
+    users --> orch : 200 { id, username, status, ... }
+else token invalido o vencido
+    users --> orch : 401
+    orch --> user : 401
+else users_app no responde / timeout
+    users --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate users
+
+group Validacion de fechas [orchestrator_app]
+    alt plannedStartDate en el pasado o plannedEndDate <= plannedStartDate
+        orch --> user : 412 { "msg": "Las fechas del trayecto no son validas" }
+    else expireAt en el pasado o expireAt > plannedStartDate
+        orch --> user : 412 { "msg": "La fecha expiracion no es valida" }
+    end
+end
+
+group Consulta de trayecto existente
+    orch -> routes : GET /routes?flight={flightId}
+    activate routes
+    alt routes_app responde
+        routes --> orch : 200 [ lista de trayectos ]
+    else routes_app no responde / timeout
+        routes --> orch : error de transporte
+        orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+    end
+    deactivate routes
+end
+
+alt el trayecto ya existe con mismo origen y destino
+    group Verificacion de publicacion duplicada
+        orch -> posts : GET /posts?owner={caller.id}&route={routeId}
+        activate posts
+        alt posts_app responde
+            posts --> orch : 200 [ lista de publicaciones ]
+        else posts_app no responde / timeout
+            posts --> orch : error de transporte
+            orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+        end
+        deactivate posts
+
+        alt el usuario ya tiene una publicacion para este trayecto
+            orch --> user : 412 { "msg": "El usuario ya tiene una publicacion para este trayecto" }
+        end
+    end
+
+else el trayecto no existe
+    group Creacion del trayecto (T1)
+        orch -> routes : POST /routes\n{ flightId, sourceAirportCode, sourceCountry,\ndestinyAirportCode, destinyCountry, bagCost,\nplannedStartDate, plannedEndDate }
+        activate routes
+        alt trayecto creado
+            routes --> orch : 201 { id, createdAt }
+        else routes_app no responde / timeout
+            routes --> orch : error de transporte
+            orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+        end
+        deactivate routes
+    end
+end
+
+group Creacion de la publicacion (T2)
+    orch -> posts : POST /posts\n{ routeId, userId=caller.id, expireAt }
+    activate posts
+    alt publicacion creada
+        posts --> orch : 201 { id, userId, createdAt }
+    else posts_app no responde / timeout
+        posts --> orch : error de transporte
+        note over orch : Accion compensatoria (solo si T1 se ejecuto)
+        orch -> routes : DELETE /routes/{routeId}
+        activate routes
+        routes --> orch : 200
+        deactivate routes
+        orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+    end
+    deactivate posts
+end
+
+orch --> ingress : 201 { data: { id, userId, createdAt, expireAt, route: { id, createdAt } }, msg }
+ingress --> user : 201 { data: { id, userId, createdAt, expireAt, route: { id, createdAt } }, msg }
+deactivate orch
+
+@enduml

@@ -1,0 +1,9 @@
+aws_region               = "us-east-1"
+owner                    = "ga.gonzalezo1"
+db_name                  = "clonatdevs"
+db_engine_version        = "16"
+db_instance_class        = "db.t3.micro"
+db_allocated_storage_gib = 20
+db_publicly_accessible   = false
+sg_ingress_cidr_blocks   = []
+secret_name              = "clonatdevs/db"

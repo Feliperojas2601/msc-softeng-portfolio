@@ -1,0 +1,71 @@
+// ============================================================================
+// Theme Colors — Paletas tonales M3 generadas para snoozeless
+//
+// Generadas con la librería oficial de Google "Material Color Utilities"
+// (el mismo algoritmo HCT que usa `ng generate @angular/material:theme-color`),
+// a partir de los colores semilla de design-tokens.scss:
+//   - primary  ← $color-sem-acento  (Amanecer,   #E68A3E)
+//   - tertiary ← $color-sem-exito   (Salvia,     #6E9C7E)
+//   - error    ← $color-sem-peligro (Terracota,  #C0523F)
+//
+// Cada mapa contiene los 16 tonos estándar de M3 (0–100). Úsalos con
+// `mat.define-theme` como `primary:`/`tertiary:`, igual que usarías
+// `mat.$azure-palette` u otra paleta predefinida.
+// ============================================================================
+
+$primary-palette: (
+  0: #000000,
+  10: #301400,
+  20: #4f2500,
+  25: #5f2e00,
+  30: #703800,
+  35: #814100,
+  40: #934b00,
+  50: #b36217,
+  60: #d37b30,
+  70: #f39447,
+  80: #ffb782,
+  90: #ffdcc5,
+  95: #ffede3,
+  98: #fff8f5,
+  99: #fffbff,
+  100: #ffffff,
+);
+
+$tertiary-palette: (
+  0: #000000,
+  10: #002110,
+  20: #083821,
+  25: #16432b,
+  30: #234f36,
+  35: #2f5b41,
+  40: #3b674d,
+  50: #548164,
+  60: #6d9b7d,
+  70: #87b696,
+  80: #a2d2b1,
+  90: #bdeecc,
+  95: #cbfcda,
+  98: #e9ffed,
+  99: #f5fff4,
+  100: #ffffff,
+);
+
+$error-palette: (
+  0: #000000,
+  10: #3f0300,
+  20: #630e04,
+  25: #731a0d,
+  30: #832617,
+  35: #933121,
+  40: #a33d2c,
+  50: #c35441,
+  60: #e46d58,
+  70: #ff8a75,
+  80: #ffb4a6,
+  90: #ffdad4,
+  95: #ffede9,
+  98: #fff8f6,
+  99: #fffbff,
+  100: #ffffff,
+);

@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Routes App API",
+    "description": "Colección de verificación de los siete servicios de trayectos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:30002"
+    },
+    {
+      "key": "flightId",
+      "value": "AV-001"
+    },
+    {
+      "key": "routeId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Crear trayecto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Creado', () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set('routeId', pm.response.json().id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"flightId\": \"{{flightId}}\",\n  \"sourceAirportCode\": \"BOG\",\n  \"sourceCountry\": \"Colombia\",\n  \"destinyAirportCode\": \"MEX\",\n  \"destinyCountry\": \"México\",\n  \"bagCost\": 120,\n  \"plannedStartDate\": \"2099-01-01T10:00:00\",\n  \"plannedEndDate\": \"2099-01-01T14:00:00\"\n}"
+        },
+        "url": "{{baseUrl}}/routes"
+      }
+    },
+    {
+      "name": "2. Ver trayectos",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/routes"
+      }
+    },
+    {
+      "name": "2b. Filtrar por vuelo",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/routes?flight={{flightId}}"
+      }
+    },
+    {
+      "name": "3. Consultar trayecto",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/routes/{{routeId}}"
+      }
+    },
+    {
+      "name": "5. Contar trayectos",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/routes/count"
+      }
+    },
+    {
+      "name": "6. Salud del servicio",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/routes/ping"
+      }
+    },
+    {
+      "name": "4. Eliminar trayecto",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/routes/{{routeId}}"
+      }
+    },
+    {
+      "name": "7. Restablecer base de datos",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/routes/reset"
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: tokens.$color-sem-fondo;
+}
+
+.pantalla {
+    display: flex;
+    min-height: 100vh;
+}
+
+// ---- Panel de marca (izquierda) --------------------------------------------
+
+.panel-marca {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 620px;
+    background-color: tokens.$color-amanecer-soft;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 72px;
+    box-sizing: border-box;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo__text {
+    @include typography.web-display;
+    color: tokens.$color-sem-texto;
+}
+
+.titulo {
+    @include typography.web-titulo-pagina;
+    color: tokens.$color-sem-texto;
+    max-width: 476px;
+    margin: 0;
+}
+
+.subtitulo {
+    @include typography.web-cuerpo;
+    color: tokens.$color-sem-texto-secundario;
+    max-width: 476px;
+    margin: 0;
+}
+
+.beneficios {
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.beneficio {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    @include typography.web-cuerpo;
+    color: tokens.$color-sem-texto-secundario;
+}
+
+// ---- Panel de acceso (derecha) ---------------------------------------------
+
+.panel-acceso {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.tarjeta-acceso {
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+    background-color: tokens.$color-sem-fondo;
+    border: 1px solid tokens.$color-sem-borde;
+    border-radius: 20px;
+    padding: 40px 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.tarjeta-acceso__titulo {
+    @include typography.web-titulo-pagina;
+    color: tokens.$color-sem-texto;
+    margin: 0;
+}
+
+.tarjeta-acceso__subtitulo {
+    @include typography.web-cuerpo-s;
+    color: tokens.$color-sem-texto-atenuado;
+    margin: 0 0 6px;
+}
+
+.cta-sso {
+    width: 100%;
+    box-sizing: border-box;
+    height: 44px;
+    border-radius: 22px;
+    border: 1.5px solid tokens.$color-sem-borde;
+    background-color: tokens.$color-sem-fondo;
+    color: tokens.$color-sem-texto;
+    @include typography.web-boton;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 120ms ease, transform 80ms ease;
+
+    &:hover {
+        background-color: tokens.$color-sem-superficie;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.tarjeta-acceso__legal {
+    @include typography.web-etiqueta;
+    color: tokens.$color-sem-texto-atenuado;
+    text-align: center;
+    margin: 4px 0 0;
+}
+
+// ---- Responsive: apilar en pantallas angostas -------------------------------
+
+@media (max-width: 900px) {
+    .pantalla {
+        flex-direction: column;
+    }
+
+    .panel-marca {
+        max-width: none;
+        padding: 48px 32px;
+    }
+
+    .panel-acceso {
+        padding: 32px;
+    }
+}

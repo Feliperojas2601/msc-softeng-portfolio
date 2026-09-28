@@ -1,0 +1,199 @@
+@use '../../theme/design-tokens' as tokens;
+
+.pagina {
+  --background: #{tokens.$color-papel};
+  font-family: tokens.$font-family-base;
+  position: relative;
+}
+
+.app-bar {
+  position: relative;
+  height: 84px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px 18px;
+  box-sizing: border-box;
+  background-color: tokens.$color-amanecer-soft;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.app-bar__title {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.deco-circles {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.pagina-body {
+  min-height: calc(100dvh - 84px - 56px);
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.item-alarma {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 64px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  background-color: tokens.$color-papel;
+  border: 1px solid tokens.$color-bruma;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.item-alarma__icon {
+  flex: 0 0 auto;
+}
+
+.item-alarma__texto {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.item-alarma__titulo {
+  color: tokens.$color-tinta;
+  font-family: tokens.$font-family-base;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.item-alarma__subtitulo {
+  color: tokens.$color-texto-atenuado;
+  font-family: tokens.$font-family-base;
+  font-size: 12px;
+}
+
+// ---- Switch ------------------------------------------------------------------
+
+.switch {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background-color: tokens.$color-bruma;
+  position: relative;
+  transition: background-color 150ms ease;
+
+  &--on {
+    background-color: tokens.$color-salvia;
+  }
+}
+
+.switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: tokens.$color-papel;
+  transition: transform 150ms ease;
+
+  .switch--on & {
+    transform: translateX(20px);
+  }
+}
+
+// ---- Simular / FAB -------------------------------------------------------------
+
+.fila-inferior {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 16px;
+  min-height: 56px;
+}
+
+.simular {
+  color: tokens.$color-amanecer;
+  font-family: tokens.$font-family-base;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fab {
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background-color: tokens.$color-amanecer;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.fab__v {
+  position: absolute;
+  left: 26px;
+  top: 16px;
+  width: 4px;
+  height: 24px;
+  border-radius: 2px;
+  background-color: tokens.$color-papel;
+}
+
+.fab__h {
+  position: absolute;
+  left: 16px;
+  top: 26px;
+  width: 24px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: tokens.$color-papel;
+}
+
+// ---- Bottom nav ---------------------------------------------------------------
+
+.bottom-nav {
+  display: flex;
+  height: 56px;
+  border-top: 1px solid tokens.$color-bruma;
+  background-color: tokens.$color-papel;
+}
+
+.bottom-nav__tab {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: tokens.$font-family-base;
+  font-size: 11px;
+  font-weight: 500;
+  color: tokens.$color-texto-atenuado;
+
+  &--active {
+    color: tokens.$color-amanecer-oscuro;
+    font-weight: 700;
+  }
+}

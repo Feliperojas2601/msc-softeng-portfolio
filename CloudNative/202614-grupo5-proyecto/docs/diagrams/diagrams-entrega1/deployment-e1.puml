@@ -1,0 +1,99 @@
+@startuml
+
+actor User
+
+frame "k8s" {
+
+    component "users-app-service" as users_app_service
+    component "posts-app-service" as posts_app_service
+    component "offers-app-service" as offers_app_service
+    component "routes-app-service" as routes_app_service
+
+    frame "users-app" <<pod>> as users-app{
+        node "docker" <<Contenedor>> as users_app_container {
+            component "users_app" as users_app
+        }
+    }
+
+    frame "posts-app" <<pod>> as posts-app{
+        node "docker" <<Contenedor>> as posts_app_container {
+            component "posts_app" as posts_app
+        }
+    }
+
+    frame "offers-app" <<pod>> as offers-app {
+        node "docker" <<Contenedor>> as offers_app_container {
+            component "offers_app" as offers_app
+        }
+    }
+
+    frame "routes-app" <<pod>> as routes-app {
+        node "docker" <<Contenedor>> as routes_app_container {
+            component "routes_app" as routes_app
+        }
+    }
+
+    users_app_service --> users_app
+    posts_app_service --> posts_app
+    offers_app_service --> offers_app
+    routes_app_service --> routes_app
+
+
+    component "users-db-service" as users_db_service
+    component "posts-db-service" as posts_db_service
+    component "offers-db-service" as offers_db_service
+    component "routes-db-service" as routes_db_service
+
+    users_app --> users_db_service
+    posts_app --> posts_db_service
+    offers_app --> offers_db_service
+    routes_app --> routes_db_service
+
+    frame "users-db" <<pod>> as users-db {
+        node "docker" <<Contenedor>> as users_db_container {
+            database "users_db" as users_db
+        }
+    }
+
+    frame "posts-db" <<pod>> as posts-db {
+        node "docker" <<Contenedor>> as posts_db_container {
+            database "posts_db" as posts_db
+        }
+    }
+
+    frame "offers-db" <<pod>> as offers-db {
+        node "docker" <<Contenedor>> as offers_db_container {
+            database "offers_db" as offers_db
+        }
+    }
+
+    frame "routes-db" <<pod>> as routes-db {
+        node "docker" <<Contenedor>> as routes_db_container {
+            database "routes_db" as routes_db
+        }
+    }
+
+    users_db_service --> users_db
+    posts_db_service --> posts_db
+    offers_db_service --> offers_db
+    routes_db_service --> routes_db
+
+    artifact "users-db-volumen" as users_db_volumen
+    artifact "posts-db-volumen" as posts_db_volumen
+    artifact "offers-db-volumen" as offers_db_volumen
+    artifact "routes-db-volumen" as routes_db_volumen
+
+    users_db --> users_db_volumen
+    posts_db --> posts_db_volumen
+    offers_db --> offers_db_volumen
+    routes_db --> routes_db_volumen
+
+
+}
+
+User ..> users_app_service : HTTP
+User ..> posts_app_service : HTTP
+User ..> offers_app_service : HTTP
+User ..> routes_app_service : HTTP
+
+@enduml

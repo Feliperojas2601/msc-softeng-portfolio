@@ -1,0 +1,95 @@
+// ============================================================================
+// typography.scss — Mixins reutilizables para la escala tipográfica "Web/*"
+//
+// Un mixin por cada uno de los 10 Text Styles "Web/*" de design-tokens.scss.
+// Úsalos en los componentes así:
+//
+//   .page-title {
+//     @include typography.web-titulo-pagina;
+//   }
+//
+// Todos los valores (peso, tamaño, interlineado, tracking) vienen
+// directamente de design-tokens.scss — no se repiten valores a mano aquí.
+// ============================================================================
+
+@use './design-tokens' as tokens;
+
+@mixin web-display {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-display-weight;
+  font-size: tokens.$font-web-display-size;
+  line-height: tokens.$font-web-display-line-height;
+  letter-spacing: tokens.$font-web-display-letter-spacing;
+}
+
+@mixin web-titulo-pagina {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-titulo-pagina-weight;
+  font-size: tokens.$font-web-titulo-pagina-size;
+  line-height: tokens.$font-web-titulo-pagina-line-height;
+  letter-spacing: tokens.$font-web-titulo-pagina-letter-spacing;
+}
+
+@mixin web-titulo-seccion {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-titulo-seccion-weight;
+  font-size: tokens.$font-web-titulo-seccion-size;
+  line-height: tokens.$font-web-titulo-seccion-line-height;
+  letter-spacing: tokens.$font-web-titulo-seccion-letter-spacing;
+}
+
+@mixin web-subtitulo {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-subtitulo-weight;
+  font-size: tokens.$font-web-subtitulo-size;
+  line-height: tokens.$font-web-subtitulo-line-height;
+  letter-spacing: tokens.$font-web-subtitulo-letter-spacing;
+}
+
+@mixin web-cuerpo {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-cuerpo-weight;
+  font-size: tokens.$font-web-cuerpo-size;
+  line-height: tokens.$font-web-cuerpo-line-height;
+  letter-spacing: tokens.$font-web-cuerpo-letter-spacing;
+}
+
+@mixin web-cuerpo-s {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-cuerpo-s-weight;
+  font-size: tokens.$font-web-cuerpo-s-size;
+  line-height: tokens.$font-web-cuerpo-s-line-height;
+  letter-spacing: tokens.$font-web-cuerpo-s-letter-spacing;
+}
+
+@mixin web-etiqueta {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-etiqueta-weight;
+  font-size: tokens.$font-web-etiqueta-size;
+  line-height: tokens.$font-web-etiqueta-line-height;
+  letter-spacing: tokens.$font-web-etiqueta-letter-spacing;
+}
+
+@mixin web-boton {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-boton-weight;
+  font-size: tokens.$font-web-boton-size;
+  line-height: tokens.$font-web-boton-line-height;
+  letter-spacing: tokens.$font-web-boton-letter-spacing;
+}
+
+@mixin web-dato {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-dato-weight;
+  font-size: tokens.$font-web-dato-size;
+  line-height: tokens.$font-web-dato-line-height;
+  letter-spacing: tokens.$font-web-dato-letter-spacing;
+}
+
+@mixin web-reloj {
+  font-family: tokens.$font-family-base;
+  font-weight: tokens.$font-web-reloj-weight;
+  font-size: tokens.$font-web-reloj-size;
+  line-height: tokens.$font-web-reloj-line-height;
+  letter-spacing: tokens.$font-web-reloj-letter-spacing;
+}

@@ -1,0 +1,41 @@
+<ion-content class="pagina" [fullscreen]="true">
+  
+  <!-- Header -->
+  <div class="deco-header">
+    <svg class="deco-circles" viewBox="0 0 104 104" fill="none" aria-hidden="true">
+      <circle cx="52" cy="48" r="42" stroke="#E68A3E" stroke-width="1.5" opacity="0.7" />
+      <circle cx="60" cy="60" r="30" stroke="#6E9C7E" stroke-width="1.5" opacity="0.7" />
+      <circle cx="38" cy="60" r="20" stroke="#D9CFC0" stroke-width="1.5" opacity="0.7" />
+    </svg>
+  </div>
+
+  <!-- Reto -->
+  <header class="app-bar">
+    <span class="app-bar__title">Reto activo</span>
+  </header>
+
+  <!-- Anillo de progreso -->
+  <div class="pagina-body">
+    <div class="anillo anillo--completo">
+      <div class="anillo__hueco">
+        <div class="check">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12.5L10 17L19 7" stroke="#FAF6F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saludo -->
+    <p class="saludo">¡Buenos días, {{ userName }}!</p>
+
+    <!-- Progreso -->
+    <div class="banner banner--exito">
+      <span class="banner__tag">ÉXITO</span>
+      <p class="banner__texto">¡Reto completado! Ya puedes cerrar la alarma.</p>
+    </div>
+  </div>
+
+  <!-- Botón de salida -->
+  <a class="btn-primario" routerLink="/alarmas-lista">Cerrar alarma</a>
+</ion-content>

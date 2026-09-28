@@ -1,0 +1,41 @@
+services:
+  credit_cards_db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME:-credit_cards_db}
+      POSTGRES_USER: ${DB_USER:-credit_cards_app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5436:5432"
+    volumes:
+      - credit_cards_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  credit_cards_app:
+    build:
+      context: .
+    environment:
+      APP_NAME: ${APP_NAME:-credit_cards_app}
+      APP_PORT: 30006
+      USERS_APP_URL: ${USERS_APP_URL:-http://host.docker.internal:30000}
+      USERS_TIMEOUT_SECONDS: ${USERS_TIMEOUT_SECONDS:-2}
+      TRUE_NATIVE_BASE_URL: ${TRUE_NATIVE_BASE_URL:-http://host.docker.internal:30006}
+      TRUE_NATIVE_SECRET_TOKEN: ${TRUE_NATIVE_SECRET_TOKEN:-change-me}
+      TRUE_NATIVE_TIMEOUT_SECONDS: ${TRUE_NATIVE_TIMEOUT_SECONDS:-2}
+      DB_HOST: credit_cards_db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-credit_cards_db}
+      DB_USER: ${DB_USER:-credit_cards_app}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "30006:30006"
+    depends_on:
+      credit_cards_db:
+        condition: service_healthy
+
+volumes:
+  credit_cards_db_data:

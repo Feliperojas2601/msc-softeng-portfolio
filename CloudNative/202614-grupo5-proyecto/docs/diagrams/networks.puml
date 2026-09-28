@@ -1,0 +1,107 @@
+@startuml
+
+skinparam frame<<dashed>> {
+    BorderStyle dashed
+}
+
+cloud Internet
+
+frame "AWS Cloud (Default VPC)" {
+
+    node "AWS EKS Cluster Nodes" <<NodeGroup>> as eks_cluster {
+
+        circle "HTTP: 80 / HTTPS: 443" as ingress_port
+
+        frame "ingress-network" as ingress_network {
+            component "ingress-nginx-controller" as ingress
+        }
+
+        frame "orchestrator-network" as orchestrator_network {
+            component "orchestrator-app-service" as orchestrator_app_service
+
+            frame "orchestrator-app" <<pod>> as orchestrator_app_pod {
+                frame "orchestrator_app" <<Contenedor>> as orchestrator_app
+            }
+
+            orchestrator_app_service --> orchestrator_app: Port: 80
+        }
+
+        frame "users-network" as users_network {
+            component "users-app-service" as users_app_service
+
+            frame "users-app" <<pod>> as users_app_pod {
+                frame "users_app" <<Contenedor>> as users_app
+            }
+
+            users_app_service --> users_app: Port: 80
+        }
+
+        frame "posts-network" as posts_network {
+            component "posts-app-service" as posts_app_service
+
+            frame "posts-app" <<pod>> as posts_app_pod {
+                frame "posts_app" <<Contenedor>> as posts_app
+            }
+
+            posts_app_service --> posts_app: Port: 80
+        }
+
+        frame "offers-network" as offers_network {
+            component "offers-app-service" as offers_app_service
+
+            frame "offers-app" <<pod>> as offers_app_pod {
+                frame "offers_app" <<Contenedor>> as offers_app
+            }
+
+            offers_app_service --> offers_app: Port: 80
+        }
+
+        frame "routes-network" as routes_network {
+            component "routes-app-service" as routes_app_service
+
+            frame "routes-app" <<pod>> as routes_app_pod {
+                frame "routes_app" <<Contenedor>> as routes_app
+            }
+
+            routes_app_service --> routes_app: Port: 80
+        }
+
+        frame "scores-network" as scores_network {
+            component "scores-app-service" as scores_app_service
+
+            frame "scores-app" <<pod>> as scores_app_pod {
+                frame "scores_app" <<Contenedor>> as scores_app
+            }
+
+            scores_app_service --> scores_app: Port: 80
+        }
+
+        ingress_port --> ingress: Port: 80 / 443
+
+        ingress --> orchestrator_app_service: Port: 80
+        ingress --> users_app_service: Port: 80
+        ingress --> posts_app_service: Port: 80
+        ingress --> routes_app_service: Port: 80
+        ingress --> offers_app_service: Port: 80
+
+        orchestrator_app --> users_app_service: Port: 80
+        orchestrator_app --> posts_app_service: Port: 80
+        orchestrator_app --> offers_app_service: Port: 80
+        orchestrator_app --> routes_app_service: Port: 80
+        orchestrator_app --> scores_app_service: Port: 80
+    }
+
+    node "AWS RDS Instance (PostgreSQL)" as rds_node {
+        database "clonatdevs" as clonatdevs
+    }
+}
+
+users_app --> clonatdevs: TCP (5432)
+posts_app --> clonatdevs: TCP (5432)
+offers_app --> clonatdevs: TCP (5432)
+routes_app --> clonatdevs: TCP (5432)
+scores_app --> clonatdevs: TCP (5432)
+
+Internet ..> ingress_port: HTTP / HTTPS
+
+@enduml

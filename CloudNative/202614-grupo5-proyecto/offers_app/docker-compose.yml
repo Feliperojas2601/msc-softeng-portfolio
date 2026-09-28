@@ -1,0 +1,31 @@
+services:
+  offers_db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: offers_db
+      POSTGRES_USER: offers_app
+      POSTGRES_PASSWORD: offers_app
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U offers_app -d offers_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  offers_app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "30003:30003"
+    environment:
+      DB_HOST: offers_db
+      DB_PORT: 5432
+      DB_NAME: offers_db
+      DB_USER: offers_app
+      DB_PASSWORD: offers_app
+      APP_PORT: 30003
+    depends_on:
+      offers_db:
+        condition: service_healthy

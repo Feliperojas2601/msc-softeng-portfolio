@@ -1,0 +1,22 @@
+// ============================================================================
+// design-tokens.scss — Paleta y tipografía de snoozeless-mobile.
+// Extraído vía Figma MCP del archivo "snoozeless - mockups - mobile".
+// Mismos valores hex que el proyecto web (misma marca), pero aquí Figma
+// solo define primitivos (sin capa semántica "sem/*"), así que se usan
+// directamente.
+// ============================================================================
+
+$color-papel:           #FAF6F0;
+$color-tinta:           #2B2A26;
+$color-texto-atenuado:  #75736C;
+$color-bruma:           #D9CFC0;
+$color-bruma-oscuro:    #B3A78E;
+$color-amanecer:        #E68A3E;
+$color-amanecer-oscuro: #B4651F;
+$color-amanecer-tint:   #F4CB9F;
+$color-amanecer-soft:   #F7E3CE;
+$color-salvia:          #6E9C7E;
+$color-salvia-oscuro:   #4F7359;
+$color-salvia-tint:     #C6D8CC;
+
+$font-family-base: 'Comfortaa', sans-serif;

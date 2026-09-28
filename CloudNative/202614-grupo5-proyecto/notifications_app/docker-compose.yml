@@ -1,0 +1,14 @@
+services:
+  notifications_app:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "30008:30008"
+    environment:
+      APP_PORT: 30008
+      AWS_REGION: us-east-1
+      SNS_TOPIC_ARN: arn:aws:sns:us-east-1:000000000000:change-me
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}

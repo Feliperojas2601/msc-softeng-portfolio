@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: credit-cards-db-secret
+  namespace: default
+type: Opaque
+stringData:
+  DB_HOST: "${DB_HOST}"
+  DB_PORT: "${DB_PORT}"
+  DB_NAME: "${DB_NAME}"
+  DB_USER: "${DB_USERNAME}"
+  DB_PASSWORD: "${DB_PASSWORD}"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-cards-app-deployment
+  namespace: default
+  labels:
+    app: credit-cards-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: credit-cards-app
+  template:
+    metadata:
+      labels:
+        app: credit-cards-app
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - until nc -z "${DB_HOST}" "${DB_PORT}"; do sleep 2; done
+      containers:
+        - name: credit-cards-app
+          image: ${ECR_REGISTRY}/credit_cards_app:v1.0.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 30006
+          envFrom:
+            - secretRef:
+                name: credit-cards-db-secret
+          env:
+            - name: APP_PORT
+              value: "30006"
+            - name: USERS_APP_URL
+              value: http://users-app-service
+            - name: TRUE_NATIVE_BASE_URL
+              value: http://true-native-service
+            - name: TRUE_NATIVE_SECRET_TOKEN
+              value: "${TRUE_NATIVE_SECRET_TOKEN}"
+            - name: TRUE_NATIVE_TIMEOUT_SECONDS
+              value: "2"
+            - name: CREDIT_CARDS_INTERNAL_SECRET
+              value: "${CREDIT_CARDS_INTERNAL_SECRET}"
+          readinessProbe:
+            httpGet:
+              path: /credit-cards/ping
+              port: 30006
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /credit-cards/ping
+              port: 30006
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: credit-cards-app-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: credit-cards-app
+  ports:
+    - port: 80
+      targetPort: 30006

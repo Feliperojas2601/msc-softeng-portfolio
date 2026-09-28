@@ -1,0 +1,612 @@
+@use '../../styles/design-tokens' as tokens;
+@use '../../styles/typography' as typography;
+
+// ============================================================================
+// Iconos (SVG en línea, sin emoji ni fuentes externas)
+// ============================================================================
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.icon--accent {
+  color: tokens.$color-sem-acento;
+}
+
+.icon--logo {
+  width: 22px;
+  height: 22px;
+}
+
+// ============================================================================
+// Shell (sidebar + contenido)
+// Todo el fondo (página, sidebar, tarjetas) usa el mismo tono $color-sem-fondo
+// — la diferenciación viene únicamente del borde de cada tarjeta, igual que
+// en la referencia de Figma.
+// ============================================================================
+
+.shell,
+:host {
+  height: 100vh;
+  display: block;
+}
+
+.sidebar.sidebar {
+  width: 240px;
+  background-color: tokens.$color-sem-superficie; // rgba(243,238,228,1) exacto de Figma
+  border-right: 1px solid tokens.$color-sem-borde;
+  // Nada de position/display/height acá — eso lo maneja Material internamente
+  // para las animaciones de abrir/cerrar. Toda la estructura vive en
+  // .sidebar__inner, un div propio que sí controlo por completo.
+}
+
+.sidebar__inner {
+  position: relative;
+  height: 100%;
+  padding: 24px 16px 160px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 24px;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__logo-text {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  color: tokens.$color-sem-texto-secundario;
+  @include typography.web-cuerpo;
+  transition: background-color 120ms ease, color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &--active {
+    background-color: tokens.$color-sem-acento-suave;
+    color: tokens.$color-sem-acento-fuerte;
+
+    &:hover {
+      background-color: tokens.$color-sem-acento-suave;
+    }
+  }
+}
+
+// ---- Bloque de usuario (reutilizado en sidebar y header) ------------------
+
+.sidebar__user {
+  position: absolute !important;
+  left: 16px;
+  right: 16px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-block__avatar {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-exito-suave;
+  color: tokens.$color-salvia-oscuro;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: tokens.$font-family-base;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.user-block__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-block__name {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.user-block__email {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 6px 0;
+  cursor: pointer;
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: tokens.$color-sem-peligro;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+// ---- Contenido principal ----------------------------------------------------
+
+.content {
+  background-color: tokens.$color-sem-fondo;
+  height: 100%;
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: tokens.$color-sem-superficie;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: tokens.$color-sem-texto-secundario;
+  transition: background-color 120ms ease, transform 80ms ease;
+
+  &:hover {
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+// ============================================================================
+// Dashboard content
+// ============================================================================
+
+.dashboard {
+  //padding: 0px 40px;
+  box-sizing: border-box;
+}
+
+.dashboard__header {
+  display: flex;
+  height: 76px;
+  padding: 0 40px;
+  align-items: center;
+  justify-content: space-between;
+  //gap: 24px;
+  //margin-bottom: 24px;
+  border-bottom: 1px solid tokens.$color-sem-borde;
+  box-sizing: border-box;
+}
+
+
+.dashboard-title-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.dashboard-info {
+  padding: 40px 40px 28px;
+}
+
+.dashboard__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+.dashboard__title {
+  @include typography.web-titulo-pagina;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+.dashboard__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-atenuado;
+  margin: 0;
+}
+
+// ---- KPI row ---------------------------------------------------------------
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background-color: tokens.$color-sem-fondo !important;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px;
+  box-shadow: none !important;
+}
+
+.kpi-card__value {
+  @include typography.web-dato;
+  color: tokens.$color-sem-texto;
+}
+
+.kpi-card__label {
+  @include typography.web-cuerpo;
+  font-size: 13px;
+  color: tokens.$color-sem-texto-atenuado; // ← era $color-sem-texto
+}
+
+.kpi-card__delta {
+  @include typography.web-cuerpo-s;
+  font-size: 12px;
+  color: tokens.$color-salvia-oscuro; // ← era $color-sem-exito
+
+  &--neutral {
+    color: tokens.$color-sem-texto-atenuado;
+  }
+}
+
+// ---- Próxima alarma ---------------------------------------------------------
+//
+// mat-card trae por defecto `display:flex; flex-direction:column`, que le
+// gana en especificidad a una regla sin !important — por eso el layout se
+// apilaba en una sola columna. Forzamos row explícitamente.
+
+.next-alarm {
+  background-color: tokens.$color-sem-acento-suave !important;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 24px;
+}
+
+.next-alarm__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.next-alarm__col--main {
+  gap: 4px;
+}
+
+.next-alarm__col--side {
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.next-alarm__tag {
+  @include typography.web-etiqueta;
+  color: tokens.$color-sem-acento-fuerte;
+  text-transform: uppercase;
+}
+
+.next-alarm__time {
+  @include typography.web-reloj;
+  color: tokens.$color-sem-texto;
+}
+
+.next-alarm__subtitle {
+  @include typography.web-subtitulo;
+  font-size: 15px;
+  font-weight: 400;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.next-alarm__days {
+  display: flex;
+  gap: 8px;
+}
+
+.day-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include typography.web-cuerpo-s;
+  cursor: pointer;
+  border: 1px solid var(--sem-Borde, #D9CFC0);
+  transition: transform 80ms ease, opacity 120ms ease;
+
+  &--active {
+    background-color: tokens.$color-sem-texto;
+    color: tokens.$color-sem-fondo;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
+
+// El botón "Ver detalle" se fuerza por CSS directo (no por token de Material)
+// porque los tokens internos de mat-flat-button (--mdc-*) quedan resueltos
+// como valores fijos al compilar el tema, y no reaccionan a overrides de
+// --mat-sys-primary hechos después en tiempo de ejecución.
+.next-alarm__cta.next-alarm__cta {
+  background-color: tokens.$color-sem-acento !important;
+  color: tokens.$color-sem-fondo !important;
+  box-shadow: none !important;
+}
+
+// ---- Columnas: actividad + resumen semanal ---------------------------------
+
+.dashboard__columns {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 16px;
+  align-items: start;
+}
+
+.activity-card {
+  background-color: tokens.$color-sem-fondo !important;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: none !important;
+  display: block !important;
+}
+
+.weekly-card {
+  background-color: tokens.$color-sem-fondo;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activity-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.activity-card__title,
+.weekly-card__title {
+  @include typography.web-titulo-seccion;
+  color: tokens.$color-sem-texto;
+  margin: 0;
+}
+
+.activity-card__link {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-acento;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 120ms ease;
+
+  &:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+.weekly-card__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+  margin: 0 0 16px;
+}
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid tokens.$color-sem-borde;
+  border-radius: 10px;
+  background-color: tokens.$color-sem-fondo;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+
+  &:hover {
+    border-color: tokens.$color-sem-borde-fuerte;
+    background-color: tokens.$color-sem-superficie;
+  }
+
+  &:active {
+    background-color: tokens.$color-sem-acento-suave;
+  }
+}
+
+.activity-item__icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: tokens.$color-sem-acento-suave;
+  color: tokens.$color-sem-acento-fuerte;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-item__text {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.activity-item__title {
+  @include typography.web-cuerpo;
+  color: tokens.$color-sem-texto;
+}
+
+.activity-item__subtitle {
+  @include typography.web-cuerpo-s;
+  color: tokens.$color-sem-texto-secundario;
+}
+
+.activity-item__chevron {
+  flex: 0 0 auto;
+  font-size: 22px;
+  line-height: 1;
+  color: tokens.$color-sem-texto-atenuado;
+}
+
+// Insignias de estado — span propio (no mat-chip) para tener control
+// total y confiable del color de fondo/texto por variante.
+.status-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  @include typography.web-cuerpo-s;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex: 0 0 auto;
+  }
+
+  &--exito {
+    background-color: tokens.$color-sem-exito-suave;
+    color: tokens.$color-sem-exito;
+  }
+
+  &--peligro {
+    background-color: tokens.$color-sem-peligro-suave;
+    color: tokens.$color-sem-peligro;
+  }
+
+  &--acento {
+    background-color: tokens.$color-sem-acento-suave;
+    color: tokens.$color-sem-acento-fuerte;
+  }
+}
+
+// ---- Gráfico de barras (resumen semanal) -----------------------------------
+
+.weekly-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 160px;
+}
+
+.weekly-chart__bar {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.weekly-chart__track {
+  flex: 1 1 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.weekly-chart__fill {
+  width: 100%;
+  border-radius: 8px;
+
+  &--suave {
+    background-color: tokens.$color-sem-acento-suave;
+  }
+
+  &--borde {
+    background-color: tokens.$color-sem-borde;
+  }
+
+  &--acento {
+    background-color: tokens.$color-sem-acento;
+  }
+}
+.weekly-chart__label {
+  @include typography.web-cuerpo-s;
+  letter-spacing: 0;
+  color: tokens.$color-sem-texto-atenuado;
+}

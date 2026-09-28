@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  multiplicacion:
+    image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/s1-calculadora-numeros:vmultiplicacion-0.0.1
+    ports:
+      - 4000:4000
+    environment:
+      user_name: Tomas
+      write_result: show
+    networks:
+      -  COMPOSE_01
+    volumes:
+      - ./data_file/:/app/data_file
+
+
+  suma:
+    image: ghcr.io/misw-4301-desarrollo-apps-en-la-nube/s1-calculadora-numeros:vSuma-0.0.1
+    ports:
+      - 5001:4000
+    environment:
+      user_name: Tomas
+      write_result: show
+    networks:
+      -  COMPOSE_01
+    volumes:
+      - ./data_file/:/app/data_file
+
+networks:
+  COMPOSE_01:
+    # Use a custom driver
+    driver: bridge

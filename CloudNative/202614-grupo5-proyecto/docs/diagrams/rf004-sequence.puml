@@ -1,0 +1,109 @@
+@startuml rf004-sequence
+
+title RF-004 - Crear oferta sobre una publicacion (POST /rf004/posts/{id}/offers)
+
+skinparam responseMessageBelowArrow true
+skinparam sequenceMessageAlign center
+
+actor "Usuario" as user
+participant "Ingress" as ingress
+participant "orchestrator_app" as orch
+participant "users_app" as users
+participant "posts_app" as posts
+participant "offers_app" as offers
+participant "scores_app" as scores
+participant "routes_app" as routes
+
+user -> ingress : POST /rf004/posts/{id}/offers\nAuthorization: Bearer <token>\n{ description, size, fragile, offer }
+ingress -> orch : enruta la peticion (un solo host)
+activate orch
+
+group Validacion del cuerpo [orchestrator_app]
+    alt cuerpo invalido: campo faltante / size no en {LARGE, MEDIUM, SMALL} / tipo invalido
+        orch --> user : 400 (sin cuerpo)
+    end
+end
+
+alt no viene el header Authorization
+    orch --> user : 403 (sin cuerpo)
+end
+
+orch -> users : GET /users/me\nAuthorization: Bearer <token>
+activate users
+alt token valido
+    users --> orch : 200 { id, username, status, ... }
+else token invalido o vencido
+    users --> orch : 401
+    orch --> user : 401
+else users_app no responde / timeout
+    users --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate users
+
+orch -> posts : GET /posts/{id}
+activate posts
+alt la publicacion existe
+    posts --> orch : 200 { id, routeId, userId, expireAt, createdAt }
+else la publicacion no existe
+    posts --> orch : 404
+    orch --> user : 404
+else posts_app no responde / timeout
+    posts --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate posts
+
+group Reglas de negocio RF-004 [orchestrator_app]
+    alt post.expireAt <= ahora (UTC)
+        orch --> user : 412 (publicacion expirada)
+    else post.userId == caller.id
+        orch --> user : 412 (no puede ofertar en su propia publicacion)
+    end
+end
+
+group Obtener bagCost para la formula de la utilidad
+    orch -> routes : GET /routes/{post.routeId}
+    activate routes
+    alt trayecto disponible
+        routes --> orch : 200 { id, bagCost, ... }
+    else routes_app no responde / inconsistencia
+        routes --> orch : error
+        orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+    end
+    deactivate routes
+end
+
+orch -> offers : POST /offers\n{ postId, userId=caller.id, description, size, fragile, offer }
+activate offers
+alt oferta creada
+    offers --> orch : 201 { id, userId, createdAt }
+else offers_app no responde / timeout
+    offers --> orch : error de transporte
+    orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+end
+deactivate offers
+
+group Calculo y persistencia de la utilidad (score)
+    orch -> scores : POST /scores\n{ offerId, size, offer, bagCost }
+    activate scores
+    scores -> scores : utilidad = offer - (ocupacion(size) * bagCost)\nocupacion: LARGE 100%, MEDIUM 50%, SMALL 25%
+    alt score calculado y persistido
+        scores --> orch : 201 { id, score }
+    else scores_app no responde / timeout
+        scores --> orch : error de transporte
+        note over orch : Accion compensatoria
+        orch -> offers : DELETE /offers/{offerId}
+        activate offers
+        offers --> orch : 200
+        deactivate offers
+        orch --> user : 503 { "msg": "El servicio esta temporalmente fuera de servicio." }
+    end
+    deactivate scores
+end
+
+orch --> ingress : 201 { data: { id, userId, createdAt, postId }, msg }
+ingress --> user : 201 { data: { id, userId, createdAt, postId }, msg }
+deactivate orch
+
+@enduml

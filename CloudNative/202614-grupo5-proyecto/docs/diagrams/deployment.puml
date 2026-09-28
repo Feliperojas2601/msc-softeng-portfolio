@@ -1,0 +1,141 @@
+@startuml
+
+actor User
+
+frame "k8s" {
+
+    component "ingress" as ingress
+
+    component "orchestrator-app-service" as orchestrator_app_service
+    frame "orchestrator-app" <<pod>> as orchestrator_app_pod {
+        node "docker" <<Contenedor>> as orchestrator_app_container {
+            component "orchestrator_app" as orchestrator_app
+        }
+    }
+
+    component "users-app-service" as users_app_service
+    component "posts-app-service" as posts_app_service
+    component "offers-app-service" as offers_app_service
+    component "routes-app-service" as routes_app_service
+    component "scores-app-service" as scores_app_service
+    component "credit-cards-app-service" as credit_cards_app_service
+    component "true-native-service" as true_native_service
+    component "identity-webhook-app-service" as identity_webhook_app_service
+    component "notifications-app-service" as notifications_app_service
+
+    frame "users-app" <<pod>> as users_app_pod {
+        node "docker" <<Contenedor>> as users_app_container {
+            component "users_app" as users_app
+        }
+    }
+
+    frame "posts-app" <<pod>> as posts_app_pod {
+        node "docker" <<Contenedor>> as posts_app_container {
+            component "posts_app" as posts_app
+        }
+    }
+
+    frame "offers-app" <<pod>> as offers_app_pod {
+        node "docker" <<Contenedor>> as offers_app_container {
+            component "offers_app" as offers_app
+        }
+    }
+
+    frame "routes-app" <<pod>> as routes-app_pod {
+        node "docker" <<Contenedor>> as routes_app_container {
+            component "routes_app" as routes_app
+        }
+    }
+
+    frame "scores-app" <<pod>> as scores_app_pod {
+        node "docker" <<Contenedor>> as scores_app_container {
+            component "scores_app" as scores_app
+        }
+    }
+
+    frame "credit-cards-app" <<pod>> as credit_cards_app_pod {
+        node "docker" <<Contenedor>> as credit_cards_app_container {
+            component "credit_cards_app" as credit_cards_app
+        }
+    }
+
+    frame "true-native" <<pod>> as true_native_pod {
+        node "docker" <<Contenedor externo>> as true_native_container {
+            component "true_native" as true_native
+        }
+    }
+
+    frame "identity-webhook-app" <<pod>> as identity_webhook_app_pod {
+        node "docker" <<Contenedor>> as identity_webhook_app_container {
+            component "identity_webhook_app" as identity_webhook_app
+        }
+    }
+
+    frame "notifications-app" <<pod>> as notifications_app_pod {
+        node "docker" <<Contenedor>> as notifications_app_container {
+            component "notifications_app" as notifications_app
+        }
+    }
+
+    frame "credit-cards-mediator-app" <<pod>> as credit_cards_mediator_app_pod {
+        node "docker" <<Contenedor>> as credit_cards_mediator_app_container {
+            component "credit_cards_mediator_app" as credit_cards_mediator_app
+        }
+    }
+
+    orchestrator_app_service --> orchestrator_app
+    users_app_service --> users_app
+    posts_app_service --> posts_app
+    offers_app_service --> offers_app
+    routes_app_service --> routes_app
+    scores_app_service --> scores_app
+    credit_cards_app_service --> credit_cards_app
+    true_native_service --> true_native
+    identity_webhook_app_service --> identity_webhook_app
+    notifications_app_service --> notifications_app
+
+    ingress --> orchestrator_app_service
+    ingress --> users_app_service
+    ingress --> posts_app_service
+    ingress --> offers_app_service
+    ingress --> routes_app_service
+    ingress --> credit_cards_app_service
+    ingress --> true_native_service
+
+    orchestrator_app --> users_app_service
+    orchestrator_app --> posts_app_service
+    orchestrator_app --> offers_app_service
+    orchestrator_app --> routes_app_service
+    orchestrator_app --> scores_app_service
+
+    users_app -right-> true_native_service
+    true_native -down-> identity_webhook_app_service
+    identity_webhook_app -left-> users_app_service
+    identity_webhook_app -down-> notifications_app_service
+    credit_cards_app -right-> true_native_service
+    credit_cards_mediator_app --> true_native_service : GET /native/cards/{ruv}
+    credit_cards_mediator_app --> credit_cards_app_service : PATCH /credit-cards/internal/{cardId}/verification
+    credit_cards_mediator_app --> notifications_app_service : POST /notify
+}
+
+frame "AWS Cloud" {
+    node "RDS Instance (PostgreSQL)" as rds_node {
+        database "clonatdevs" as clonatdevs
+        database "credit_cards_db" as credit_cards_db
+    }
+
+    cloud "SNS" as sns
+}
+
+users_app --> clonatdevs : TCP (5432)
+posts_app --> clonatdevs : TCP (5432)
+offers_app --> clonatdevs : TCP (5432)
+routes_app --> clonatdevs : TCP (5432)
+scores_app --> clonatdevs : TCP (5432)
+credit_cards_app -down-> credit_cards_db : TCP (5432)
+
+notifications_app -down-> sns : sns:Publish
+
+User ..> ingress : HTTP / HTTPS
+
+@enduml

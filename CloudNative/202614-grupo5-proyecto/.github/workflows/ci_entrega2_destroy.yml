@@ -1,0 +1,25 @@
+name: Entrega 2 - Destroy
+
+# Solo se dispara manualmente: es una acción destructiva e irreversible.
+# Destruye stacks en el orden inverso al que declara en el config.yaml.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Ambiente de terraform/environments a destruir'
+        required: true
+        default: 'student1'
+        type: choice
+        options:
+          - student1
+          - student2
+          - student3
+          - student4
+          - tutor
+
+jobs:
+  destroy:
+    uses: MISW-4301-Desarrollo-Apps-en-la-Nube/recursos-evaluador/.github/workflows/ci_entrega2_destroy.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
